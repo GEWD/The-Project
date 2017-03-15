@@ -4,6 +4,8 @@ const cors = require('cors');
 const app = express();
 const model = require('./model');
 
+var db = require('./db/index.js')
+
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
