@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const model = require('./model');
-
 var db = require('./db/index.js')
 
 app.use( bodyParser.json() );
