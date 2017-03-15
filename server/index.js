@@ -1,8 +1,10 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const app = express();
 
-var app = express();
-
+app.use( bodyParser.json() );
+app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
 
 app.get('/', function(req, res) {
