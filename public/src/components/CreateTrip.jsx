@@ -24,7 +24,6 @@ class CreateTrip extends React.Component {
   }
   sendServerName() {
     const currentScope = this;
-    console.log('This within sendServer is:', this, 'currentScope.state.tripname:', currentScope.state.tripName);
     fetch('http://127.0.0.1:3000/test', {
       method: 'POST',
       headers: {
