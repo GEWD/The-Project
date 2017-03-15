@@ -15,7 +15,6 @@ class App extends React.Component {
         <h1>GEDW</h1>
         <p>The Project</p>
         <div>
-          <h3>CreateTrip test</h3>
           <CreateTrip />
         </div>
       </div>
