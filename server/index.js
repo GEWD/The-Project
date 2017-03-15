@@ -13,11 +13,10 @@ app.get('/', function(req, res) {
 });
 
 //To be used for testing and seeing requests
-app.post('/test', function(req, res) {
-  console.log('Received request aimed at /test, request is currently:', req, '///////RequestBody is:', req.body);
+app.post('/testTripName', function(req, res) {
   //With the received request, use model function to submit the tripname to the database
   model.tripNameInsert(req.body.submittedTripName);
-  res.send('Server received test');
+  res.send('Received request to /testTripNameServer');
 });
 
 

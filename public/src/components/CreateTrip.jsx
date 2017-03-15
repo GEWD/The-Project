@@ -8,23 +8,26 @@ class CreateTrip extends React.Component {
     this.state = {
       tripName: ''
     };
-
+    //Must bind all functions with 'this' to CreateTrip
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.testClick = this.testClick.bind(this);
     this.sendServerName = this.sendServerName.bind(this);
   }
-  testClick(event) {
-    event.preventDefault();
-    console.log('CreateTrip this is:', this);
-  }
+  //If you want to check the current scope, uncommend and click this components header
+  // testClick(event) {
+  //   event.preventDefault();
+  //   console.log('CreateTrip this is:', this);
+  // }
+
+  //Automatically updates the property tripName of state 
   handleChange(event) {
-    // console.log('handleChange: Checking what event param is:', event);
     this.setState({tripName: event.target.value});
   }
+  //Handles post request to the server with tripName in req.body
   sendServerName() {
     const currentScope = this;
-    fetch('http://127.0.0.1:3000/test', {
+    fetch('http://127.0.0.1:3000/testTripName', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -35,7 +38,7 @@ class CreateTrip extends React.Component {
       })
     });
   }
-
+  //Handles subsequent function calls after submit 
   handleSubmit(event) {
     console.log('Tripname was submitted:' + this.state.tripName);
     event.preventDefault();
