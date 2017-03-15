@@ -1,4 +1,4 @@
-# Th3 Projekt
+# The Project
 
 > Shared payment for travel
 
