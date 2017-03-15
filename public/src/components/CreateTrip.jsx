@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
 class CreateTrip extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,7 @@ class CreateTrip extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.testClick = this.testClick.bind(this);
+    this.sendServerName = this.sendServerName.bind(this);
   }
   testClick(event) {
     event.preventDefault();
@@ -20,9 +22,25 @@ class CreateTrip extends React.Component {
     // console.log('handleChange: Checking what event param is:', event);
     this.setState({tripName: event.target.value});
   }
+  sendServerName() {
+    const currentScope = this;
+    console.log('This within sendServer is:', this, 'currentScope.state.tripname:', currentScope.state.tripName);
+    fetch('http://127.0.0.1:3000/test', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        submittedTripName: currentScope.state.tripName
+      })
+    });
+  }
+
   handleSubmit(event) {
     console.log('Tripname was submitted:' + this.state.tripName);
     event.preventDefault();
+    this.sendServerName();
   }
 
   render() {

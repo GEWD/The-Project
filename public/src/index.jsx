@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import CreateTrip from './components/CreateTrip.jsx';
 
 class App extends React.Component {
