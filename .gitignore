@@ -21,6 +21,7 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 node_modules/
 build/
+env/
 bundle.js
 
 # Dependency directorys
