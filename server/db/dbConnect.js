@@ -35,4 +35,3 @@ MemberTrip.sync();
 
 
 module.exports = connection;
->>>>>>> Fix memberModel and tripModel
