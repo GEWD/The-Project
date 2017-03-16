@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const connection = require('./dbConnect');
+// const connection = require('./dbConnect');
+const connection = new Sequelize('testing123', 'root', '');
 
-const memberTrip = connection.define('MemberTrip', {
-
+const MemberTrip = connection.define('MemberTrip', {
 });
 
-module.exports = memberTrip;
+module.exports = MemberTrip;

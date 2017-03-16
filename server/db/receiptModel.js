@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const connection = require('./dbConnect');
+// const connection = require('./dbConnect');
+const connection = new Sequelize('testing123', 'root', '');
 
 const Receipt = connection.define('Receipt', {
   id: {

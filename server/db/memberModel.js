@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const connection = require('./dbConnect');
+// const connection = require('./dbConnect');
+const connection = new Sequelize('testing123', 'root', '');
 
 const Member = connection.define('Member', {
   id: {
@@ -13,7 +14,7 @@ const Member = connection.define('Member', {
   },
   auth: {
     type: Sequelize.STRING,
-    unique: true
+    unique: false
   }
 });
 

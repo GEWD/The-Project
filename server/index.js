@@ -1,9 +1,24 @@
+<<<<<<< HEAD
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const model = require('./model');
 var db = require('./db/index.js')
+||||||| merged common ancestors
+var express = require('express');
+var bodyParser = require('body-parser');
+// db is for sequelize, i.e. db.sequelize
+var db = require('./db/dbConnect')
+
+var app = express();
+=======
+var express = require('express');
+var bodyParser = require('body-parser');
+var connect = require('./db/dbConnect')
+
+var app = express();
+>>>>>>> Refractor code but foreign key is no longer working
 
 app.use( bodyParser.json() );
 app.use(cors());
