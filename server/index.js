@@ -33,20 +33,11 @@ passport.use(new FacebookStrategy({
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
     //   return cb(err, user);
     // });
-    let displayName = profile.displayName;
-    console.log('username', displayName);
+    // let displayName = profile.displayName;
+    // console.log('username', displayName);
+    return cb(null, profile);
   }
 ));
-
-// Define routes.
-app.get('/login/facebook',
-  passport.authenticate('facebook'));
-
-app.get('/login/facebook/return',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-});
 
 // route for facebook authentication and login
 app.get('/auth/facebook',
