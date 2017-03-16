@@ -1,12 +1,22 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const app = express();
+const model = require('./model');
 
-var app = express();
-
+app.use( bodyParser.json() );
+app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
 
 app.get('/', function(req, res) {
-  res.send('hello world')
+  res.send('hello world');
+});
+
+//To be used for testing and seeing requests
+app.post('/testTripName', function(req, res) {
+  //With the received request, use model function to submit the tripname to the database
+  model.tripNameInsert(req.body.submittedTripName);
+  res.send('Received request to /testTripNameServer');
 });
 
 app.post('/upload', function(req,res) {
@@ -26,3 +36,4 @@ app.post('/upload/delete', function(req,res) {
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
+
