@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // const Sequelize = require('sequelize');
 
 // const connection = new Sequelize('testing123', 'root', '');
@@ -41,3 +42,11 @@ MemberTrip.sync();
 
 
 module.exports = connection;
+||||||| merged common ancestors
+=======
+const Sequelize = require('sequelize');
+
+const connection = new Sequelize('testing123', 'root', '');
+
+module.exports = connection;
+>>>>>>> Fix memberModel and tripModel
