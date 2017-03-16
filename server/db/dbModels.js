@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const connection = require('./dbConnect');
 const Member = require('./memberModel');
 const Trip = require('./tripModel');
@@ -6,21 +5,10 @@ const MemberTrip = require('./memberTripModel');
 const Receipt = require('./receiptModel');
 const Item = require('./ItemModel');
 
-module.exports = {
-  connection,
-  Member,
-  Trip,
-  MemberTrip
-};
-||||||| merged common ancestors
-=======
-const connection = require('./dbConnect');
-const Member = require('./memberModel');
-const Trip = require('./tripModel');
-
 Member.belongsToMany(Trip, { through: 'MemberTrip' });
 Trip.belongsToMany(Member, { through: 'MemberTrip' });
 connection.sync();
+
 
 module.exports = {
   connection,
@@ -50,4 +38,3 @@ module.exports = {
 // Member.sync();
 // Trip.sync();
 // MemberTrip.sync()
->>>>>>> Fix memberModel and tripModel

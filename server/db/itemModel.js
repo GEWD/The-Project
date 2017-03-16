@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const Sequelize = require('sequelize');
 // const connection = require('./dbConnect');
 const connection = new Sequelize('testing123', 'root', '');
@@ -18,8 +17,3 @@ const Item = connection.define('Item', {
 });
 
 module.exports = Item;
-||||||| merged common ancestors
-=======
-const Sequelize = require('sequelize');
-const connection = require('./dbConnect');
->>>>>>> Fix memberModel and tripModel
