@@ -33,8 +33,8 @@ passport.use(new FacebookStrategy({
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
     //   return cb(err, user);
     // });
-    User
-    console.log('profile', profile);
+    let displayName = profile.displayName;
+    console.log('username', displayName);
   }
 ));
 
