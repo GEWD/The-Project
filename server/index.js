@@ -1,32 +1,13 @@
-<<<<<<< HEAD
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const cors = require('cors');
 const model = require('./model');
-var db = require('./db/index.js')
-||||||| merged common ancestors
-var express = require('express');
-var bodyParser = require('body-parser');
-// db is for sequelize, i.e. db.sequelize
-var db = require('./db/dbConnect')
-
-var app = express();
-=======
-var express = require('express');
-var bodyParser = require('body-parser');
-var connect = require('./db/dbConnect')
-
-var app = express();
->>>>>>> Refractor code but foreign key is no longer working
-
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var KEYS = require('../env/KEYS.js');
-
+const connect = require('./db/dbConnect');
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
-
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -38,7 +19,6 @@ app.use(fileUpload());
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: KEYS.SESSION_SECRET, resave: true, saveUninitialized: true }));
 
 // Initialize Passport and restore authentication state, if any, from the
@@ -80,7 +60,7 @@ app.get('/auth/facebook/callback',
 //   if (req.isAuthenticated())
 //       return next();
 
-//   // if they aren't redirect them to the home page
+
 //   res.redirect('/');
 // }
 
