@@ -1,8 +1,8 @@
 <<<<<<< HEAD
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const cors = require('cors');
-const app = express();
 const model = require('./model');
 var db = require('./db/index.js')
 ||||||| merged common ancestors
@@ -24,9 +24,15 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var KEYS = require('../env/KEYS.js');
 
+const fileUpload = require('express-fileupload');
+const app = express();
+
+
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(fileUpload());
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -99,11 +105,21 @@ app.post('/testTripName', function(req, res) {
 });
 
 app.post('/upload', function(req,res) {
-  var body = req.body;
-  console.log(body);
-  res.sendStatus(201);
   //req.body should include receipt name, total, receipt_link;
   //should be an insert query
+   if (!req.files) {
+    return res.status(400).send('No files were uploaded.');
+  }
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  let sampleFile = req.files.sampleFile;
+  console.log(sampleFile);
+  // Use the mv() method to place the file somewhere on your server 
+  sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send('File uploaded!');
+  });
 
 })
 
