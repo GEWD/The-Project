@@ -1,16 +1,20 @@
 const mysql = require('mysql');
+// const createTables = require('./schema.sql');
 const mysqlConfig = require('./config.js');
+// const Promise = require('bluebird');
+const database = 'gewd';
 
 const connection = mysql.createConnection(mysqlConfig);
 
-const getAllUsers = (req, res) => {
-  connection.query('SELECT * FROM users', function (err, result) {
-    if (err) {
-      console.log('error querying db', err);
-    } else {
-      res.send(result);
-    }
-  })
-}
+// const db = Promise.promisifyAll(connection, { multiArgs: true });
 
-module.exports.getAllUsers = getAllUsers;
+// db.connectAsync().then(function() {
+//   console.log('Connected to ' + database + 'database as ID ' + db.threadId);
+//   return db.queryAsync('CREATE DATABASE IF NOT EXISTS ' + database);
+// }).then(function() {
+//   return db.queryAsync('USE ' + database);
+// }).then(function() {
+//   return createTables(db);
+// });
+
+// module.exports = db;

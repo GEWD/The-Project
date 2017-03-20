@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS hackmo;
+DROP DATABASE IF EXISTS gewd;
 
 CREATE DATABASE gewd;
 
@@ -8,14 +8,14 @@ CREATE TABLE members (
   id            int NOT NULL AUTO_INCREMENT,
   name          varchar(50) NOT NULL,
   auth          varchar(50) NOT NULL,
-  PRIMARY KEY (ID)
+  PRIMARY KEY   (ID)
 );
 
 CREATE TABLE trips (
   id            int NOT NULL AUTO_INCREMENT,
   trip_name     varchar(50) NOT NULL,
   admin         varchar(50) NOT NULL,
-  PRIMARY KEY (ID)
+  PRIMARY KEY   (ID)
 );
 
 CREATE TABLE trips_members (
