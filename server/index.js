@@ -57,7 +57,7 @@ app.get('/auth/facebook/callback',
 // // test database functions
 app.get('/getAllUsers', db.getAllUsers);
 app.get('/createNewUser', db.createNewUser);
-// (['Gary', 'gary@gmail.com'])
+app.get('/createNewTrip', db.createNewTrip);
 
 
 // // route middleware to make sure a user is logged in

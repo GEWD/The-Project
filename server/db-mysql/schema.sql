@@ -14,14 +14,16 @@ CREATE TABLE members (
 CREATE TABLE trips (
   id            int NOT NULL AUTO_INCREMENT,
   trip_name     varchar(50) NOT NULL,
-  admin         varchar(50) NOT NULL,
+  admin_fk      int NOT NULL,
   PRIMARY KEY   (ID)
 );
 
 CREATE TABLE trips_members (
-  trips_fk      int,
-  members_fk    int
+  trips_fk      int NOT NULL,
+  members_fk    int NOT NULL
 );
+ALTER TABLE trips ADD FOREIGN KEY (admin_fk)
+REFERENCES members(id);
 ALTER TABLE trips_members ADD FOREIGN KEY (trips_fk)
 REFERENCES trips(id);
 ALTER TABLE trips_members ADD FOREIGN KEY (members_fk)
@@ -87,4 +89,4 @@ REFERENCES trips(id);
  *    mysql -u root < server/schema.sql
  *  to create the database and the tables.*/
 
-INSERT INTO members (id, name, auth) VALUES (1, "beth", 1915.96);
+INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);
