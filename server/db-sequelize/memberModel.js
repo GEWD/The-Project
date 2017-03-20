@@ -12,9 +12,15 @@ const Member = connection.define('Member', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  auth: {
+  email: {
     type: Sequelize.STRING,
-    unique: false
+    allowNull: false
+  },
+  fb_id: {
+    type: Sequelize.STRING
+  },
+  token: {
+    type: Sequelize.STRING,
   }
 });
 

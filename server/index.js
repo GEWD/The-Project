@@ -22,7 +22,11 @@ app.use(fileUpload());
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: KEYS.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({
+  secret: KEYS.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -32,26 +36,49 @@ app.use(passport.session());
 passport.use(new FacebookStrategy({
     clientID: KEYS.FB_APP_CLIENTID,
     clientSecret: KEYS.FB_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'email', 'displayName', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
   },
   function(accessToken, refreshToken, profile, cb) {
-    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    //   return cb(err, user);
-    // });
-    // let displayName = profile.displayName;
-    // console.log('username', displayName);
-    return cb(null, profile);
+    process.nextTick(function() {
+
+      console.log('profile=======', profile._json);
+
+      let userInfo = {
+        name: profile._json.name,
+        fb_id: profile._json.id,
+        // token: accessToken,
+        email: profile._json.email
+      };
+      console.log('userInfo=====', userInfo);
+      // dbHelpers.findOrCreateUser(userInfo, function(err, user) {
+      //   console.log('findorcreateuser result======', user);
+      //   req.session.user = user.fb_id;
+      //   // next();
+      // });
+        console.log('done with creating User');
+    });
   }
 ));
 
+app.get('/profile', function(req, res) {
+  console.log('======req.session.user is', req.session.user);
+  if (!req.session.user) {
+    res.redirect('/login');
+  } else {
+    console.log('session is valid=========');
+  }
+})
+
 // route for facebook authentication and login
 app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', { scope: ['email']}));
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log('Successful facebook callback! ==========');
     // Successful authentication, redirect home.
     res.redirect('/');
 });
@@ -76,6 +103,8 @@ app.get('/assignItem', db.assignItem);
 // }
 
 
+
+
 passport.serializeUser(function(user, cb) {
   cb(null, user);
 });
@@ -84,8 +113,11 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-app.get('/', function(req, res) {
+app.get('/testing', function(req, res) {
   res.send('hello world');
+  console.log('req.cookies is ========', req.cookies);
+  console.log('req.session is ========', req.session);
+  console.log('req.session.user is ========', req.session.user);
 });
 
 //To be used for testing and seeing requests
@@ -101,10 +133,10 @@ app.post('/upload', function(req,res) {
    if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
   console.log(sampleFile);
-  // Use the mv() method to place the file somewhere on your server 
+  // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
       return res.status(500).send(err);
