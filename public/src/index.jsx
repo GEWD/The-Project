@@ -14,6 +14,10 @@ class App extends React.Component {
     super(props);
   }
 
+  loggedIn() {
+    return false;
+  }
+
   render() {
     return (
       <div>
@@ -25,6 +29,7 @@ class App extends React.Component {
               <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/login">Login</Link></li>
             </ul>
+
             <Route exact path ="/" component={TripSummary}/>
             <Route path ="/profile" component={Profile}/>
             <Route path ="/login" component={Login}/>
@@ -38,3 +43,10 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
+// <Route exact path="/" render={() => (
+//   this.loggedIn() ? (
+//     <TripSummary />
+//   ) : (
+//     <Redirect to="/login"/>
+//   )
+// )}/>
