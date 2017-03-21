@@ -30,7 +30,8 @@ const queryString = {
                           AND trips.adminID = (SELECT members.id FROM members \
                           WHERE members.name = ?)), \
                           ?, ?, ?, ?, ?);',
-  assignItem: '',
+  storeReceiptItems: '',
+  assignItemsToMembers: '',
 
   getAllMembers: 'SELECT * FROM MEMBERS',
   getAllTrips: 'SELECT * FROM TRIPS;',
@@ -41,7 +42,7 @@ const queryString = {
 
 const createNewUser = (req, res) => {
   // Total 2 fields: USER_NAME and USER_AUTH from req.body
-  db.query(queryString.createNewUser, twoFields, (err, result) => {
+  db.query(queryString.createNewUser, [twoFields], (err, result) => {
     if (err) {
       console.log('ERROR: createNewUsers in SQL', err);
     } else {
@@ -53,7 +54,7 @@ const createNewUser = (req, res) => {
 
 const createNewTrip = (req, res) => {
   // Total 2 fields: get name and ADMIN_NAME from req.body
-  db.query(queryString.createNewTrip, twoFields, (err, result) => {
+  db.query(queryString.createNewTrip, [twoFields], (err, result) => {
     if (err) {
       console.log('ERROR: createNewTrip in SQL', err);
     } else {
@@ -81,7 +82,7 @@ const addMembersToTrip = (req, res) => {
 
 const addReceipt = (req, res) => {
   // Total 8 fields: get PAYOR_NAME, name, PAYOR_NAME, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
-  db.query(queryString.addReceipt, eightFields, (err, result) => {
+  db.query(queryString.addReceipt, [eightFields], (err, result) => {
     if (err) {
       console.log('ERROR: addReceipt in SQL', err);
     } else {
@@ -90,8 +91,19 @@ const addReceipt = (req, res) => {
   })
 }
 
-const assignItem = (req, res) => {
-  db.query(queryString.assignItem, ['receipt_name', 'raw_px'], (err, result) => {
+const storeReceiptItems = (req, res) => {
+  // Total 3 fields: get RECEIPT_NAME, ITEM NAME, RAW_PX
+  db.query(queryString.storeReceiptItems, [threeFields], (err, result) => {
+    if (err) {
+      console.log('ERROR: storeItem in SQL', err);
+    } else {
+      res.send(result);
+    }
+  })
+}
+
+const assignItemsToMembers = (req, res) => {
+  db.query(queryString.assignItemsToMembers, ['receipt_name', 'raw_px'], (err, result) => {
 
   })
 }
@@ -111,6 +123,7 @@ module.exports = {
   createNewTrip,
   addMembersToTrip,
   addReceipt,
-  assignItem,
+  storeReceiptItems,
+  assignItemsToMembers,
   getAllUsers
 }
