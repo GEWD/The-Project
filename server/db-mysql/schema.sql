@@ -35,10 +35,10 @@ CREATE TABLE receipts (
   trip_fk       int NOT NULL,
   pool_fk       int NOT NULL,
   name          varchar(50) NOT NULL,
-  url           varchar(50) NOT NULL,
-  total_bill    varchar(50) NOT NULL,
-  total_tax     varchar(50) NOT NULL,
-  total_tax_tip varchar(50) NOT NULL,
+  url           varchar(100) NOT NULL,
+  total_bill    int NOT NULL DEFAULT 0,
+  total_tax     int NOT NULL DEFAULT 0,
+  total_tax_tip int NOT NULL DEFAULT 0,
   PRIMARY KEY   (ID)
 );
 ALTER TABLE receipts ADD FOREIGN KEY (payor_fk)
@@ -50,7 +50,7 @@ CREATE TABLE items (
   id            int NOT NULL AUTO_INCREMENT,
   receipt_fk    int NOT NULL,
   name          varchar(50) NOT NULL,
-  raw_price     varchar(50),
+  raw_price     int NOT NULL DEFAULT 0,
   PRIMARY KEY   (ID)
 );
 ALTER TABLE items ADD FOREIGN KEY (receipt_fk)
@@ -89,4 +89,4 @@ REFERENCES trips(id);
  *    mysql -u root < server/schema.sql
  *  to create the database and the tables.*/
 
-INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);
+-- INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);

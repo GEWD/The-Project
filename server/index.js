@@ -55,10 +55,12 @@ app.get('/auth/facebook/callback',
 });
 
 // // test database functions
-app.get('/getAllUsers', db.getAllUsers);
-app.get('/createNewUser', db.createNewUser);
-app.get('/createNewTrip', db.createNewTrip);
-
+// app.get('/', db.getAllUsers);
+app.get('/newUser', db.createNewUser);
+app.get('/newTrip', db.createNewTrip);
+app.get('/addMemberToTrip', db.addMemberToTrip);
+app.get('/addReceipt', db.addReceipt);
+app.get('/assignItem', db.assignItem);
 
 // // route middleware to make sure a user is logged in
 // function isLoggedIn(req, res, next) {

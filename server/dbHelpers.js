@@ -3,16 +3,22 @@ const mysqlConfig = require('./db-mysql/config.js');
 const db = mysql.createConnection(mysqlConfig);
 
 const queryString = {
+  createNewUser: 'INSERT INTO members (name, auth)\
+                    VALUES(?, ?)',
+  // createNewTrip: 'INSERT INTO trips (trip_name, admin_fk)\
+  //                   VALUES(?, (SELECT members.id FROM members WHERE members.name = ?));\
+  //                 INSERT INTO trips_members (trips_fk, members_fk)\
+  //                   VALUES((SELECT trips.id FROM trips), ());',
+  createNewTrip: 'INSERT INTO trips (trip_name, admin_fk)\
+                    VALUES(?, (SELECT members.id FROM members WHERE members.name = ?));',
+  addMemberToTrip: '',
+  addReceipt: '',
+  assignItem: '',
   getAllMembers: 'SELECT * FROM MEMBERS',
-  getAllTrips: 'SELECT * FROM TRIPS',
-  getAllReceipts: 'SELECT * FROM RECEIPTS',
-  getAllItems: 'SELECT * FROM ITEMS',
-  getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS',
-
-  createNewUser: 'INSERT INTO members (name, auth) VALUES (?, ?)',
-  createNewTrip: 'INSERT INTO trips (trip_name, admin_fk) VALUES (?,\
-                  (SELECT members.id FROM members WHERE members.name = ?\
-                  ))'
+  getAllTrips: 'SELECT * FROM TRIPS;',
+  getAllReceipts: 'SELECT * FROM RECEIPTS;',
+  getAllItems: 'SELECT * FROM ITEMS;',
+  getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS;',
 }
 
 const createNewUser = (req, res) => {
@@ -35,6 +41,23 @@ const createNewTrip = (req, res) => {
       res.send(result);
     }
   })
+}
+
+const addMemberToTrip = (req, res) => {
+
+}
+
+const addReceipt = (req, res) => {
+  db.query(queryString.addReceipt, ['receipt_name', 'receipt.jpg', '100', '10', '25'], (err, result) => {
+    if (err) {
+      console.log('ERROR: addReceipt in SQL', err);
+    } else {
+      res.send(result);
+    }
+  })
+}
+
+const assignItem = (req, res) => {
 
 }
 
@@ -51,5 +74,8 @@ const getAllUsers = (req, res) => {
 module.exports = {
   createNewUser,
   createNewTrip,
+  addMemberToTrip,
+  addReceipt,
+  assignItem,
   getAllUsers
 }
