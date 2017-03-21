@@ -65,14 +65,12 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+// route middleware to make sure a user is logged in
 function checkAuthentication(req, res, next) {
-  console.log('checkAuthentication middleware invoked====', req.isAuthenticated());
   if (req.isAuthenticated()) {
-    console.log('req.isAuthenticated ===== user is authenticated');
     //if user is loged in, req.isAuthenticated() will return true
     next();
   } else {
-    console.log('req.isAuthenticated not authenticated ===== user should be redirected');
     res.redirect("/login");
   }
 }
@@ -89,7 +87,6 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
 });
 
-
 // // test database functions
 // app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
@@ -98,52 +95,31 @@ app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
 app.get('/assignItem', db.assignItem);
 
-// // route middleware to make sure a user is logged in
-// function isLoggedIn(req, res, next) {
-
 app.get('/login', (req, res) => {
-  console.log('expressjs register /login path');
-  res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
+  }
 });
 
 app.get('/logout', function(req, res) {
-  console.log('=====req.user b4 delete', req.user);
   req.logout();
-  console.log('=====req.user after delete', req.user);
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/verify', function(req, res) {
   let isAuthenticated =  req.isAuthenticated() ? true : false;
-  console.log('expressjs /verify path', req.isAuthenticated());
   res.send(req.isAuthenticated());
 });
 
 app.get('*', checkAuthentication, (req, res) => {
   if (!req.user) {
-    console.log('req.user doesn"t exist and req.isAuthenticated is', req.isAuthenticated());
     res.redirect('/login');
   } else {
-    console.log('session is valid=========');
     res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
   }
 });
-
-
-
-// app.get('/profile', function(req, res) {
-//   console.log('======req.user is', req.user);
-//   if (!req.user) {
-//     res.redirect('/login');
-//   } else {
-//     console.log('session is valid=========');
-//     res.send();
-//   }
-// });
-
-
-
-
 
 app.get('/testing', function(req, res) {
   res.send('hello world');

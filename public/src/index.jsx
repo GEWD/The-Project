@@ -13,16 +13,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: false,
+      isAuthenticated: false,
     }
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
     this.setState({
       isAuthenticated: isAuthenticated
     });
-    console.log('updated authenticated state is now', this.state.isAuthenticated);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    Util.logout(this.verifyAuthentication);
   }
 
   render() {
@@ -35,13 +40,14 @@ class App extends React.Component {
               <li><Link to="/upload-receipt">Upload Receipt</Link></li>
               <li><Link to="/profile">Profile</Link></li>
               {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={Util.logout}>Logout</Link></li>}
+              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClick}>Logout</Link></li>}
             </ul>
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
             <PrivateRoute path ="/profile" isAuthenticated={this.state.isAuthenticated} component={Profile}/>
             <PrivateRoute path ="/upload-receipt" isAuthenticated={this.state.isAuthenticated} component={UploadReceipt}/>
-            <Route path ="/login" component={Login}/>
-
+            <Route path ="/login" render={() => (
+              this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
+            )}/>
           </div>
         </Router>
       </div>
@@ -54,13 +60,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-// <Route exact path ="/" component={TripSummary}/>
-
-// <Route exact path="/" render={() => (
-//   this.loggedIn() ? (
-//     <TripSummary />
-//   ) : (
-//     <Redirect to="/login"/>
-//   )
-// )}/>
