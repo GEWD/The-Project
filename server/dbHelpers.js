@@ -21,7 +21,16 @@ const queryString = {
                               WHERE members.name = ?)),\
                               (SELECT members.id FROM members\
                               WHERE members.name = ?));',
-  addReceipt: '',
+  addReceipt: 'INSERT INTO receipts (payor_fk, trip_fk, name, url, sum_bill,\
+                                     sum_tax, sum_tax_tip)\
+                  VALUES ((SELECT members.id FROM members WHERE members.name = ?),\
+                          (SELECT trips.id FROM trips WHERE trips.trip_name = ?),\
+                          ?, ?, ?, ?, ?)',
+// INSERT INTO receipts (payor_fk, trip_fk, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.trip_name = 'Japan2016'), 'Receipt01', 'google.com', '100', '10', '18');
+
+// INSERT INTO receipts (payor_fk) VALUES (SELECT members.id FROM members WHERE members.name = 'Jon');
+
+// INSERT INTO receipts (trip_fk, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT trips.id FROM trips WHERE trips.trip_name = 'Japan2016'), 'Receipt01', 'google.com', '100', '10', '18');
 
   assignItem: '',
 
