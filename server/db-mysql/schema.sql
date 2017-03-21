@@ -35,7 +35,7 @@ CREATE TABLE receipts (
   tripID       int NOT NULL,
   -- poolID       int NOT NULL,
   name          varchar(50) NOT NULL,
-  url           varchar(100) NOT NULL,
+  url           varchar(100) NOT NULL ,
   sum_bill    int NOT NULL DEFAULT 0,
   sum_tax     int NOT NULL DEFAULT 0,
   sum_tax_tip int NOT NULL DEFAULT 0,
@@ -49,6 +49,7 @@ REFERENCES trips(id);
 CREATE TABLE items (
   id            int NOT NULL AUTO_INCREMENT,
   receiptID    int NOT NULL,
+  tripID        int NOT NULL,
   name          varchar(50) NOT NULL,
   raw_price     int NOT NULL DEFAULT 0,
   PRIMARY KEY   (ID)
@@ -119,4 +120,4 @@ INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips 
 INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com')), 'Receipt01', 'google.com', '100', '10', '18');
 
 -- /* TESTING TO ADD NEW ITEM */
-INSERT INTO items (receiptID, name, raw_price) VALUES ((SELECT receipts.id from receipts WHERE receipts.name = 'Receipt01'), 'Burger', 10);
+INSERT INTO items (receiptID, tripID, name, raw_price) VALUES ((SELECT receipts.id from receipts WHERE receipts.url = 'google.com'), (SELECT receipts.tripID from receipts WHERE receipts.url = 'google.com'), 'Burger', 10);

@@ -33,11 +33,12 @@ const queryString = {
                           AND trips.adminID = (SELECT members.id FROM members \
                           WHERE members.auth = ?)), \
                           ?, ?, ?, ?, ?);',
-
-  storeReceiptItems: 'INSERT INTO items (receiptID, name, raw_price) \
+  storeReceiptItems: 'INSERT INTO items (receiptID, tripID, name, raw_price) \
                         VALUES ((SELECT receipts.id from receipts \
-                        WHERE receipts.name = ?), \
-                        ?, ?)',
+                        WHERE receipts.url = ?), \
+                                (SELECT receipts.tripID from receipts \
+                                WHERE receipts.url = ?), \
+                                ?, ?);',
   assignItemsToMembers: '',
   settlePayment: '',
 
@@ -100,13 +101,14 @@ const addReceipt = (req, res) => {
 }
 
 const storeReceiptItems = (req, res) => {
-  // Total 3 fields: get RECEIPT_NAME, [ITEM NAMES], RAW_PX
+  // Total 4 fields from req.headers: get RECEIPT_URL, RECEIPT_URL, [ITEM NAMES], RAW_PX
+  const dummyReceiptURL = 'google.com';
   const dummyItemNames = ['Beef', 'Chicken', 'Pork'];
   const dummyItemRawPrices = [3, 2, 5];
 
   if (dummyItemNames.length === dummyItemRawPrices.length) {
     for (let i = 0; i < dummyItemNames.length; i++) {
-      db.query(queryString.storeReceiptItems, ['Receipt01', dummyItemNames[i], dummyItemRawPrices[i]], (err, result) => {
+      db.query(queryString.storeReceiptItems, [ dummyReceiptURL, dummyReceiptURL, dummyItemNames[i], dummyItemRawPrices[i]], (err, result) => {
         if (err) {
           console.log('ERROR: storeItem in SQL', err);
         } else {
@@ -121,6 +123,7 @@ const assignItemsToMembers = (req, res) => {
   // After gVision data is returned, data will be funneled and immediately be stored in 2 different tables: receipts and items table. Consumed_Items only references items table and info passed down from request headers.
   // There are 2 fields from items table: itemID, receiptID,
   // There are 3 fields from req.headers: payeeID(s), payorID (from members.auth), tripID (from trips.name);
+  const dummyPayeeAuth = ['jon@gmail.com', 'may@gmail.com'];
   db.query(queryString.assignItemsToMembers, args, (err, result) => {
     if (err) {
       console.log('ERROR: assignItems in SQL', err);
