@@ -117,3 +117,6 @@ INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips 
 
 /*  TESTING TO ADD NEW RECEIPT */
 INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt01', 'google.com', '100', '10', '18');
+
+/* TESTING TO ADD NEW ITEM */
+INSERT INTO items (receiptID, name, raw_price) VALUES ((SELECT receipts.id from receipts WHERE receipts.name = 'Receipt01'), 'Burger', 10);
