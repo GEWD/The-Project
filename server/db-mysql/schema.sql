@@ -13,80 +13,106 @@ CREATE TABLE members (
 
 CREATE TABLE trips (
   id            int NOT NULL AUTO_INCREMENT,
-  trip_name     varchar(50) NOT NULL,
-  admin_fk      int NOT NULL,
+  name          varchar(50) NOT NULL,
+  adminID       int NOT NULL,
   PRIMARY KEY   (ID)
 );
 
 CREATE TABLE trips_members (
-  trips_fk      int NOT NULL,
-  members_fk    int NOT NULL
+  tripID      int NOT NULL,
+  memberID    int NOT NULL
 );
-ALTER TABLE trips ADD FOREIGN KEY (admin_fk)
+ALTER TABLE trips ADD FOREIGN KEY (adminID)
 REFERENCES members(id);
-ALTER TABLE trips_members ADD FOREIGN KEY (trips_fk)
+ALTER TABLE trips_members ADD FOREIGN KEY (tripID)
 REFERENCES trips(id);
-ALTER TABLE trips_members ADD FOREIGN KEY (members_fk)
+ALTER TABLE trips_members ADD FOREIGN KEY (memberID)
 REFERENCES members(id);
 
 CREATE TABLE receipts (
   id            int NOT NULL AUTO_INCREMENT,
-  payor_fk      int NOT NULL,
-  trip_fk       int NOT NULL,
-  pool_fk       int NOT NULL,
+  payorID      int NOT NULL,
+  tripID       int NOT NULL,
+  -- poolID       int NOT NULL,
   name          varchar(50) NOT NULL,
   url           varchar(100) NOT NULL,
-  total_bill    int NOT NULL DEFAULT 0,
-  total_tax     int NOT NULL DEFAULT 0,
-  total_tax_tip int NOT NULL DEFAULT 0,
+  sum_bill    int NOT NULL DEFAULT 0,
+  sum_tax     int NOT NULL DEFAULT 0,
+  sum_tax_tip int NOT NULL DEFAULT 0,
   PRIMARY KEY   (ID)
 );
-ALTER TABLE receipts ADD FOREIGN KEY (payor_fk)
+ALTER TABLE receipts ADD FOREIGN KEY (payorID)
 REFERENCES members(id);
-ALTER TABLE receipts ADD FOREIGN KEY (trip_fk)
+ALTER TABLE receipts ADD FOREIGN KEY (tripID)
 REFERENCES trips(id);
 
 CREATE TABLE items (
   id            int NOT NULL AUTO_INCREMENT,
-  receipt_fk    int NOT NULL,
+  receiptID    int NOT NULL,
   name          varchar(50) NOT NULL,
   raw_price     int NOT NULL DEFAULT 0,
   PRIMARY KEY   (ID)
 );
-ALTER TABLE items ADD FOREIGN KEY (receipt_fk)
+ALTER TABLE items ADD FOREIGN KEY (receiptID)
 REFERENCES receipts(id);
 
-CREATE TABLE pool (
-  id            int NOT NULL AUTO_INCREMENT,
-  trip_fk       int NOT NULL,
-  PRIMARY KEY   (ID)
-);
-ALTER TABLE pool ADD FOREIGN KEY (trip_fk)
-REFERENCES trips(id);
-ALTER TABLE receipts ADD FOREIGN KEY (pool_fk)
-REFERENCES pool(id);
+-- CREATE TABLE pool (
+--   id            int NOT NULL AUTO_INCREMENT,
+--   tripID       int NOT NULL,
+--   PRIMARY KEY   (ID)
+-- );
+-- ALTER TABLE pool ADD FOREIGN KEY (tripID)
+-- REFERENCES trips(id);
+-- ALTER TABLE receipts ADD FOREIGN KEY (poolID)
+-- REFERENCES pool(id);
 
 CREATE TABLE consumed_items (
-  item_fk       int NOT NULL,
-  payor_fk      int NOT NULL,
-  payee_fk      int NOT NULL,
-  receipt_fk    int NOT NULL,
-  trip_fk       int NOT NULL,
+  itemID       int NOT NULL,
+  payorID      int NOT NULL,
+  payeeID      int NOT NULL,
+  receiptID    int NOT NULL,
+  tripID       int NOT NULL,
   payment       varchar(10) NOT NULL DEFAULT 'unpaid'
 );
-ALTER TABLE consumed_items ADD FOREIGN KEY (item_fk)
+ALTER TABLE consumed_items ADD FOREIGN KEY (itemID)
 REFERENCES items(id);
-ALTER TABLE consumed_items ADD FOREIGN KEY (payor_fk)
+ALTER TABLE consumed_items ADD FOREIGN KEY (payorID)
 REFERENCES members(id);
-ALTER TABLE consumed_items ADD FOREIGN KEY (payee_fk)
+ALTER TABLE consumed_items ADD FOREIGN KEY (payeeID)
 REFERENCES members(id);
-ALTER TABLE consumed_items ADD FOREIGN KEY (receipt_fk)
+ALTER TABLE consumed_items ADD FOREIGN KEY (receiptID)
 REFERENCES receipts(id);
-ALTER TABLE consumed_items ADD FOREIGN KEY (trip_fk)
+ALTER TABLE consumed_items ADD FOREIGN KEY (tripID)
 REFERENCES trips(id);
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/db-mysql/schema.sql
  *  to create the database and the tables.*/
 
--- INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);
+
+/*  PLEASE IGNORE BELOW. FOR DB TESTING PURPOSE ONLY */
+
+
+/* ----------------------------------------- */
+
+/*  TESTING TO CREATE MEMBER AND CREATE TRIP */
+INSERT INTO members (name, auth) VALUES ('Gary', 'gary@gmail.com');
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Gary'));
+INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('Jon', 'jon@gmail.com');
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Jon'));
+INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('May', 'may@gmail.com');
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='May'));
+INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('June', 'jun@gmail.com');
+INSERT INTO trips (name, adminID) VALUES ('Canada2016', (SELECT members.id FROM members WHERE members.name='June'));
+INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+/*  TESTING TO ADD NEW MEMBER TO EXISTING TRIP */
+INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), (SELECT members.id FROM members WHERE members.name = 'June'));
+
+INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt01', 'google.com', '100', '10', '18');

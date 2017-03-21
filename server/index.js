@@ -60,7 +60,7 @@ app.get('/auth/facebook/callback',
 // app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
-app.get('/addMemberToTrip', db.addMemberToTrip);
+app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
 app.get('/assignItem', db.assignItem);
 
