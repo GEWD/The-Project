@@ -97,26 +97,26 @@ REFERENCES trips(id);
 
 /*  TESTING TO CREATE MEMBER AND CREATE TRIP */
 INSERT INTO members (name, auth) VALUES ('Gary', 'gary@gmail.com');
-INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Gary'));
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.auth='gary@gmail.com'));
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
 INSERT INTO members (name, auth) VALUES ('Jon', 'jon@gmail.com');
-INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Jon'));
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.auth='jon@gmail.com'));
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
 INSERT INTO members (name, auth) VALUES ('May', 'may@gmail.com');
-INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='May'));
+INSERT INTO trips (name, adminID) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.auth='may@gmail.com'));
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
-INSERT INTO members (name, auth) VALUES ('June', 'jun@gmail.com');
-INSERT INTO trips (name, adminID) VALUES ('Canada2016', (SELECT members.id FROM members WHERE members.name='June'));
+INSERT INTO members (name, auth) VALUES ('June', 'june@gmail.com');
+INSERT INTO trips (name, adminID) VALUES ('Canada2016', (SELECT members.id FROM members WHERE members.auth='june@gmail.com'));
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
 /*  TESTING TO ADD NEW MEMBER TO EXISTING TRIP */
-INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Canada2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'June')), (SELECT members.id FROM members WHERE members.name = 'Jon'));
+INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Canada2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.auth = 'june@gmail.com')), (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'));
 
-/*  TESTING TO ADD NEW RECEIPT */
-INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt01', 'google.com', '100', '10', '18');
+-- /*  TESTING TO ADD NEW RECEIPT */
+INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com')), 'Receipt01', 'google.com', '100', '10', '18');
 
-/* TESTING TO ADD NEW ITEM */
+-- /* TESTING TO ADD NEW ITEM */
 INSERT INTO items (receiptID, name, raw_price) VALUES ((SELECT receipts.id from receipts WHERE receipts.name = 'Receipt01'), 'Burger', 10);

@@ -8,7 +8,7 @@ const queryString = {
                     VALUES (?, ?)',
   createNewTrip: 'INSERT INTO trips (name, adminID)\
                     VALUES (?, (SELECT members.id FROM members\
-                    WHERE members.name = ?));\
+                    WHERE members.auth = ?));\
                   INSERT INTO trips_members (tripID, memberID)\
                     VALUES (LAST_INSERT_ID(),\
                            (SELECT trips.adminID FROM trips\
@@ -18,9 +18,9 @@ const queryString = {
                       VALUES ((SELECT trips.id FROM trips\
                       WHERE trips.name = ? AND\
                             trips.adminID = (SELECT members.id FROM members \
-                              WHERE members.name = ?)),\
+                              WHERE members.auth = ?)),\
                               (SELECT members.id FROM members\
-                              WHERE members.name = ?));',
+                              WHERE members.auth = ?));',
   addReceipt: 'INSERT INTO receipts (payorID, tripID, name, url, \
                 sum_bill, sum_tax, sum_tax_tip) \
                   VALUES ((SELECT members.id FROM members \
@@ -96,24 +96,29 @@ const addReceipt = (req, res) => {
 
 const storeReceiptItems = (req, res) => {
   // Total 3 fields: get RECEIPT_NAME, [ITEM NAMES], RAW_PX
-  const dummyItemNames = ['Burger', 'Fries'];
-  const dummyItemRawPrices = [10, 4];
+  const dummyItemNames = ['Beef', 'Chicken', 'Pork'];
+  const dummyItemRawPrices = [3, 2, 5];
 
-  for (let i = 0; i < dummyItemNames.length; i++) {
-    db.query(queryString.storeReceiptItems, ['Receipt01', ], (err, result) => {
-      if (err) {
-        console.log('ERROR: storeItem in SQL', err);
-      } else {
-        res.send(result);
-      }
-    })
+  if (dummyItemNames.length === dummyItemRawPrices.length) {
+    for (let i = 0; i < dummyItemNames.length; i++) {
+      db.query(queryString.storeReceiptItems, ['Receipt01', dummyItemNames[i], dummyItemRawPrices[i]], (err, result) => {
+        if (err) {
+          console.log('ERROR: storeItem in SQL', err);
+        } else {
+          res.send(result);
+        }
+      })
+    }    
   }
 }
 
 const assignItemsToMembers = (req, res) => {
-  db.query(queryString.assignItemsToMembers, ['receipt_name', 'raw_px'], (err, result) => {
+  // Total 3 fields from StoreReceiptItems: itemID, payorID, 
+  // Total 1 field from addReceipt
+  // Total 1 field from req.header
+  // db.query(queryString.assignItemsToMembers, ['receipt_name', 'raw_px'], (err, result) => {
 
-  })
+  // })
 }
 
 const getAllUsers = (req, res) => {
