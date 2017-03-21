@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const model = require('./model');
-const connect = require('./db/dbConnect');
+const db = require('./dbHelpers');
+const connection = require('./db-mysql');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const KEYS = require('../env/KEYS.js');
@@ -52,6 +53,14 @@ app.get('/auth/facebook/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
 });
+
+// // test database functions
+// app.get('/', db.getAllUsers);
+app.get('/newUser', db.createNewUser);
+app.get('/newTrip', db.createNewTrip);
+app.get('/addMemberToTrip', db.addMemberToTrip);
+app.get('/addReceipt', db.addReceipt);
+app.get('/assignItem', db.assignItem);
 
 // // route middleware to make sure a user is logged in
 // function isLoggedIn(req, res, next) {
