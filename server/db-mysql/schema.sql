@@ -86,7 +86,7 @@ ALTER TABLE consumed_items ADD FOREIGN KEY (trip_fk)
 REFERENCES trips(id);
 
 /*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql
+ *    mysql -u root < server/db-mysql/schema.sql
  *  to create the database and the tables.*/
 
 -- INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);
