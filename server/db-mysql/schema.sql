@@ -7,7 +7,8 @@ USE gewd;
 CREATE TABLE members (
   id            int NOT NULL AUTO_INCREMENT,
   name          varchar(50) NOT NULL,
-  auth          varchar(50) NOT NULL,
+  email          varchar(50) NOT NULL,
+  token          varchar(100) NOT NULL,
   PRIMARY KEY   (ID)
 );
 
