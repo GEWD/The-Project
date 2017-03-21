@@ -8,6 +8,8 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
+const cloudinary = require('cloudinary');
+const cloudConfig = require('../env/cloudKey.js')
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -93,12 +95,18 @@ app.post('/upload', function(req,res) {
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
   let sampleFile = req.files.sampleFile;
   console.log(sampleFile);
+  // cloudinary.uploader.upload(sampleFile, function(result) {
+  //   console.log(result);
+  // })
   // Use the mv() method to place the file somewhere on your server 
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
       return res.status(500).send(err);
     }
-    res.send('File uploaded!');
+    cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(results) {
+      console.log(results);
+      res.send('File uploaded!');
+    })
   });
 
 })
