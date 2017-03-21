@@ -30,4 +30,3 @@ bundle.js
 node_modules/
 bower_components/
 
-server/api/goog.json
