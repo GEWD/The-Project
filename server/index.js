@@ -16,6 +16,8 @@ const path = require('path');
 var localStorage = {};
 
 
+
+//Google cloud vision setup:
 const gVision = require('./api/vision.js');
 
 
@@ -183,7 +185,7 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/vision', function(req, res) {
-  let image = './api/test.jpg';
+  let image = req.body.receipt || './api/test.jpg';
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     res.send(results);
