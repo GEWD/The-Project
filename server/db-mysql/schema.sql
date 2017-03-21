@@ -92,6 +92,9 @@ REFERENCES trips(id);
 
 /*  PLEASE IGNORE BELOW. FOR DB TESTING PURPOSE ONLY */
 
+
+/* ----------------------------------------- */
+
 /*  TESTING TO CREATE MEMBER AND CREATE TRIP */
 INSERT INTO members (name, auth) VALUES ('Gary', 'gary@gmail.com');
 INSERT INTO trips (trip_name, admin_fk) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Gary'));
@@ -108,3 +111,8 @@ INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT
 INSERT INTO members (name, auth) VALUES ('June', 'jun@gmail.com');
 INSERT INTO trips (trip_name, admin_fk) VALUES ('Canada2016', (SELECT members.id FROM members WHERE members.name='June'));
 INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT trips.admin_fk FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+/*  TESTING TO ADD NEW MEMBER TO EXISTING TRIP */
+INSERT INTO trips_members (trip_fk, member_fk) VALUES((SELECT trips.id FROM trips WHERE trips.trip_name = 'Japan2016' AND trips.admin_fk = (SELECT members.id FROM members WHERE members.name = 'Jon')), (SELECT members.id FROM members WHERE members.name = 'June'));
+
+
