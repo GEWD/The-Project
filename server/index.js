@@ -8,6 +8,14 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
+//Google cloud vision setup:
+// const gcloud = require('google-cloud');
+const gVision = require('./api/vision.js');
+// const vision = gcloud.vision;
+// const visionClient = vision({
+//   projectId: 'gewd-161701',
+//   keyFilename: '../env/goog.json'
+// });
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -27,10 +35,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new FacebookStrategy({
-    clientID: KEYS.FB_APP_CLIENTID,
-    clientSecret: KEYS.FB_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
-  },
+  clientID: KEYS.FB_APP_CLIENTID,
+  clientSecret: KEYS.FB_APP_SECRET,
+  callbackURL: 'http://localhost:3000/auth/facebook/callback'
+},
   function(accessToken, refreshToken, profile, cb) {
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
     //   return cb(err, user);
@@ -51,7 +59,7 @@ app.get('/auth/facebook/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
-});
+  });
 
 // // route middleware to make sure a user is logged in
 // function isLoggedIn(req, res, next) {
@@ -84,10 +92,10 @@ app.post('/testTripName', function(req, res) {
   res.send('Received request to /testTripNameServer');
 });
 
-app.post('/upload', function(req,res) {
+app.post('/upload', function(req, res) {
   //req.body should include receipt name, total, receipt_link;
   //should be an insert query
-   if (!req.files) {
+  if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
@@ -101,12 +109,29 @@ app.post('/upload', function(req,res) {
     res.send('File uploaded!');
   });
 
-})
+});
 
-app.post('/upload/delete', function(req,res) {
+app.post('/upload/delete', function(req, res) {
   //req.body should include receipt name, total, receipt_link;
   //should be a delete query
-})
+});
+
+app.post('/vision', function(req, res) {
+  let image = './api/test.jpg';
+  gVision.promisifiedDetectText(image)
+  .then(function(results) {
+    res.send(results);
+  })
+  .error(function(e) {
+    console.log('Error received in appPost, promisifiedDetectText:', e);
+  });
+});
+
+app.post('/test', function(req, res) {
+  // res.send(image);
+  res.send(__dirname);
+});
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
