@@ -3,9 +3,11 @@ const mysqlConfig = require('./db-mysql/config.js');
 const db = mysql.createConnection(mysqlConfig);
 
 const queryString = {
+
   createNewUser: 'INSERT INTO\
                     members (name, auth)\
                     VALUES (?, ?)',
+
   createNewTrip: 'INSERT INTO trips (name, adminID)\
                     VALUES (?, (SELECT members.id FROM members\
                     WHERE members.auth = ?));\
@@ -21,6 +23,7 @@ const queryString = {
                               WHERE members.auth = ?)),\
                               (SELECT members.id FROM members\
                               WHERE members.auth = ?));',
+
   addReceipt: 'INSERT INTO receipts (payorID, tripID, name, url, \
                 sum_bill, sum_tax, sum_tax_tip) \
                   VALUES ((SELECT members.id FROM members \
@@ -30,11 +33,13 @@ const queryString = {
                           AND trips.adminID = (SELECT members.id FROM members \
                           WHERE members.auth = ?)), \
                           ?, ?, ?, ?, ?);',
+
   storeReceiptItems: 'INSERT INTO items (receiptID, name, raw_price) \
                         VALUES ((SELECT receipts.id from receipts \
                         WHERE receipts.name = ?), \
                         ?, ?)',
   assignItemsToMembers: '',
+  settlePayment: '',
 
   getAllMembers: 'SELECT * FROM MEMBERS',
   getAllTrips: 'SELECT * FROM TRIPS;',
@@ -113,13 +118,21 @@ const storeReceiptItems = (req, res) => {
 }
 
 const assignItemsToMembers = (req, res) => {
-  // Total 3 fields from StoreReceiptItems: itemID, payorID, 
-  // Total 1 field from addReceipt
-  // Total 1 field from req.header
-  // db.query(queryString.assignItemsToMembers, ['receipt_name', 'raw_px'], (err, result) => {
-
-  // })
+  // After gVision data is returned, data will be funneled and immediately be stored in 2 different tables: receipts and items table. Consumed_Items only references items table and info passed down from request headers.
+  // There are 2 fields from items table: itemID, receiptID,
+  // There are 3 fields from req.headers: payeeID(s), payorID (from members.auth), tripID (from trips.name);
+  db.query(queryString.assignItemsToMembers, args, (err, result) => {
+    if (err) {
+      console.log('ERROR: assignItems in SQL', err);
+    } else {
+      res.send(result);
+    }
+  })
 }
+
+const settlePayment = (req, res) => {
+
+};
 
 const getAllUsers = (req, res) => {
   db.query(queryString.getAllMembers, (err, result) => {
@@ -138,5 +151,6 @@ module.exports = {
   addReceipt,
   storeReceiptItems,
   assignItemsToMembers,
+  settlePayment,
   getAllUsers
 }
