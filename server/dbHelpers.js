@@ -14,6 +14,7 @@ const queryString = {
   addMemberToTrip: '',
   addReceipt: '',
   assignItem: '',
+
   getAllMembers: 'SELECT * FROM MEMBERS',
   getAllTrips: 'SELECT * FROM TRIPS;',
   getAllReceipts: 'SELECT * FROM RECEIPTS;',
@@ -58,7 +59,9 @@ const addReceipt = (req, res) => {
 }
 
 const assignItem = (req, res) => {
+  db.query(queryString.assignItem, ['receipt_name', 'raw_px'], (err, result) => {
 
+  })
 }
 
 const getAllUsers = (req, res) => {
