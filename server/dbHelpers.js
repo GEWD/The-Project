@@ -6,32 +6,30 @@ const queryString = {
   createNewUser: 'INSERT INTO\
                     members (name, auth)\
                     VALUES (?, ?)',
-  createNewTrip: 'INSERT INTO trips (trip_name, admin_fk)\
+  createNewTrip: 'INSERT INTO trips (name, adminID)\
                     VALUES (?, (SELECT members.id FROM members\
                     WHERE members.name = ?));\
-                  INSERT INTO trips_members (trip_fk, member_fk)\
+                  INSERT INTO trips_members (tripID, memberID)\
                     VALUES (LAST_INSERT_ID(),\
-                           (SELECT trips.admin_fk FROM trips\
+                           (SELECT trips.adminID FROM trips\
                            WHERE trips.id = LAST_INSERT_ID()));',
 
-  addMemberToTrip: 'INSERT INTO trips_members (trip_fk, member_fk)\
+  addMembersToTrip: 'INSERT INTO trips_members (tripID, memberID)\
                       VALUES ((SELECT trips.id FROM trips\
-                      WHERE trips.trip_name = ? AND\
-                            trips.admin_fk = (SELECT members.id\
+                      WHERE trips.name = ? AND\
+                            trips.adminID = (SELECT members.id\
                               WHERE members.name = ?)),\
                               (SELECT members.id FROM members\
                               WHERE members.name = ?));',
-  addReceipt: 'INSERT INTO receipts (payor_fk, trip_fk, name, url, sum_bill,\
-                                     sum_tax, sum_tax_tip)\
-                  VALUES ((SELECT members.id FROM members WHERE members.name = ?),\
-                          (SELECT trips.id FROM trips WHERE trips.trip_name = ?),\
-                          ?, ?, ?, ?, ?)',
-// INSERT INTO receipts (payor_fk, trip_fk, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.trip_name = 'Japan2016'), 'Receipt01', 'google.com', '100', '10', '18');
-
-// INSERT INTO receipts (payor_fk) VALUES (SELECT members.id FROM members WHERE members.name = 'Jon');
-
-// INSERT INTO receipts (trip_fk, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT trips.id FROM trips WHERE trips.trip_name = 'Japan2016'), 'Receipt01', 'google.com', '100', '10', '18');
-
+  addReceipt: 'INSERT INTO receipts (payorID, tripID, name, url, \
+                sum_bill, sum_tax, sum_tax_tip) \
+                  VALUES ((SELECT members.id FROM members \
+                  WHERE members.name = ?), \
+                          (SELECT trips.id FROM trips \
+                          WHERE trips.name = ? \
+                          AND trips.adminID = (SELECT members.id FROM members \
+                          WHERE members.name = ?)), \
+                          ?, ?, ?, ?, ?);',
   assignItem: '',
 
   getAllMembers: 'SELECT * FROM MEMBERS',
@@ -42,8 +40,8 @@ const queryString = {
 }
 
 const createNewUser = (req, res) => {
-  // get USER_NAME and USER_AUTH from req.body
-  db.query(queryString.createNewUser, ['USER_NAME', 'USER_AUTH'], (err, result) => {
+  // Total 2 fields: USER_NAME and USER_AUTH from req.body
+  db.query(queryString.createNewUser, twoFields, (err, result) => {
     if (err) {
       console.log('ERROR: createNewUsers in SQL', err);
     } else {
@@ -54,8 +52,8 @@ const createNewUser = (req, res) => {
 }
 
 const createNewTrip = (req, res) => {
-  // get TRIP_NAME and ADMIN_NAME from req.body
-  db.query(queryString.createNewTrip, ['TRIP_NAME', 'ADMIN_NAME'], (err, result) => {
+  // Total 2 fields: get name and ADMIN_NAME from req.body
+  db.query(queryString.createNewTrip, twoFields, (err, result) => {
     if (err) {
       console.log('ERROR: createNewTrip in SQL', err);
     } else {
@@ -66,11 +64,11 @@ const createNewTrip = (req, res) => {
 }
 
 const addMembersToTrip = (req, res) => {
-  // get TRIP_NAME, ADMIN_NAME and [MEMBER_ARRAY] from req.body
+  // Total 3 fields: get name, ADMIN_NAME and [MEMBER_ARRAY] from req.body
   // const dummyMembersArray = ['Aiden', 'Whitney', 'Eugene'];
 
   for (let i = 0; i < dummyMembersArray.length; i++) {
-    db.query(queryString.addMembersToTrip, [dummyMembersArray[i]], (err, result) => {
+    db.query(queryString.addMembersToTrip, threeFields, (err, result) => {
       if (err) {
         console.log('ERROR: addMemberToTrip in SQL', err);
       } else {
@@ -82,9 +80,8 @@ const addMembersToTrip = (req, res) => {
 }
 
 const addReceipt = (req, res) => {
-  // get PAYOR_NAME, TRIP_NAME from req.body
-  // get RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
-  db.query(queryString.addReceipt, ['payor_name', 'trip_name', 'receipt_name', 'receipt_url', '100', '10', '25'], (err, result) => {
+  // Total 8 fields: get PAYOR_NAME, name, PAYOR_NAME, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
+  db.query(queryString.addReceipt, eightFields, (err, result) => {
     if (err) {
       console.log('ERROR: addReceipt in SQL', err);
     } else {
