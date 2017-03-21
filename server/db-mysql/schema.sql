@@ -89,4 +89,22 @@ REFERENCES trips(id);
  *    mysql -u root < server/db-mysql/schema.sql
  *  to create the database and the tables.*/
 
--- INSERT INTO members (id, name, auth) VALUES (1, "Aiden", 1337);
+
+/*  PLEASE IGNORE BELOW. FOR DB TESTING PURPOSE ONLY */
+
+/*  TESTING TO CREATE MEMBER AND CREATE TRIP */
+INSERT INTO members (name, auth) VALUES ('Gary', 'gary@gmail.com');
+INSERT INTO trips (trip_name, admin_fk) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Gary'));
+INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT trips.admin_fk FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('Jon', 'jon@gmail.com');
+INSERT INTO trips (trip_name, admin_fk) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='Jon'));
+INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT trips.admin_fk FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('May', 'may@gmail.com');
+INSERT INTO trips (trip_name, admin_fk) VALUES ('Japan2016', (SELECT members.id FROM members WHERE members.name='May'));
+INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT trips.admin_fk FROM trips WHERE trips.id=LAST_INSERT_ID()));
+
+INSERT INTO members (name, auth) VALUES ('June', 'jun@gmail.com');
+INSERT INTO trips (trip_name, admin_fk) VALUES ('Canada2016', (SELECT members.id FROM members WHERE members.name='June'));
+INSERT INTO trips_members (trip_fk, member_fk) VALUES (LAST_INSERT_ID(), (SELECT trips.admin_fk FROM trips WHERE trips.id=LAST_INSERT_ID()));
