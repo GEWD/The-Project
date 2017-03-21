@@ -19,8 +19,8 @@ CREATE TABLE trips (
 );
 
 CREATE TABLE trips_members (
-  trips_fk      int NOT NULL,
-  members_fk    int NOT NULL
+  trip_fk      int NOT NULL,
+  member_fk    int NOT NULL
 );
 ALTER TABLE trips ADD FOREIGN KEY (admin_fk)
 REFERENCES members(id);
