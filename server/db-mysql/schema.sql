@@ -113,6 +113,7 @@ INSERT INTO trips (name, adminID) VALUES ('Canada2016', (SELECT members.id FROM 
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
 /*  TESTING TO ADD NEW MEMBER TO EXISTING TRIP */
-INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), (SELECT members.id FROM members WHERE members.name = 'June'));
+INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Canada2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'June')), (SELECT members.id FROM members WHERE members.name = 'Jon'));
 
+/*  TESTING TO ADD NEW RECEIPT */
 INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt01', 'google.com', '100', '10', '18');

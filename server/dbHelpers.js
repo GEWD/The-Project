@@ -17,7 +17,7 @@ const queryString = {
   addMembersToTrip: 'INSERT INTO trips_members (tripID, memberID)\
                       VALUES ((SELECT trips.id FROM trips\
                       WHERE trips.name = ? AND\
-                            trips.adminID = (SELECT members.id\
+                            trips.adminID = (SELECT members.id FROM members \
                               WHERE members.name = ?)),\
                               (SELECT members.id FROM members\
                               WHERE members.name = ?));',
@@ -64,11 +64,11 @@ const createNewTrip = (req, res) => {
 }
 
 const addMembersToTrip = (req, res) => {
-  // Total 3 fields: get name, ADMIN_NAME and [MEMBER_ARRAY] from req.body
-  // const dummyMembersArray = ['Aiden', 'Whitney', 'Eugene'];
+  // Total 3 fields: get TRIP_NAME, ADMIN_NAME and [MEMBER_ARRAY] from req.body
+  const dummyMembersArray = ['May', 'Jon'];
 
   for (let i = 0; i < dummyMembersArray.length; i++) {
-    db.query(queryString.addMembersToTrip, threeFields, (err, result) => {
+    db.query(queryString.addMembersToTrip, ['Canada2016', 'June', dummyMembersArray[i]], (err, result) => {
       if (err) {
         console.log('ERROR: addMemberToTrip in SQL', err);
       } else {
