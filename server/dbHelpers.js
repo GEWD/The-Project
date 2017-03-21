@@ -24,11 +24,11 @@ const queryString = {
   addReceipt: 'INSERT INTO receipts (payorID, tripID, name, url, \
                 sum_bill, sum_tax, sum_tax_tip) \
                   VALUES ((SELECT members.id FROM members \
-                  WHERE members.name = ?), \
+                  WHERE members.id = ?), \
                           (SELECT trips.id FROM trips \
-                          WHERE trips.name = ? \
+                          WHERE trips.id = ? \
                           AND trips.adminID = (SELECT members.id FROM members \
-                          WHERE members.name = ?)), \
+                          WHERE members.id = ?)), \
                           ?, ?, ?, ?, ?);',
   assignItem: '',
 
@@ -79,13 +79,13 @@ const addMembersToTrip = (req, res) => {
   }
 }
 
-const addReceipt = (req, res) => {
+const addReceipt = (params,callback) => {
   // Total 8 fields: get PAYOR_NAME, name, PAYOR_NAME, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
-  db.query(queryString.addReceipt, eightFields, (err, result) => {
+  db.query(queryString.addReceipt, params, (err, result) => {
     if (err) {
       console.log('ERROR: addReceipt in SQL', err);
     } else {
-      res.send(result);
+      callback(null,result);
     }
   })
 }
