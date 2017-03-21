@@ -6,6 +6,8 @@ import CreateTrip from './components/CreateTrip.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
+import Util from './lib/util.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,10 +15,14 @@ class App extends React.Component {
     this.state = {
       authenticated: false,
     }
+    this.verifyAuthentication = this.verifyAuthentication.bind(this);
   }
 
-  loggedIn() {
-    return false;
+  verifyAuthentication(isAuthenticated) {
+    this.setState({
+      isAuthenticated: isAuthenticated
+    });
+    console.log('updated authenticated state is now', this.state.isAuthenticated);
   }
 
   render() {
@@ -28,21 +34,28 @@ class App extends React.Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/upload-receipt">Upload Receipt</Link></li>
               <li><Link to="/profile">Profile</Link></li>
-              {this.state.authenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.authenticated ? null : <li><Link to="/logut">Logout</Link></li>}
+              {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
+              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={Util.logout}>Logout</Link></li>}
             </ul>
-            <Route exact path ="/" component={TripSummary} onEnter={this.isAuthenticated}/>
-            <Route path ="/profile" component={Profile} onEnter={this.isAuthenticated}/>
+            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
+            <PrivateRoute path ="/profile" isAuthenticated={this.state.isAuthenticated} component={Profile}/>
+            <PrivateRoute path ="/upload-receipt" isAuthenticated={this.state.isAuthenticated} component={UploadReceipt}/>
             <Route path ="/login" component={Login}/>
-            <Route path ="/upload-receipt" component={UploadReceipt}/>
+
           </div>
         </Router>
       </div>
     );
   }
+
+  componentWillMount() {
+    Util.verify(this.verifyAuthentication);
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+// <Route exact path ="/" component={TripSummary}/>
 
 // <Route exact path="/" render={() => (
 //   this.loggedIn() ? (

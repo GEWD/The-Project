@@ -10,7 +10,8 @@ const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = require('../env/cloudKey.js')
+const cloudConfig = require('../env/cloudKey.js');
+const path = require('path');
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -23,7 +24,7 @@ app.use(fileUpload());
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
-  secret: KEYS.SESSION_SECRET,
+  secret: KEYS.sessionAuth.sessionSecret,
   resave: true,
   saveUninitialized: true
 }));
@@ -42,13 +43,13 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 passport.use(new FacebookStrategy({
-    clientID: KEYS.FB_APP_CLIENTID,
-    clientSecret: KEYS.FB_APP_SECRET,
+    clientID: KEYS.facebookAuth.clientID,
+    clientSecret: KEYS.facebookAuth.clientSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'email', 'displayName', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
   },
   function(accessToken, refreshToken, profile, cb) {
-    // console.log('profile=======', profile._json);
+    process.nextTick(function () {
     let userInfo = {
       name: profile._json.name,
       fb_id: profile._json.id,
@@ -56,12 +57,25 @@ passport.use(new FacebookStrategy({
       email: profile._json.email
     };
     // console.log('userInfo=====', userInfo);
-    dbHelpers.findOrCreateUser(userInfo, function(err, user) {
-      console.log('findorcreateuser result======', user);
-    });
+    // dbHelpers.findOrCreateUser(userInfo, function(err, user) {
+    //   console.log('findorcreateuser result======', user);
+    // });
     return cb(null, userInfo);
+    })
   }
 ));
+
+function checkAuthentication(req, res, next) {
+  console.log('checkAuthentication middleware invoked====', req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    console.log('req.isAuthenticated ===== user is authenticated');
+    //if user is loged in, req.isAuthenticated() will return true
+    next();
+  } else {
+    console.log('req.isAuthenticated not authenticated ===== user should be redirected');
+    res.redirect("/login");
+  }
+}
 
 // route for facebook authentication and login
 app.get('/auth/facebook',
@@ -87,34 +101,49 @@ app.get('/assignItem', db.assignItem);
 // // route middleware to make sure a user is logged in
 // function isLoggedIn(req, res, next) {
 
-//   // if user is authenticated in the session, carry on
-//   if (req.isAuthenticated())
-//       return next();
+app.get('/login', (req, res) => {
+  console.log('expressjs register /login path');
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
+});
 
+app.get('/logout', function(req, res) {
+  console.log('=====req.user b4 delete', req.user);
+  req.logout();
+  console.log('=====req.user after delete', req.user);
+  res.redirect('/login');
+});
 
-//   res.redirect('/');
-// }
+app.get('/verify', function(req, res) {
+  let isAuthenticated =  req.isAuthenticated() ? true : false;
+  console.log('expressjs /verify path', req.isAuthenticated());
+  res.send(req.isAuthenticated());
+});
 
-
-app.get('/', function(req, res) {
-  console.log('======req.user is', req.user, 'req.userInfo', req.userInfo);
+app.get('*', checkAuthentication, (req, res) => {
   if (!req.user) {
+    console.log('req.user doesn"t exist and req.isAuthenticated is', req.isAuthenticated());
     res.redirect('/login');
   } else {
     console.log('session is valid=========');
+    res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
   }
 });
 
-app.get('/signout', function(req, res) {
-  console.log('=====req.user b4 delete', req.user);
-  delete req.user;
-  console.log('=====req.user after delete', req.user);
-  res.send('logged out');
-});
 
-// app.get('/auth', function(req, res) {
-//   if
+
+// app.get('/profile', function(req, res) {
+//   console.log('======req.user is', req.user);
+//   if (!req.user) {
+//     res.redirect('/login');
+//   } else {
+//     console.log('session is valid=========');
+//     res.send();
+//   }
 // });
+
+
+
+
 
 app.get('/testing', function(req, res) {
   res.send('hello world');
