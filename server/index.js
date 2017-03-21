@@ -8,14 +8,10 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
+
 //Google cloud vision setup:
-// const gcloud = require('google-cloud');
 const gVision = require('./api/vision.js');
-// const vision = gcloud.vision;
-// const visionClient = vision({
-//   projectId: 'gewd-161701',
-//   keyFilename: '../env/goog.json'
-// });
+
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -117,7 +113,7 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/vision', function(req, res) {
-  let image = './api/test.jpg';
+  let image = req.body.receipt || './api/test.jpg';
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     res.send(results);
