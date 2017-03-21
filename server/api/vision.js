@@ -10,6 +10,18 @@ const visionClient = vision({
   keyFilename: __dirname + '/../../env/goog.json'
 });
 
+//Google-cloud usage
+// let image = './test.jpg';
+
+// visionClient.detectText(image, function(err, text, apiResponse) {
+//   if (err) {
+//     console.log('Received error within vision:detectText', err);
+//   } else {
+//     console.log(`Text found in ${image}:`, text);
+//     console.log('Response from api:', apiResponse);
+//   }
+// });
+
 exports.promisifiedDetectText = function(image) {
   return new Promise(function(resolve, reject) {
     visionClient.detectText(image, function(err, text) {
@@ -21,6 +33,4 @@ exports.promisifiedDetectText = function(image) {
     });
   });
 };
-                                                             
-
 
