@@ -9,6 +9,8 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const KEYS = require('../env/KEYS.js');
 const fileUpload = require('express-fileupload');
 const app = express();
+const cloudinary = require('cloudinary');
+const cloudConfig = require('../env/cloudKey.js')
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -107,7 +109,10 @@ app.post('/upload', function(req,res) {
     if (err) {
       return res.status(500).send(err);
     }
-    res.send('File uploaded!');
+    cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(results) {
+      console.log(results);
+      res.send('File uploaded!');
+    })
   });
 
 })
