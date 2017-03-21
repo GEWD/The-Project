@@ -24,9 +24,9 @@ CREATE TABLE trips_members (
 );
 ALTER TABLE trips ADD FOREIGN KEY (admin_fk)
 REFERENCES members(id);
-ALTER TABLE trips_members ADD FOREIGN KEY (trips_fk)
+ALTER TABLE trips_members ADD FOREIGN KEY (trip_fk)
 REFERENCES trips(id);
-ALTER TABLE trips_members ADD FOREIGN KEY (members_fk)
+ALTER TABLE trips_members ADD FOREIGN KEY (member_fk)
 REFERENCES members(id);
 
 CREATE TABLE receipts (
