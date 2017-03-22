@@ -1,6 +1,9 @@
 const mysql = require('mysql');
 const mysqlConfig = require('./db-mysql/config.js');
 const db = mysql.createConnection(mysqlConfig);
+const Promise = require('bluebird');
+
+Promise.promisifyAll(db);
 
 const queryString = {
   createNewUser: 'INSERT INTO\
@@ -39,16 +42,20 @@ const queryString = {
   getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS;',
 }
 
-const createNewUser = (req, res) => {
-  // Total 2 fields: USER_NAME and USER_AUTH from req.body
-  db.query(queryString.createNewUser, twoFields, (err, result) => {
-    if (err) {
-      console.log('ERROR: createNewUsers in SQL', err);
-    } else {
-      console.log('SUCCESS: new user has been created.');
-      res.send(result);
-    }
-  })
+const createNewUser = (userInfo) => {
+
+  db.queryAsync(`SELECT * from members where fb_id = ?`, userInfo.fb_id)
+    .then(function(user) {
+      console.log('successful checked user');
+      if(!user[0]) {
+        db.queryAsync(`INSERT INTO members set ?`, userInfo)
+      } else {
+        console.log('user already exisit');
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+    })
 }
 
 const createNewTrip = (req, res) => {

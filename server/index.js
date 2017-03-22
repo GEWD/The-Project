@@ -13,6 +13,7 @@ const cloudinary = require('cloudinary');
 const cloudConfig = require('../env/cloudKey.js');
 const path = require('path');
 
+
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
@@ -56,7 +57,7 @@ passport.use(new FacebookStrategy({
       token: accessToken,
       email: profile._json.email
     };
-    // console.log('userInfo=====', userInfo);
+    db.createNewUser(userInfo);
     // dbHelpers.findOrCreateUser(userInfo, function(err, user) {
     //   console.log('findorcreateuser result======', user);
     // });
