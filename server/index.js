@@ -15,8 +15,8 @@ const path = require('path');
 
 var localStorage = {};
 
-
-
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 //Google cloud vision setup:
 const gVision = require('./api/vision.js');
 
@@ -185,19 +185,20 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test.jpg'; 
   gVision.promisifiedDetectText(image)
   .then(function(results) {
-    res.send(results);
+    fs.writeFileAsync('server/api/testResults/test2.js', results[0].split('\n'));
+    // console.log('Successfully created /test.js with:', results[0], '....typeof:', typeof results[0]);
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
   });
 });
 
-app.post('/test', function(req, res) {
-  // res.send(image);
-  res.send(__dirname);
+app.get('/test', function(req, res) {
+  let test = [1, 2, 3];
+  
 });
 
 
