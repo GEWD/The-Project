@@ -37,7 +37,7 @@ class App extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    Util.logout(this.verifyAuthentication);    
+    Util.logout(this.verifyAuthentication);
   }
 
   addItem (itemArray){
@@ -76,13 +76,12 @@ class App extends React.Component {
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
-            <Route path ="/upload-receipt" component={UploadReceipt}/>
-            <CreateItem 
-              addItem={this.addItem} 
-              itemName={this.state.name} 
-              itemAmount={this.state.amount} 
-              items={this.state.items} 
-              onNameChange={this.onNameChange} 
+            <CreateItem
+              addItem={this.addItem}
+              itemName={this.state.name}
+              itemAmount={this.state.amount}
+              items={this.state.items}
+              onNameChange={this.onNameChange}
               onPriceChange={this.onPriceChange}/>
           </div>
         </Router>
