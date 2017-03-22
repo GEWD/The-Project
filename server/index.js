@@ -62,7 +62,8 @@ app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
-app.get('/assignItem', db.assignItem);
+app.get('/storeItems', db.storeReceiptItems);
+app.get('/assignItems', db.assignItemsToMembers);
 
 // // route middleware to make sure a user is logged in
 // function isLoggedIn(req, res, next) {
