@@ -1,25 +1,20 @@
 import React from 'react';
 
-class CreateItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
+const CreateItem = ({addItem,itemName,itemAmount,items,onNameChange,onPriceChange}) => {
+  return (
       <div>
+        <h2>Add your items</h2>
+        <input placeholder='receipt name' type='text' onChange= {onNameChange}/>
+        <input placeholder='amount' type='number' onChange={onPriceChange}/>
+        <button onClick= {addItem}>Add</button><br/>
         <ul>      
-          {this.props.items.map((item,index) => {
-            return <li>{item[0] + '   '  + item[1]}</li>
+          {items.map((item,index) => {
+            return <li key={index}>{item[0] + '   ' + item[1]}</li>
           })}
         </ul>
-        <input placeholder='receipt name' type='text' onChange= {this.props.onNameChange.bind(this)}/>
-        <input placeholder='amount' type='number' onChange= {this.props.onPriceChange.bind(this)}/>
-        <button onClick= {this.props.addItem.bind(this)}>Add</button>
       </div>
-    );
+    )
   }
-}
 
 
 export default CreateItem;

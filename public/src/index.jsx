@@ -6,10 +6,8 @@ import CreateTrip from './components/CreateTrip.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
-
 import PrivateRoute from './components/PrivateRoute.jsx';
 import Util from './lib/util.js';
-
 import CreateItem from './components/CreateItem.jsx';
 
 
@@ -67,22 +65,24 @@ class App extends React.Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/upload-receipt">Upload Receipt</Link></li>
               <li><Link to="/profile">Profile</Link></li>
+              <li><Link to="/additems">Add Items</Link></li>
               {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
               {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClick}>Logout</Link></li>}
             </ul>
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
             <PrivateRoute path ="/profile" isAuthenticated={this.state.isAuthenticated} component={Profile}/>
             <PrivateRoute path ="/upload-receipt" isAuthenticated={this.state.isAuthenticated} component={UploadReceipt}/>
-            <Route path ="/login" render={() => (
-              this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
-            )}/>
-            <CreateItem
+            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem} 
               addItem={this.addItem}
               itemName={this.state.name}
               itemAmount={this.state.amount}
               items={this.state.items}
               onNameChange={this.onNameChange}
               onPriceChange={this.onPriceChange}/>
+            <Route path ="/login" render={() => (
+              this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
+            )}/>
+
           </div>
         </Router>
       </div>
