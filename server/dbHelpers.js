@@ -83,7 +83,7 @@ const createNewUser = (userInfo) => {
     .catch(function(err) {
       console.error(err);
     })
-
+}
 
 const createNewTrip = (req, res) => {
   // Total 2 fields: get name and ADMIN_NAME from req.body
@@ -139,7 +139,7 @@ const storeReceiptItems = (req, res) => {
           res.send(result);
         }
       })
-    }    
+    }
   }
 }
 
