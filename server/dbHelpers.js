@@ -113,6 +113,7 @@ const addMembersToTrip = (req, res) => {
 }
 
 
+
 const addReceipt = (req, res) => {
   // Total 8 fields: get PAYOR_AUTH, TRIP_NAME, PAYOR_AUTH, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
   db.query(queryString.addReceipt, [eightFields], (err, result) => {
