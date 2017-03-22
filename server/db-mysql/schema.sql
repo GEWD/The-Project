@@ -6,7 +6,7 @@ USE gewd;
 
 CREATE TABLE members (
   id            int NOT NULL AUTO_INCREMENT,
-  fb_id          varchar(50) NOT NULL,
+  fb_id          varchar(50) NOT NULL UNIQUE,
   name          varchar(50) NOT NULL,
   email          varchar(50) NOT NULL,
   token          varchar(360) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE receipts (
   tripID       int NOT NULL,
   -- poolID       int NOT NULL,
   name          varchar(50) NOT NULL,
-  url           varchar(100) NOT NULL ,
+  url           varchar(100) NOT NULL UNIQUE,
   sum_bill    int NOT NULL DEFAULT 0,
   sum_tax     int NOT NULL DEFAULT 0,
   sum_tax_tip int NOT NULL DEFAULT 0,
@@ -118,14 +118,15 @@ INSERT INTO trips (name, adminID) VALUES ('Canada2016', (SELECT members.id FROM 
 INSERT INTO trips_members (tripID, memberID) VALUES (LAST_INSERT_ID(), (SELECT trips.adminID FROM trips WHERE trips.id=LAST_INSERT_ID()));
 
 /*  TESTING TO ADD NEW MEMBER TO EXISTING TRIP */
-INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Canada2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.auth = 'june@gmail.com')), (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'));
+INSERT INTO trips_members (tripID, memberID) VALUES((SELECT trips.id FROM trips WHERE trips.name = 'Canada2016' AND trips.adminID = (SELECT members.id FROM members WHERE fb_id = '290290342300923')), (SELECT members.id FROM members WHERE fb_id = '9999123981923'));
 
-/*  TESTING TO ADD NEW RECEIPT */
-INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com')), 'Receipt01', 'google.com', '100', '10', '18');
+/*  TESTING TO ADD TWO NEW RECEIPT */
+INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE fb_id = '9999123981923'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE fb_id = '9999123981923')), 'Receipt01', 'google.com', '100', '10', '18');
+
+INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt02', 'amazon.com', '100', '10', '18');
 
 /* TESTING TO ADD NEW ITEM */
 INSERT INTO items (receiptID, tripID, name, raw_price) VALUES ((SELECT receipts.id from receipts WHERE receipts.url = 'google.com'), (SELECT receipts.tripID from receipts WHERE receipts.url = 'google.com'), 'Burger', 10);
 
-INSERT INTO receipts (payorID, tripID, name, url, sum_bill, sum_tax, sum_tax_tip) VALUES ((SELECT members.id FROM members WHERE members.name = 'Jon'), (SELECT trips.id FROM trips WHERE trips.name = 'Japan2016' AND trips.adminID = (SELECT members.id FROM members WHERE members.name = 'Jon')), 'Receipt01', 'google.com', '100', '10', '18');
 /* TESTING TO ADD INTO CONSUMED_ITEMS */
-INSERT INTO consumed_items (itemID, payorID, payeeID, receiptID, tripID) VALUES ((SELECT items.id FROM items WHERE items.name = 'Burger' AND items.receiptID = (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com')), (SELECT members.id FROM members WHERE members.auth = 'gary@gmail.com'), (SELECT members.id FROM members WHERE members.auth = 'jon@gmail.com'), (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com'), (SELECT trips.id FROM trips WHERE trips.adminID = (SELECT members.id from members WHERE members.auth = 'gary@gmail.com')));
+INSERT INTO consumed_items (itemID, payorID, payeeID, receiptID, tripID) VALUES ((SELECT items.id FROM items WHERE items.name = 'Burger' AND items.receiptID = (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com')), (SELECT members.id FROM members WHERE fb_id = '1230981923'), (SELECT members.id FROM members WHERE fb_id = '9999123981923'), (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com'), (SELECT trips.id FROM trips WHERE trips.adminID = (SELECT members.id from members WHERE fb_id = '1230981923')));
