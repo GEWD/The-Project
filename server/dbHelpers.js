@@ -13,7 +13,7 @@ const queryString = {
 
   createNewTrip: 'INSERT INTO trips (name, adminID)\
                     VALUES (?, (SELECT members.id FROM members\
-                    WHERE members.auth = ?));\
+                    WHERE fb_id = ?));\
                   INSERT INTO trips_members (tripID, memberID)\
                     VALUES (LAST_INSERT_ID(),\
                            (SELECT trips.adminID FROM trips\
@@ -23,18 +23,18 @@ const queryString = {
                       VALUES ((SELECT trips.id FROM trips\
                       WHERE trips.name = ? AND\
                             trips.adminID = (SELECT members.id FROM members \
-                              WHERE members.auth = ?)),\
+                              WHERE fb_id = ?)),\
                               (SELECT members.id FROM members\
-                              WHERE members.auth = ?));',
+                              WHERE fb_id = ?));',
 
   addReceipt: 'INSERT INTO receipts (payorID, tripID, name, url, \
                 sum_bill, sum_tax, sum_tax_tip) \
                   VALUES ((SELECT members.id FROM members \
-                  WHERE members.auth = ?), \
+                  WHERE fb_id = ?), \
                           (SELECT trips.id FROM trips \
                           WHERE trips.name = ? \
                           AND trips.adminID = (SELECT members.id FROM members \
-                          WHERE members.auth = ?)), \
+                          WHERE fb_id = ?)), \
                           ?, ?, ?, ?, ?);',
   storeReceiptItems: 'INSERT INTO items (receiptID, tripID, name, raw_price) \
                         VALUES ((SELECT receipts.id from receipts \
@@ -50,15 +50,15 @@ const queryString = {
                               (SELECT receipts.id FROM receipts \
                               WHERE receipts.url = ?)), \
                               (SELECT members.id FROM members \
-                              WHERE members.auth = ?), \
+                              WHERE fb_id = ?), \
                               (SELECT members.id FROM members \
-                              WHERE members.auth = ?), \
+                              WHERE fb_id = ?), \
                               (SELECT receipts.id FROM receipts \
                               WHERE receipts.url = ?), \
                               (SELECT trips.id FROM trips \
                               WHERE trips.adminID = \
                               (SELECT members.id from members \
-                              WHERE members.auth = ?)));',
+                              WHERE fb_id = ?)));',
   settlePayment: '',
 
   getAllMembers: 'SELECT * FROM MEMBERS',
@@ -68,9 +68,7 @@ const queryString = {
   getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS;',
 }
 
-
 const createNewUser = (userInfo) => {
-
   db.queryAsync(`SELECT * from members where fb_id = ?`, userInfo.fb_id)
     .then(function(user) {
       console.log('successful checked user');
@@ -113,20 +111,22 @@ const addMembersToTrip = (req, res) => {
   }
 }
 
+
+
 const addReceipt = (req, res) => {
   // Total 8 fields: get PAYOR_AUTH, TRIP_NAME, PAYOR_AUTH, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
   db.query(queryString.addReceipt, [eightFields], (err, result) => {
     if (err) {
       console.log('ERROR: addReceipt in SQL', err);
     } else {
-      res.send(result);
+      callback(null,result);
     }
   })
 }
 
 const storeReceiptItems = (req, res) => {
   // Total 4 fields from req.headers: get RECEIPT_URL, RECEIPT_URL, [ITEM NAMES], RAW_PX
-  const dummyReceiptURL = 'google.com';
+  const dummyReceiptURL = 'walmart.com';
   const dummyItemNames = ['Beef', 'Chicken', 'Pork'];
   const dummyItemRawPrices = [3, 2, 5];
 
@@ -146,17 +146,16 @@ const storeReceiptItems = (req, res) => {
 const assignItemsToMembers = (req, res) => {
   // After gVision data is returned, data will be funneled and immediately be stored in 2 different tables: receipts and items table. Consumed_Items only references items table and info passed down from request headers.
   // There are 2 fields from items table: itemID, receiptID,
-  // There are 3 fields from req.headers: payeeID(s), payorID (from members.auth), tripID (from trips.name);
+  // There are 3 fields from req.headers: payeeID(s), payorID (from fb_id), tripID (from trips.name);
 
   // sequence: item_name, url, payor_auth, payee_auth, url, payor_auth
   const dummyPayorAuth = ['gary@gmail.com']; // always only 1 person
-  const dummyReceiptURL = 'google.com';
+  const dummyReceiptURL = 'walmart.com';
   const dummyPayeeAuthItems = {
     'jon@gmail.com': 'Burger',
     'may@gmail.com': 'Burger'
   }
   const payeeAuths = Object.keys(dummyPayeeAuthItems);
-
   for (let i = 0; i < payeeAuths.length; i++) {
     let queryArgs = [dummyPayeeAuthItems[payeeAuths[i]], dummyReceiptURL, dummyPayorAuth, payeeAuths[i], dummyReceiptURL, dummyPayorAuth];
     // console.log('--------------------------', queryArgs);
@@ -172,7 +171,7 @@ const assignItemsToMembers = (req, res) => {
 
 const settlePayment = (req, res) => {
 
-};
+}
 
 const getAllUsers = (req, res) => {
   db.query(queryString.getAllMembers, (err, result) => {

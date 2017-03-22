@@ -152,8 +152,11 @@ app.post('/upload', function(req,res) {
       return res.status(500).send(err);
     }
     cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(results) {
-      console.log(results);
-      res.send('File uploaded!');
+      var params = [1,1,1,'cat',results.url, 150,10,15];
+      db.addReceipt(params, function(err,data) {
+        console.log(data);
+        res.send('File uploaded!');
+      })
     })
   });
 
