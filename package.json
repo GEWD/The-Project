@@ -12,6 +12,7 @@
     "start": "nodemon server/index.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "cloudinary": "^1.8.0",
     "cookie-parser": "^1.4.3",
@@ -19,6 +20,7 @@
     "express": "^4.15.2",
     "express-fileupload": "^0.1.2",
     "express-session": "^1.15.1",
+    "jquery": "^3.2.1",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "passport": "^0.3.2",

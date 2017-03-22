@@ -6,9 +6,17 @@ const MemberTrip = require('./memberTripModel');
 const Receipt = require('./receiptModel');
 const Item = require('./ItemModel');
 
+// connection.authenticate()
+//   .then(function(err) {
+//     console.log('connection has been established successfully');
+//   }, function(err) {
+//     console.log('unable to connect to database', err);
+//   })
+
 Member.create({
-  name: 'Canada',
-  auth: '1239'
+  name: 'user name',
+  fb_id: '123455',
+  token: '1239'
 }).then(function(can) {
   console.log(can.get({
     plain: true
