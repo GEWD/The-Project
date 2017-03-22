@@ -184,7 +184,7 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/test.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     res.send(results);
