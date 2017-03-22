@@ -6,8 +6,13 @@ USE gewd;
 
 CREATE TABLE members (
   id            int NOT NULL AUTO_INCREMENT,
+<<<<<<< e2e636cb58caefb78416f155bcfb7e8dd2b681c8
   fb_id          varchar(50) NOT NULL UNIQUE,
   name          varchar(50) NOT NULL,
+=======
+  fb_id          varchar(50) NOT NULL,
+  name           varchar(50) NOT NULL,
+>>>>>>> commented out schema testing
   email          varchar(50) NOT NULL,
   token          varchar(360) NOT NULL,
   PRIMARY KEY   (ID)
