@@ -77,7 +77,13 @@ class App extends React.Component {
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
             <Route path ="/upload-receipt" component={UploadReceipt}/>
-            <CreateItem addItem={this.addItem} itemName={this.state.name} itemAmount={this.state.amount} items={this.state.items} onNameChange= {this.onNameChange} onPriceChange ={this.onPriceChange}/>
+            <CreateItem 
+              addItem={this.addItem} 
+              itemName={this.state.name} 
+              itemAmount={this.state.amount} 
+              items={this.state.items} 
+              onNameChange={this.onNameChange} 
+              onPriceChange={this.onPriceChange}/>
           </div>
         </Router>
       </div>

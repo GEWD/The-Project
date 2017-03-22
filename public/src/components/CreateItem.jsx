@@ -13,8 +13,8 @@ class CreateItem extends React.Component {
             return <li>{item[0] + '   '  + item[1]}</li>
           })}
         </ul>
-        <input placeholder='receipt name' type='text' onChange={this.props.onNameChange.bind(this)}/>
-        <input placeholder='amount' type='number' onChange={this.props.onPriceChange.bind(this)}/>
+        <input placeholder='receipt name' type='text' onChange= {this.props.onNameChange.bind(this)}/>
+        <input placeholder='amount' type='number' onChange= {this.props.onPriceChange.bind(this)}/>
         <button onClick= {this.props.addItem.bind(this)}>Add</button>
       </div>
     );
