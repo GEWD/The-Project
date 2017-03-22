@@ -13,6 +13,7 @@ const cloudinary = require('cloudinary');
 const cloudConfig = require('../env/cloudKey.js');
 const path = require('path');
 
+var localStorage = {};
 
 app.use( bodyParser.json() );
 app.use(cors());
@@ -58,9 +59,6 @@ passport.use(new FacebookStrategy({
       email: profile._json.email
     };
     db.createNewUser(userInfo);
-    // dbHelpers.findOrCreateUser(userInfo, function(err, user) {
-    //   console.log('findorcreateuser result======', user);
-    // });
     return cb(null, userInfo);
     })
   }
@@ -74,6 +72,12 @@ function checkAuthentication(req, res, next) {
   } else {
     res.redirect("/login");
   }
+}
+
+function authHelper(req, res, next) {
+  localStorage.isAuthenitcated = req.isAuthenticated();
+  localStorage.user = req.user;
+  next();
 }
 
 // route for facebook authentication and login
@@ -97,7 +101,7 @@ app.get('/addReceipt', db.addReceipt);
 app.get('/storeItems', db.storeReceiptItems);
 app.get('/assignItems', db.assignItemsToMembers);
 
-app.get('/login', (req, res) => {
+app.get('/login', authHelper, (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect('/');
   } else {
@@ -105,17 +109,17 @@ app.get('/login', (req, res) => {
   }
 });
 
-app.get('/logout', function(req, res) {
+app.get('/logout', authHelper, function(req, res) {
   req.logout();
   res.redirect('/');
 });
 
-app.get('/verify', function(req, res) {
+app.get('/verify', authHelper, function(req, res) {
   let isAuthenticated =  req.isAuthenticated() ? true : false;
   res.send(req.isAuthenticated());
 });
 
-app.get('*', checkAuthentication, (req, res) => {
+app.get('*', checkAuthentication, authHelper, (req, res) => {
   if (!req.user) {
     res.redirect('/login');
   } else {
@@ -133,8 +137,14 @@ app.get('/testing', function(req, res) {
 //To be used for testing and seeing requests
 app.post('/testTripName', function(req, res) {
   //With the received request, use model function to submit the tripname to the database
-  model.tripNameInsert(req.body.submittedTripName);
-  res.send('Received request to /testTripNameServer');
+
+  let params = [
+    req.body.submittedTripName,
+    localStorage.user.fb_id
+  ];
+
+  db.createNewTrip(params);
+  res.redirect('/upload-receipt');
 });
 
 app.post('/upload', function(req,res) {

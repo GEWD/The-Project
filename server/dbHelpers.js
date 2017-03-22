@@ -13,7 +13,7 @@ const queryString = {
 
   createNewTrip: 'INSERT INTO trips (name, adminID)\
                     VALUES (?, (SELECT members.id FROM members\
-                    WHERE fb_id = ?));\
+                    WHERE members.fb_id = ?));\
                   INSERT INTO trips_members (tripID, memberID)\
                     VALUES (LAST_INSERT_ID(),\
                            (SELECT trips.adminID FROM trips\
@@ -70,7 +70,7 @@ const queryString = {
 
 const createNewUser = (userInfo) => {
   db.queryAsync(`SELECT * from members where fb_id = ?`, userInfo.fb_id)
-    .then(function(user) {
+    .then( user => {
       console.log('successful checked user');
       if(!user[0]) {
         db.queryAsync(`INSERT INTO members set ?`, userInfo)
@@ -78,21 +78,29 @@ const createNewUser = (userInfo) => {
         console.log('user already exisit');
       }
     })
-    .catch(function(err) {
-      console.error(err);
-    })
+    .catch(err => console.error(err));
 }
 
-const createNewTrip = (req, res) => {
+const createNewTrip = (params) => {
   // Total 2 fields: get name and ADMIN_NAME from req.body
-  db.query(queryString.createNewTrip, [twoFields], (err, result) => {
-    if (err) {
-      console.log('ERROR: createNewTrip in SQL', err);
-    } else {
-      console.log('SUCCESS: new trip has been created.');
-      res.send(result);
-    }
-  })
+  const queryCheckIfTripExist = `SELECT trips.id FROM trips WHERE trips.name = ? AND trips.adminID = (SELECT members.id FROM members
+                    WHERE members.fb_id = ?)`
+  const queryStringCreateNewTrip = `INSERT INTO trips (name, adminID)
+                    VALUES (?, (SELECT members.id FROM members
+                    WHERE members.fb_id = ?));`
+  const queryStringInsertTripMembers = ` INSERT INTO trips_members (tripID, memberID)
+                    VALUES ( LAST_INSERT_ID(),
+                    (SELECT trips.adminID FROM trips
+                    WHERE trips.id = LAST_INSERT_ID()));`
+  db.queryAsync(queryCheckIfTripExist, params)
+    .then( result => {
+      if (result[0]) {
+        throw 'Trip already exist!';
+      }
+    })
+    .then( () => db.queryAsync(queryStringCreateNewTrip, params))
+    .then( () => db.queryAsync(queryStringInsertTripMembers))
+    .catch( err => console.log('ERROR: createNewTrip in SQL', err) );
 }
 
 const addMembersToTrip = (req, res) => {
