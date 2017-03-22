@@ -185,10 +185,10 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
   gVision.promisifiedDetectText(image)
   .then(function(results) {
-    fs.writeFileAsync('server/api/testResults/test2.js', results[0].split('\n'));
+    fs.writeFileAsync('server/api/testResults/test3.js', results[0].split('\n'));
     console.log('Successfully created /test.js with:', results[0].split('\n'), '....typeof:', typeof results[0].split('\n'));
   })
   .error(function(e) {
