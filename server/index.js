@@ -188,7 +188,7 @@ app.post('/vision', function(req, res) {
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     fs.writeFileAsync('server/api/testResults/test2.js', results[0].split('\n'));
-    // console.log('Successfully created /test.js with:', results[0], '....typeof:', typeof results[0]);
+    console.log('Successfully created /test.js with:', results[0].split('\n'), '....typeof:', typeof results[0].split('\n'));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
