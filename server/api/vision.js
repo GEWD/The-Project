@@ -22,3 +22,4 @@ exports.promisifiedDetectText = function(image) {
   });
 };
 
+// exports.promisifiedDetectText('./test.jpg');
