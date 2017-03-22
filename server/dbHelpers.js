@@ -32,7 +32,7 @@ const queryString = {
                   VALUES ((SELECT members.id FROM members \
                   WHERE fb_id = ?), \
                           (SELECT trips.id FROM trips \
-                          WHERE trips.name = ? \
+                          WHERE trips.id = ? \
                           AND trips.adminID = (SELECT members.id FROM members \
                           WHERE fb_id = ?)), \
                           ?, ?, ?, ?, ?);',
@@ -69,7 +69,6 @@ const queryString = {
 }
 
 const createNewUser = (userInfo) => {
-
   db.queryAsync(`SELECT * from members where fb_id = ?`, userInfo.fb_id)
     .then(function(user) {
       console.log('successful checked user');
@@ -112,13 +111,15 @@ const addMembersToTrip = (req, res) => {
   }
 }
 
+
+
 const addReceipt = (req, res) => {
   // Total 8 fields: get PAYOR_AUTH, TRIP_NAME, PAYOR_AUTH, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
   db.query(queryString.addReceipt, [eightFields], (err, result) => {
     if (err) {
       console.log('ERROR: addReceipt in SQL', err);
     } else {
-      res.send(result);
+      callback(null,result);
     }
   })
 }
@@ -155,7 +156,6 @@ const assignItemsToMembers = (req, res) => {
     'may@gmail.com': 'Burger'
   }
   const payeeAuths = Object.keys(dummyPayeeAuthItems);
-
   for (let i = 0; i < payeeAuths.length; i++) {
     let queryArgs = [dummyPayeeAuthItems[payeeAuths[i]], dummyReceiptURL, dummyPayorAuth, payeeAuths[i], dummyReceiptURL, dummyPayorAuth];
     // console.log('--------------------------', queryArgs);
