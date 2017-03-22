@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import serverInt from '../lib/serverInteraction.js';
+import Util from '../lib/util.js';
 
 class CreateTrip extends React.Component {
   constructor(props) {
@@ -12,16 +13,16 @@ class CreateTrip extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  //Automatically updates the property tripName of state 
+  //Automatically updates the property tripName of state
   handleChange(event) {
     this.setState({tripName: event.target.value});
   }
 
-  //Handles subsequent function calls after submit 
+  //Handles subsequent function calls after submit
   handleSubmit(event) {
     console.log('Tripname was submitted:' + this.state.tripName);
     event.preventDefault();
-    serverInt.sendServerTripName(this.state.tripName);
+    Util.sendServerTripName(this.state.tripName);
   }
 
   render() {

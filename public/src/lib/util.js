@@ -13,5 +13,16 @@ module.exports = {
       console.log('successful logout');
       cb(false);
     })
+  },
+
+  sendServerTripName: (tripName) => {
+    $.post('/testTripName',
+    {
+      submittedTripName: tripName
+    },
+    function(res) {
+      console.log('successful tripName submitted');
+    })
   }
+
 }
