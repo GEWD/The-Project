@@ -32,7 +32,7 @@ const queryString = {
                   VALUES ((SELECT members.id FROM members \
                   WHERE fb_id = ?), \
                           (SELECT trips.id FROM trips \
-                          WHERE trips.id = ? \
+                          WHERE trips.name = ? \
                           AND trips.adminID = (SELECT members.id FROM members \
                           WHERE fb_id = ?)), \
                           ?, ?, ?, ?, ?);',
