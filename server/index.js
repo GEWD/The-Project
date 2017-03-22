@@ -94,7 +94,8 @@ app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
-app.get('/assignItem', db.assignItem);
+app.get('/storeItems', db.storeReceiptItems);
+app.get('/assignItems', db.assignItemsToMembers);
 
 app.get('/login', (req, res) => {
   if (req.isAuthenticated()) {
