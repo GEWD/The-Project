@@ -6,13 +6,8 @@ USE gewd;
 
 CREATE TABLE members (
   id            int NOT NULL AUTO_INCREMENT,
-<<<<<<< e2e636cb58caefb78416f155bcfb7e8dd2b681c8
   fb_id          varchar(50) NOT NULL UNIQUE,
   name          varchar(50) NOT NULL,
-=======
-  fb_id          varchar(50) NOT NULL,
-  name           varchar(50) NOT NULL,
->>>>>>> commented out schema testing
   email          varchar(50) NOT NULL,
   token          varchar(360) NOT NULL,
   PRIMARY KEY   (ID)
@@ -135,7 +130,3 @@ INSERT INTO items (receiptID, tripID, name, raw_price) VALUES ((SELECT receipts.
 
 /* TESTING TO ADD INTO CONSUMED_ITEMS */
 INSERT INTO consumed_items (itemID, payorID, payeeID, receiptID, tripID) VALUES ((SELECT items.id FROM items WHERE items.name = 'Burger' AND items.receiptID = (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com')), (SELECT members.id FROM members WHERE fb_id = '1230981923'), (SELECT members.id FROM members WHERE fb_id = '9999123981923'), (SELECT receipts.id FROM receipts WHERE receipts.url = 'google.com'), (SELECT trips.id FROM trips WHERE trips.adminID = (SELECT members.id from members WHERE fb_id = '1230981923')));
-<<<<<<< 32c86c160bce65bb3e17056570701bb9d97bd92c
-=======
-
->>>>>>> commented out schema testing
