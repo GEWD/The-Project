@@ -68,7 +68,6 @@ const queryString = {
   getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS;',
 }
 
-
 const createNewUser = (userInfo) => {
 
   db.queryAsync(`SELECT * from members where fb_id = ?`, userInfo.fb_id)
@@ -84,7 +83,6 @@ const createNewUser = (userInfo) => {
       console.error(err);
     })
 }
-
 
 const createNewTrip = (req, res) => {
   // Total 2 fields: get name and ADMIN_NAME from req.body
@@ -151,7 +149,7 @@ const assignItemsToMembers = (req, res) => {
 
   // sequence: item_name, url, payor_auth, payee_auth, url, payor_auth
   const dummyPayorAuth = ['gary@gmail.com']; // always only 1 person
-  const dummyReceiptURL = 'google.com';
+  const dummyReceiptURL = 'walmart.com';
   const dummyPayeeAuthItems = {
     'jon@gmail.com': 'Burger',
     'may@gmail.com': 'Burger'
