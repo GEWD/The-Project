@@ -21,6 +21,10 @@ const fs = Promise.promisifyAll(require('fs'));
 const gVision = require('./api/vision.js');
 
 
+//Google cloud vision setup:
+const gVision = require('./api/vision.js');
+
+
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
@@ -72,20 +76,20 @@ passport.use(new FacebookStrategy({
 ));
 
 // route middleware to make sure a user is logged in
-function checkAuthentication(req, res, next) {
+checkAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     //if user is loged in, req.isAuthenticated() will return true
     next();
   } else {
     res.redirect('/login');
   }
-}
+};
 
-function authHelper(req, res, next) {
+authHelper = (req, res, next) => {
   localStorage.isAuthenitcated = req.isAuthenticated();
   localStorage.user = req.user;
   next();
-}
+};
 
 // route for facebook authentication and login
 app.get('/auth/facebook',
@@ -99,8 +103,6 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
-// // test database functions
-// app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
@@ -184,6 +186,7 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
   let image = req.body.receipt || __dirname + '/api/testReceipts/test4.jpg'; 
@@ -193,16 +196,10 @@ app.post('/vision', function(req, res) {
     fs.writeFileAsync('server/api/testResults/test4.js', gVision.spliceReceipt(allItems.split('\n')));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
     console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
-  })
-  .error(function(e) {
-    console.log('Error received in appPost, promisifiedDetectText:', e);
   });
 });
 
-app.get('/test', function(req, res) {
-  let test = [1, 2, 3];
-  
-});
+
 
 
 app.listen(3000, function() {
