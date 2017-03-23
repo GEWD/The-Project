@@ -140,6 +140,7 @@ app.post('/createTripName', function(req, res) {
 
   let params = [
     req.body.submittedTripName,
+    req.body.submittedTripDesc,
     localStorage.user.fb_id
   ];
 
