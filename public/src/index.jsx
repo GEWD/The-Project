@@ -98,9 +98,6 @@ class App extends React.Component {
       amount: event.target.value
     })
   }
-
-  handleTripNameChange(event) {
-    let name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
@@ -131,7 +128,7 @@ class App extends React.Component {
               component={CreateTrip}
               isAuthenticated={this.state.isAuthenticated}
               tripName={this.state.tripName}
-              handleTripNameChange={this.handleTripNameChange}
+              onInputChange={this.onInputChange}
               handleTripNameSubmit={this.handleTripNameSubmit}
             />
             <PrivateRoute
