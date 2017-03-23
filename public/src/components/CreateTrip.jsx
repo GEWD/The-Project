@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 const CreateTrip = ({tripName, handleTripNameSubmit, handleTripNameChange}) => (
   <div>
     <h3>Create Trip</h3>
-    <form onSubmit={handleTripNameChange}>
+    <form onSubmit={handleTripNameSubmit}>
       <label>
         Name your trip:
         <input placeholder='Yosemite 2017' type='text' value={tripName} onChange={handleTripNameChange}/>

@@ -16,7 +16,7 @@ module.exports = {
   },
 
   sendServerTripName: (tripName) => {
-    $.post('/testTripName',
+    $.post('/createTripName',
     {
       submittedTripName: tripName
     },
