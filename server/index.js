@@ -185,11 +185,11 @@ app.post('/upload/delete', function(req, res) {
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test4.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test.jpg'; 
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
-    fs.writeFileAsync('server/api/testResults/test4.js', gVision.spliceReceipt(allItems.split('\n')));
+    fs.writeFileAsync('server/api/testResults/test.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
     console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   });
