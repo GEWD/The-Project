@@ -4,9 +4,10 @@ const CreateItem = ({addItem,itemName,itemAmount,items,addMember,members, member
   return (
       <div>
         <h2>Add your items</h2>
-        <input placeholder='receipt name' name='name' type='text' onChange= {onInputChange}/>
-        <input placeholder='amount' name='amount' type='number' onChange={onInputChange}/>
-        <button onClick= {addItem}>Add</button><br/>
+        <input placeholder='Item name' name='name' type='text' value={itemName} onChange= {onInputChange}/>
+        <input placeholder='Amount' name='amount' type='number' value={itemAmount} onChange={onInputChange}/>
+        <button onClick= {addItem}>Add Item</button><br/>
+
         <ul>
           {items.map((item,index) => {
             return <li key={index}>{item[0] + '   ' + item[1]}</li>
