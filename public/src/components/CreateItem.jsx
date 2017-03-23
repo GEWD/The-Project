@@ -1,17 +1,28 @@
 import React from 'react';
 
-const CreateItem = ({addItem,itemName,itemAmount,items,onNameChange,onPriceChange}) => {
+const CreateItem = ({addItem,itemName,itemAmount,items,addMember,members, member,onInputChange}) => {
   return (
       <div>
         <h2>Add your items</h2>
-        <input placeholder='receipt name' type='text' onChange= {onNameChange}/>
-        <input placeholder='amount' type='number' onChange={onPriceChange}/>
+        <input placeholder='receipt name' name='name' type='text' onChange= {onInputChange}/>
+        <input placeholder='amount' name='amount' type='number' onChange={onInputChange}/>
         <button onClick= {addItem}>Add</button><br/>
-        <ul>      
+        <ul>
           {items.map((item,index) => {
             return <li key={index}>{item[0] + '   ' + item[1]}</li>
           })}
         </ul>
+        <hr/>
+        <br/>
+        <label>To:
+        <input placeholder='Name' name='member' type='text' value={member} onChange={onInputChange}/>
+        <button onClick={addMember}>Add Member</button><br/>
+        <ul>
+          {members.map((member, index) => {
+            return <li key={index}>{member[0]}</li>
+          })}
+        </ul>
+        </label>
       </div>
     )
   }

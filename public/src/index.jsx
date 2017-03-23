@@ -21,19 +21,20 @@ class App extends React.Component {
       tripDesc: '',
       receiptName:'',
       items:[],
+      members:[],
+      member: '',
       name:'',
       amount: 0
     }
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onPriceChange = this.onPriceChange.bind(this);
     this.onReceiptNameChange = this.onReceiptNameChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
-    this.handleTripNameChange = this.handleTripNameChange.bind(this);
     this.callGVision = this.callGVision.bind(this);
     this.onGVision = this.onGVision.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.addMember = this.addMember.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -51,8 +52,9 @@ class App extends React.Component {
     this.setState({
       items: this.state.items.concat([[this.state.name, this.state.amount]])
     })
+    this.state.name = '';
+    this.state.amount = '';
   }
-
   onReceiptNameChange(event){
     this.setState({
       receiptName:event.target.value
@@ -87,17 +89,15 @@ class App extends React.Component {
     console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
-  onNameChange(event) {
+  addMember (itemArray){
     this.setState({
-      name: event.target.value
+      members: this.state.members.concat([[this.state.member]])
     })
+    this.state.member = '';
   }
 
-  onPriceChange(event) {
-    this.setState({
-      amount: event.target.value
-    })
-  }
+  onInputChange(event) {
+    const name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
@@ -150,8 +150,10 @@ class App extends React.Component {
               itemName={this.state.name}
               itemAmount={this.state.amount}
               items={this.state.items}
-              onNameChange={this.onNameChange}
-              onPriceChange={this.onPriceChange}/>
+              members={this.state.members}
+              member={this.state.member}
+              addMember={this.addMember}
+              onInputChange={this.onInputChange}/>
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
