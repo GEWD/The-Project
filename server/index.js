@@ -184,12 +184,15 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+//gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test4.jpg'; 
   gVision.promisifiedDetectText(image)
   .then(function(results) {
-    fs.writeFileAsync('server/api/testResults/test3.js', results[0].split('\n'));
-    console.log('Successfully created /test.js with:', results[0].split('\n'), '....typeof:', typeof results[0].split('\n'));
+    let allItems = results[0];
+    fs.writeFileAsync('server/api/testResults/test4.js', gVision.spliceReceipt(allItems.split('\n')));
+    res.send(gVision.spliceReceipt(allItems.split('\n')));
+    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);

@@ -21,5 +21,33 @@ exports.promisifiedDetectText = function(image) {
     });
   });
 };
+
+exports.spliceReceipt = function(receiptArray) {
+  var itemToPriceObj = {};
+  var firstPriceSearch = /\.\d\d/;
+  var totalSearch = /(\btotal)/i;
+  var startSplice;
+  var endSplice;
+  for (var i = 0; i < receiptArray.length; i++) {
+    if (receiptArray[i].search(firstPriceSearch) !== -1) {
+      startSplice = i;
+      // console.log('found at:', i)
+      break;
+    }
+  }
+  for (var j = startSplice; j < receiptArray.length; j++) {
+    if (receiptArray[j].search(totalSearch) !== -1) {
+      endSplice = j;
+      break;
+    }
+  }
+  console.log('Found first start:', startSplice, receiptArray[startSplice]);
+  console.log('Found last total:', endSplice, receiptArray[endSplice]);
+
+  for (var k = startSplice; k < endSplice; k += 2) {
+    itemToPriceObj[receiptArray[k + 1]] = receiptArray[k];
+  }
+  return itemToPriceObj;
+};
                                                              
 // exports.promisifiedDetectText('./test.jpg');
