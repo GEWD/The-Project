@@ -31,7 +31,6 @@ exports.spliceReceipt = function(receiptArray) {
   for (var i = 0; i < receiptArray.length; i++) {
     if (receiptArray[i].search(firstPriceSearch) !== -1) {
       startSplice = i;
-      // console.log('found at:', i)
       break;
     }
   }
@@ -41,13 +40,9 @@ exports.spliceReceipt = function(receiptArray) {
       break;
     }
   }
-  console.log('Found first start:', startSplice, receiptArray[startSplice]);
-  console.log('Found last total:', endSplice, receiptArray[endSplice]);
-
   for (var k = startSplice; k < endSplice; k += 2) {
     itemToPriceObj[receiptArray[k + 1]] = receiptArray[k];
   }
   return itemToPriceObj;
 };
                                                              
-// exports.promisifiedDetectText('./test.jpg');

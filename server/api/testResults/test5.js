@@ -1,0 +1,1 @@
+{"D. Spicy Tsukemen":"($13.50 each)","Sapporo x 3":"Takoyaki","Sapporo x 2":"($6.00 each)","Subtotal":"($6.00 each)","Healthy SF":"Sales Tax"}
