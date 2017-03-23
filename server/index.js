@@ -191,7 +191,7 @@ app.post('/vision', function(req, res) {
     let allItems = results[0];
     fs.writeFileAsync('server/api/testResults/test.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    console.log('Successfully created /test.js with:', results);
   });
 });
 

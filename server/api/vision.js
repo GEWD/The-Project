@@ -41,6 +41,8 @@ exports.spliceReceipt = function(receiptArray) {
       break;
     }
   }
+  console.log('startSplice is found:', receiptArray[startSplice]);
+  console.log('endSplice is found:', receiptArray[endSplice]);
   for (var k = startSplice; k < endSplice; k += 2) {
     itemToPriceObj[receiptArray[k + 1]] = receiptArray[k];
   }
