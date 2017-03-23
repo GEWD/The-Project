@@ -197,7 +197,7 @@ let uploadCloud = () => {
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
