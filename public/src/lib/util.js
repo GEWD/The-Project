@@ -16,7 +16,6 @@ module.exports = {
   },
 
   sendServerTripName: (tripName, tripDesc) => {
-    console.log(tripDesc, '===========tripDesc');
     $.post('/createTripName',
     {
       submittedTripName: tripName,
