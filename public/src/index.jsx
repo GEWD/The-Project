@@ -17,6 +17,7 @@ class App extends React.Component {
     this.state = {
       isAuthenticated: false,
       tripName: '',
+      tripDesc: '',
       items:[],
       name:'',
       amount: 0
@@ -60,12 +61,15 @@ class App extends React.Component {
   }
 
   handleTripNameChange(event) {
-    this.setState({tripName: event.target.value});
+    let name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    });
   }
 
   handleTripNameSubmit(event) {
     console.log('Tripname was submitted:' + this.state.tripName);
-    Util.sendServerTripName(this.state.tripName);
+    Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
   }
 
   render() {
@@ -91,8 +95,18 @@ class App extends React.Component {
               handleTripNameChange={this.handleTripNameChange}
               handleTripNameSubmit={this.handleTripNameSubmit}
             />
-            <PrivateRoute path ="/profile" isAuthenticated={this.state.isAuthenticated} component={Profile}/>
-            <PrivateRoute path ="/upload-receipt" isAuthenticated={this.state.isAuthenticated} component={UploadReceipt}/>
+            <PrivateRoute
+              path ="/profile"
+              isAuthenticated={this.state.isAuthenticated}
+              component={Profile}
+            />
+            <PrivateRoute
+              path ="/upload-receipt"
+              isAuthenticated={this.state.isAuthenticated}
+              component={UploadReceipt}
+              tripName={this.state.tripName}
+              tripDesc={this.state.tripDesc}
+            />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
               addItem={this.addItem}
               itemName={this.state.name}
