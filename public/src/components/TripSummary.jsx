@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CreateTrip from './CreateTrip.jsx';
 import TripEntry from './TripEntry.jsx';
 
 class TripSummary extends React.Component {
@@ -14,7 +13,6 @@ class TripSummary extends React.Component {
         <h1>Trip Summary</h1>
         <TripEntry />
         <TripEntry />
-        <CreateTrip />
       </div>
     )
   }

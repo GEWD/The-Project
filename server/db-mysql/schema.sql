@@ -16,6 +16,7 @@ CREATE TABLE members (
 CREATE TABLE trips (
   id            int NOT NULL AUTO_INCREMENT,
   name          varchar(50) NOT NULL,
+  description   varchar(200),
   adminID       int NOT NULL,
   PRIMARY KEY   (ID)
 );

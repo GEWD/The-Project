@@ -135,11 +135,12 @@ app.get('/testing', function(req, res) {
 });
 
 //To be used for testing and seeing requests
-app.post('/testTripName', function(req, res) {
+app.post('/createTripName', function(req, res) {
   //With the received request, use model function to submit the tripname to the database
 
   let params = [
     req.body.submittedTripName,
+    req.body.submittedTripDesc,
     localStorage.user.fb_id
   ];
 

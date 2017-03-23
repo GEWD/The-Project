@@ -16,15 +16,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
+      tripName: '',
+      tripDesc: '',
       items:[],
       name:'',
       amount: 0
     }
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickLogout = this.handleClickLogout.bind(this);
     this.addItem = this.addItem.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onPriceChange = this.onPriceChange.bind(this);
+    this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
+    this.handleTripNameChange = this.handleTripNameChange.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -33,7 +37,7 @@ class App extends React.Component {
     });
   }
 
-  handleClick(event) {
+  handleClickLogout(event) {
     event.preventDefault();
     Util.logout(this.verifyAuthentication);
   }
@@ -56,6 +60,18 @@ class App extends React.Component {
     })
   }
 
+  handleTripNameChange(event) {
+    let name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    });
+  }
+
+  handleTripNameSubmit(event) {
+    console.log('Tripname was submitted:' + this.state.tripName);
+    Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
+  }
+
   render() {
     return (
       <div>
@@ -66,13 +82,32 @@ class App extends React.Component {
               <li><Link to="/upload-receipt">Upload Receipt</Link></li>
               <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/additems">Add Items</Link></li>
+              <li><Link to="/create-trip">Create Trip</Link></li>
               {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClick}>Logout</Link></li>}
+              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClickLogout}>Logout</Link></li>}
             </ul>
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
-            <PrivateRoute path ="/profile" isAuthenticated={this.state.isAuthenticated} component={Profile}/>
-            <PrivateRoute path ="/upload-receipt" isAuthenticated={this.state.isAuthenticated} component={UploadReceipt}/>
-            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem} 
+            <PrivateRoute
+              path="/create-trip"
+              component={CreateTrip}
+              isAuthenticated={this.state.isAuthenticated}
+              tripName={this.state.tripName}
+              handleTripNameChange={this.handleTripNameChange}
+              handleTripNameSubmit={this.handleTripNameSubmit}
+            />
+            <PrivateRoute
+              path ="/profile"
+              isAuthenticated={this.state.isAuthenticated}
+              component={Profile}
+            />
+            <PrivateRoute
+              path ="/upload-receipt"
+              isAuthenticated={this.state.isAuthenticated}
+              component={UploadReceipt}
+              tripName={this.state.tripName}
+              tripDesc={this.state.tripDesc}
+            />
+            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
               addItem={this.addItem}
               itemName={this.state.name}
               itemAmount={this.state.amount}

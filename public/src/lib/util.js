@@ -15,10 +15,12 @@ module.exports = {
     })
   },
 
-  sendServerTripName: (tripName) => {
-    $.post('/testTripName',
+  sendServerTripName: (tripName, tripDesc) => {
+    console.log(tripDesc, '===========tripDesc');
+    $.post('/createTripName',
     {
-      submittedTripName: tripName
+      submittedTripName: tripName,
+      submittedTripDesc: tripDesc
     },
     function(res) {
       console.log('successful tripName submitted');

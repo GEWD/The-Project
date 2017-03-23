@@ -85,8 +85,8 @@ const createNewTrip = (params) => {
   // Total 2 fields: get name and ADMIN_NAME from req.body
   const queryCheckIfTripExist = `SELECT trips.id FROM trips WHERE trips.name = ? AND trips.adminID = (SELECT members.id FROM members
                     WHERE members.fb_id = ?)`
-  const queryStringCreateNewTrip = `INSERT INTO trips (name, adminID)
-                    VALUES (?, (SELECT members.id FROM members
+  const queryStringCreateNewTrip = `INSERT INTO trips (name, description, adminID)
+                    VALUES (?, ?, (SELECT members.id FROM members
                     WHERE members.fb_id = ?));`
   const queryStringInsertTripMembers = ` INSERT INTO trips_members (tripID, memberID)
                     VALUES ( LAST_INSERT_ID(),

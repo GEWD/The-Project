@@ -2,43 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import serverInt from '../lib/serverInteraction.js';
 import Util from '../lib/util.js';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
-class CreateTrip extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tripName: ''
-    };
-    //Must bind all functions with 'this' to CreateTrip
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  //Automatically updates the property tripName of state
-  handleChange(event) {
-    this.setState({tripName: event.target.value});
-  }
-
-  //Handles subsequent function calls after submit
-  handleSubmit(event) {
-    console.log('Tripname was submitted:' + this.state.tripName);
-    event.preventDefault();
-    Util.sendServerTripName(this.state.tripName);
-  }
-
-  render() {
-    return (
-      <div>
-        <h3 onClick={this.testClick}>CreateTrip test</h3>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name your trip:
-            <input placeholder="Yosemite 2017" type="text" value={this.state.tripName} onChange={this.handleChange}/>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
-  }
-}
+const CreateTrip = ({tripName, tripDesc, handleTripNameSubmit, handleTripNameChange}) => (
+  <div>
+    <h3>Create Trip</h3>
+      <input id='tripName' name='tripName'placeholder='Yosemite 2017' type='text' value={tripName} onChange={handleTripNameChange}/>
+      <textarea id='tripDesc' name='tripDesc' placeholder='Your Trip Description' value={tripDesc} onChange={handleTripNameChange}/>
+      <Link to='/upload-receipt' value='submit' onClick={handleTripNameSubmit}>Submit</Link>
+  </div>
+)
 
 export default CreateTrip;
