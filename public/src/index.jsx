@@ -9,6 +9,7 @@ import Login from './components/Login.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
+import $ from 'jquery';
 
 
 class App extends React.Component {
@@ -29,6 +30,8 @@ class App extends React.Component {
     this.onPriceChange = this.onPriceChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
     this.handleTripNameChange = this.handleTripNameChange.bind(this);
+    this.callGVision = this.callGVision.bind(this);
+    this.onGVision = this.onGVision.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -46,6 +49,34 @@ class App extends React.Component {
     this.setState({
       items: this.state.items.concat([[this.state.name, this.state.amount]])
     })
+  }
+
+  callGVision(form) {
+    let data = new FormData(form);
+    let currentScope = this;
+    $.ajax({
+      type: 'POST',
+      url: '/upload',
+      data: data,
+      processData:false,
+      contentType:false,
+      success: (results) => {
+        console.log('.as.d.awd.as.data', results);
+        console.log('this is ssss:', this, '....', currentScope);
+        this.onGVision(results);
+        console.log('Successfully sent post to /vision, resulting array:', this.state.items);
+      },
+    });
+  }
+
+   onGVision(itemizationObject) {
+    //{item: price, item: price}
+    let itemArray = [];
+    for (var key in itemizationObject) {
+      itemArray.push([key, itemizationObject[key]]);
+    }
+    this.setState({items: itemArray});
+    console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
   onNameChange(event) {
@@ -106,6 +137,7 @@ class App extends React.Component {
               component={UploadReceipt}
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
+              callGVision={this.callGVision}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
               addItem={this.addItem}

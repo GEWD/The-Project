@@ -23,6 +23,8 @@ node_modules/
 build/
 env/
 bundle.js
+temp/
+api/testResults/
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
