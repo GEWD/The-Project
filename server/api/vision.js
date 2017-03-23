@@ -22,6 +22,7 @@ exports.promisifiedDetectText = function(image) {
   });
 };
 
+
 exports.spliceReceipt = function(receiptArray) {
   var itemToPriceObj = {};
   var firstPriceSearch = /\.\d\d/;
@@ -45,4 +46,3 @@ exports.spliceReceipt = function(receiptArray) {
   }
   return itemToPriceObj;
 };
-                                                             

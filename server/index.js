@@ -19,6 +19,12 @@ const gVision = require('./api/vision.js');
 //
 var localStorage = {};
 
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
+//Google cloud vision setup:
+const gVision = require('./api/vision.js');
+
+
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
@@ -97,8 +103,6 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
-// // test database functions
-// app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
@@ -183,6 +187,7 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
   let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
@@ -196,11 +201,6 @@ app.post('/vision', function(req, res) {
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
   });
-});
-
-app.get('/test', function(req, res) {
-  let test = [1, 2, 3];
-  
 });
 
 
