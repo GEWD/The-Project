@@ -1,6 +1,7 @@
 import React from 'react';
+import AddMember from './AddMember.jsx';
 
-const CreateItem = ({addItem,itemName,itemAmount,items,addMember,members, member,onInputChange}) => {
+const CreateItem = ({addItem, itemName, itemAmount, items, addMember, member, members, onInputChange, memberExist}) => {
   return (
       <div>
         <h2>Add your items</h2>
@@ -13,17 +14,9 @@ const CreateItem = ({addItem,itemName,itemAmount,items,addMember,members, member
             return <li key={index}>{item[0] + '   ' + item[1]}</li>
           })}
         </ul>
-        <hr/>
         <br/>
-        <label>To:
-        <input placeholder='Name' name='member' type='text' value={member} onChange={onInputChange}/>
-        <button onClick={addMember}>Add Member</button><br/>
-        <ul>
-          {members.map((member, index) => {
-            return <li key={index}>{member[0]}</li>
-          })}
-        </ul>
-        </label>
+        <hr/>
+        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist}/>
       </div>
     )
   }
