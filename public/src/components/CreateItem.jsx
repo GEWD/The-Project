@@ -1,7 +1,8 @@
 import React from 'react';
 import AddMember from './AddMember.jsx';
 
-const CreateItem = ({addItem, itemName, itemAmount, items, addMember, member, members, onInputChange, memberExist, deleteItem}) => {
+const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMember, addMember, member, members, onInputChange, memberExist, itemOnClick, memberOnClick, deleteItem}) => {
+
   return (
       <div>
         <h2>Add your items</h2>
@@ -10,14 +11,21 @@ const CreateItem = ({addItem, itemName, itemAmount, items, addMember, member, me
         <button onClick= {addItem}>Add Item</button><br/>
         <ul>
           {items.map((item,index) => {
-            return <li onClick ={() => {
-              deleteItem(index);
-            }} key={index}>{item[0] + '   ' + item[1] }</li>
+            return (
+              <li
+                key={index}
+                onClick={() => itemOnClick(index)}
+                className={'itemName' + (selectItem === index ? 'Selected' : '')}
+                >
+                  {item[0] + '   ' + item[1]}
+                  <button onClick={() => deleteItem(index) }>Delete</button>
+                </li>
+              )
           })}
         </ul>
         <br/>
         <hr/>
-        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist}/>
+        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist} memberOnClick={memberOnClick} selectMember={selectMember}/>
       </div>
     )
   }

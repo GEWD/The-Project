@@ -21,6 +21,8 @@ class App extends React.Component {
       tripDesc: '',
       receiptName:'',
       items:[],
+      selectItem:'',
+      selectMember:'',
       members:[],
       member: '',
       memberExist: false,
@@ -38,6 +40,8 @@ class App extends React.Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.addMember = this.addMember.bind(this);
     this.memberExist = this.memberExist.bind(this);
+    this.itemOnClick = this.itemOnClick.bind(this);
+    this.memberOnClick = this.memberOnClick.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -58,6 +62,7 @@ class App extends React.Component {
     this.state.name = '';
     this.state.amount = '';
   }
+
   onReceiptNameChange(event){
     this.setState({
       receiptName:event.target.value
@@ -134,6 +139,18 @@ class App extends React.Component {
     Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
   }
 
+  itemOnClick(index) {
+    this.setState({
+      selectItem: index
+    });
+  }
+
+  memberOnClick(index) {
+    this.setState({
+      selectMember: index
+    });
+  }
+
   render() {
     return (
       <div>
@@ -175,13 +192,16 @@ class App extends React.Component {
               addItem={this.addItem}
               itemName={this.state.name}
               itemAmount={this.state.amount}
+              selectItem={this.state.selectItem}
+              selectMember={this.state.selectMember}
               items={this.state.items}
               deleteItem={this.deleteItem}
               members={this.state.members}
               member={this.state.member}
-              addItem={this.addItem}
-              addMember={this.addMember}
               memberExist={this.state.memberExist}
+              addMember={this.addMember}
+              itemOnClick={this.itemOnClick}
+              memberOnClick={this.memberOnClick}
               onInputChange={this.onInputChange}/>
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
