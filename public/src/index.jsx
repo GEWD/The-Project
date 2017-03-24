@@ -34,6 +34,7 @@ class App extends React.Component {
     this.handleTripNameChange = this.handleTripNameChange.bind(this);
     this.callGVision = this.callGVision.bind(this);
     this.onGVision = this.onGVision.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -56,6 +57,13 @@ class App extends React.Component {
   onReceiptNameChange(event){
     this.setState({
       receiptName:event.target.value
+    })
+  }
+
+  deleteItem(index) {
+    delete this.state.items[index];
+    this.setState({
+      items: this.state.items
     })
   }
 
@@ -154,7 +162,8 @@ class App extends React.Component {
               itemAmount={this.state.amount}
               items={this.state.items}
               onNameChange={this.onNameChange}
-              onPriceChange={this.onPriceChange}/>
+              onPriceChange={this.onPriceChange}
+              deleteItem={this.deleteItem}/>
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
