@@ -48,6 +48,7 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+
 passport.use(new FacebookStrategy({
   clientID: process.env.FB_CLIENT_ID,
   clientSecret: process.env.FB_CLIENT_SECRET,

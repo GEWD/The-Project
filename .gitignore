@@ -32,3 +32,4 @@ api/testResults/
 node_modules/
 bower_components/
 
+.env
