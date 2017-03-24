@@ -136,9 +136,11 @@ class App extends React.Component {
   }
 
   memberExist(member, cb) {
-    var exist = false;
+    let exist = false;
     this.state.members.forEach((val, index) => {
-      exist = val[0].toUpperCase() === member.toUpperCase();
+      if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
+        exist = true;
+      }
     })
     cb(exist);
   }
