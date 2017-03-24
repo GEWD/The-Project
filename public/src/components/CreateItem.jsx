@@ -1,7 +1,7 @@
 import React from 'react';
 import AddMember from './AddMember.jsx';
 
-const CreateItem = ({addItem, itemName, itemAmount, items, addMember, member, members, onInputChange, memberExist}) => {
+const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMember, addMember, member, members, onInputChange, memberExist, itemOnClick, memberOnClick}) => {
   return (
       <div>
         <h2>Add your items</h2>
@@ -11,12 +11,18 @@ const CreateItem = ({addItem, itemName, itemAmount, items, addMember, member, me
 
         <ul>
           {items.map((item,index) => {
-            return <li key={index}>{item[0] + '   ' + item[1]}</li>
+            return (
+                <li
+                  key={index}
+                  onClick={() => itemOnClick(index)}
+                  className={'itemName' + (selectItem === index ? 'Selected' : '')}
+                >{item[0] + '   ' + item[1]}</li>
+              )
           })}
         </ul>
         <br/>
         <hr/>
-        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist}/>
+        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist} memberOnClick={memberOnClick} selectMember={selectMember}/>
       </div>
     )
   }
