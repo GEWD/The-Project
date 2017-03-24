@@ -3,7 +3,7 @@ const $ = require('jquery');
 module.exports = {
   verify: (cb) => {
     $.get('/verify', function(res) {
-      console.log('client /verify get request success', res);
+      console.log('client /verify get request success');
       cb(res);
     });
   },
@@ -16,7 +16,6 @@ module.exports = {
   },
 
   sendServerTripName: (tripName, tripDesc) => {
-    console.log(tripDesc, '===========tripDesc');
     $.post('/createTripName',
     {
       submittedTripName: tripName,

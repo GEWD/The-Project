@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import TripSummary from './components/TripSummary.jsx';
 import CreateTrip from './components/CreateTrip.jsx';
+import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
@@ -18,28 +19,40 @@ class App extends React.Component {
     this.state = {
       isAuthenticated: false,
       tripName: '',
+      username: '',
       tripDesc: '',
       receiptName:'',
       items:[],
+      selectItem:'',
+      selectMember:'',
+      members:[],
+      member: '',
+      memberExist: false,
       name:'',
       amount: 0
     }
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onPriceChange = this.onPriceChange.bind(this);
     this.onReceiptNameChange = this.onReceiptNameChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
-    this.handleTripNameChange = this.handleTripNameChange.bind(this);
     this.callGVision = this.callGVision.bind(this);
     this.onGVision = this.onGVision.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.addMember = this.addMember.bind(this);
+    this.memberExist = this.memberExist.bind(this);
+    this.itemOnClick = this.itemOnClick.bind(this);
+    this.memberOnClick = this.memberOnClick.bind(this);
+    this.initialMemberSelect = this.initialMemberSelect.bind(this);
   }
 
-  verifyAuthentication(isAuthenticated) {
+  verifyAuthentication(userInfo) {
     this.setState({
-      isAuthenticated: isAuthenticated
+      isAuthenticated: userInfo.isAuthenitcated,
+      username: userInfo.name || '',
+      members: userInfo.name !== undefined ? this.state.members.concat([[userInfo.name]]) : this.state.members,
+      fb_id: userInfo.fb_id || ''
     });
   }
 
@@ -50,8 +63,14 @@ class App extends React.Component {
 
   addItem (itemArray){
     this.setState({
-      items: this.state.items.concat([[this.state.name, this.state.amount]])
+      items: this.state.items.concat([[{
+        name: this.state.name,
+        amount: this.state.amount,
+        members: []
+      }]])
     })
+    this.state.name = '';
+    this.state.amount = '';
   }
 
   onReceiptNameChange(event){
@@ -85,38 +104,86 @@ class App extends React.Component {
     });
   }
 
-   onGVision(itemizationObject) {
-    //{item: price, item: price}
+  onGVision(itemizationObject) {
     let itemArray = [];
     for (var key in itemizationObject) {
-      itemArray.push([key, itemizationObject[key]]);
+      itemArray.push([{
+        name:key,
+        amount:itemizationObject[key],
+        members: []
+      }]);
     }
     this.setState({items: itemArray});
     console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
-  onNameChange(event) {
-    this.setState({
-      name: event.target.value
-    })
+  addMember (itemArray){
+    this.memberExist(this.state.member,(exist) => {
+        this.setState({
+          memberExist: exist
+        });
+        if (!exist) {
+          this.setState({
+            members: this.state.members.concat([[this.state.member]])
+          })
+        }
+    });
+
+    this.state.member = '';
   }
 
-  onPriceChange(event) {
-    this.setState({
-      amount: event.target.value
-    })
-  }
-
-  handleTripNameChange(event) {
-    let name = event.target.name;
+  onInputChange(event) {
+    const name = event.target.name;
     this.setState({
       [name]: event.target.value
     });
   }
 
+  memberExist(member, cb) {
+    let exist = false;
+    this.state.members.forEach((val, index) => {
+      if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
+        exist = true;
+      }
+    })
+    cb(exist);
+  }
+
   handleTripNameSubmit(event) {
     console.log('Tripname was submitted:' + this.state.tripName);
     Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
+  }
+
+  itemOnClick(index) {
+    const member = this.state.selectMember;
+    let members = this.state.items[index][0].members;
+    let items = this.state.items.slice();
+    let membersCurrIndex = members.indexOf(member);
+
+    if (membersCurrIndex < 0) {
+      items[index][0].members = members.concat([member]);
+    } else {
+      members.splice(membersCurrIndex, 1);
+    }
+
+    this.setState({
+      items: items,
+      selectItem: index
+    });
+  }
+
+  initialMemberSelect() {
+    if (this.state.selectMember.length === 0) {
+      this.setState({
+        selectMember: this.state.username
+      });
+    }
+  }
+
+  memberOnClick(member) {
+    this.setState({
+      selectMember: member
+    });
   }
 
   render() {
@@ -139,7 +206,7 @@ class App extends React.Component {
               component={CreateTrip}
               isAuthenticated={this.state.isAuthenticated}
               tripName={this.state.tripName}
-              handleTripNameChange={this.handleTripNameChange}
+              onInputChange={this.onInputChange}
               handleTripNameSubmit={this.handleTripNameSubmit}
             />
             <PrivateRoute
@@ -156,14 +223,22 @@ class App extends React.Component {
               callGVision={this.callGVision}
               onReceiptNameChange={this.onReceiptNameChange}
             />
-            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
+            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
               addItem={this.addItem}
               itemName={this.state.name}
               itemAmount={this.state.amount}
+              selectItem={this.state.selectItem}
+              selectMember={this.state.selectMember}
               items={this.state.items}
-              onNameChange={this.onNameChange}
-              onPriceChange={this.onPriceChange}
-              deleteItem={this.deleteItem}/>
+              deleteItem={this.deleteItem}
+              members={this.state.members}
+              member={this.state.member}
+              memberExist={this.state.memberExist}
+              addMember={this.addMember}
+              initialMemberSelect={this.initialMemberSelect}
+              itemOnClick={this.itemOnClick}
+              memberOnClick={this.memberOnClick}
+              onInputChange={this.onInputChange}/>
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
