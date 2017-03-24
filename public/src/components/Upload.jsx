@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
 class UploadReceipt extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleFormSubmit(e) {
+    this.props.callGVision(this.refs.uploadForm);
   }
 
   render() {
@@ -15,11 +21,12 @@ class UploadReceipt extends React.Component {
         <h3>Upload Your Receipt for </h3>
         <form ref='uploadForm'
           id='uploadForm'
-          action='http://localhost:3000/upload'
+          action='localhost:3000/upload'
           method='post'
           encType="multipart/form-data">
-            <input type="file" name="sampleFile" />
-            <input type='submit' value='Upload!' />
+          <input type="file" name="sampleFile" />
+          <Link to='/additems' value='submit' onClick={this.handleFormSubmit}>Submit</Link><br/>
+          <input type='text' onChange={this.props.onReceiptNameChange}/>
         </form>
       </div>
     )

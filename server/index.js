@@ -19,12 +19,6 @@ const gVision = require('./api/vision.js');
 //
 var localStorage = {};
 
-const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs'));
-//Google cloud vision setup:
-const gVision = require('./api/vision.js');
-
-
 app.use( bodyParser.json() );
 app.use(cors());
 app.use(express.static(__dirname + '/../public/dist'));
@@ -160,6 +154,7 @@ app.post('/createTripName', function(req, res) {
 app.post('/upload', function(req, res) {
   //req.body should include receipt name, total, receipt_link;
   //should be an insert query
+  console.log('body',req.body)
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -171,15 +166,17 @@ app.post('/upload', function(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-    cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(results) {
-      var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
-      db.addReceipt(params, function(err, data) {
-        console.log(data);
-        res.send('File uploaded!');
-      });
+    let image = __dirname + '/temp/filename.jpg'; 
+    gVision.promisifiedDetectText(image)
+    .then(function(results) {
+      let allItems = results[0];
+      uploadCloud();
+      res.send(gVision.spliceReceipt(allItems.split('\n')));
+    })
+    .error(function(e) {
+      console.log('Error received in appPost, promisifiedDetectText:', e);
     });
   });
-
 });
 
 app.post('/upload/delete', function(req, res) {
@@ -187,6 +184,16 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+let uploadCloud = () => {
+  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
+      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
+      // db.addReceipt(params, function(err, data) {
+      //   console.log(data);
+      //   res.send('File uploaded!');
+      // });
+      console.log('+++++++++',data);
+  });
+}
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {

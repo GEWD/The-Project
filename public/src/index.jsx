@@ -9,6 +9,7 @@ import Login from './components/Login.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
+import $ from 'jquery';
 
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
       isAuthenticated: false,
       tripName: '',
       tripDesc: '',
+      receiptName:'',
       items:[],
       name:'',
       amount: 0
@@ -27,8 +29,11 @@ class App extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onPriceChange = this.onPriceChange.bind(this);
+    this.onReceiptNameChange = this.onReceiptNameChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
     this.handleTripNameChange = this.handleTripNameChange.bind(this);
+    this.callGVision = this.callGVision.bind(this);
+    this.onGVision = this.onGVision.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -46,6 +51,40 @@ class App extends React.Component {
     this.setState({
       items: this.state.items.concat([[this.state.name, this.state.amount]])
     })
+  }
+
+  onReceiptNameChange(event){
+    this.setState({
+      receiptName:event.target.value
+    })
+  }
+
+  callGVision(form) {
+    let data = new FormData(form);
+    let currentScope = this;
+    $.ajax({
+      type: 'POST',
+      url: '/upload',
+      data: data,
+      processData:false,
+      contentType:false,
+      success: (results) => {
+        console.log('.as.d.awd.as.data', results);
+        console.log('this is ssss:', this, '....', currentScope);
+        this.onGVision(results);
+        console.log('Successfully sent post to /vision, resulting array:', this.state.items);
+      },
+    });
+  }
+
+   onGVision(itemizationObject) {
+    //{item: price, item: price}
+    let itemArray = [];
+    for (var key in itemizationObject) {
+      itemArray.push([key, itemizationObject[key]]);
+    }
+    this.setState({items: itemArray});
+    console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
   onNameChange(event) {
@@ -106,6 +145,8 @@ class App extends React.Component {
               component={UploadReceipt}
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
+              callGVision={this.callGVision}
+              onReceiptNameChange={this.onReceiptNameChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
               addItem={this.addItem}
