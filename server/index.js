@@ -195,18 +195,6 @@ let uploadCloud = () => {
   });
 }
 
-app.post('/fake', function(req,res) {
-  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
-      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
-      // db.addReceipt(params, function(err, data) {
-      //   console.log(data);
-      //   res.send('File uploaded!');
-      // });
-
-      res.send(data);
-      console.log('+++++++++',data);
-  });
-})
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
   let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
