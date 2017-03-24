@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import TripSummary from './components/TripSummary.jsx';
 import CreateTrip from './components/CreateTrip.jsx';
+import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
@@ -211,7 +212,7 @@ class App extends React.Component {
               callGVision={this.callGVision}
               onReceiptNameChange={this.onReceiptNameChange}
             />
-            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
+            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
               addItem={this.addItem}
               itemName={this.state.name}
               itemAmount={this.state.amount}
