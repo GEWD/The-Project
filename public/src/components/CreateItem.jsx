@@ -16,7 +16,11 @@ const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMem
                   key={index}
                   onClick={() => itemOnClick(index)}
                   className={'itemName' + (selectItem === index ? 'Selected' : '')}
-                >{item[0] + '   ' + item[1]}</li>
+                >
+                  <span>{item[0].name}</span>
+                  <span>{item[0].amount}</span>
+                  <span>{item[0].members}</span>
+                </li>
               )
           })}
         </ul>
