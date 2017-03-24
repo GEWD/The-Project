@@ -64,7 +64,7 @@ class App extends React.Component {
       items: this.state.items.concat([[{
         name: this.state.name,
         amount: this.state.amount,
-        members: null
+        members: []
       }]])
     })
     this.state.name = '';
@@ -143,7 +143,19 @@ class App extends React.Component {
   }
 
   itemOnClick(index) {
+    const member = this.state.selectMember;
+    let members = this.state.items[index][0].members;
+    let items = this.state.items.slice();
+    let membersCurrIndex = members.indexOf(member);
+
+    if (membersCurrIndex < 0) {
+      items[index][0].members = members.concat([member]);
+    } else {
+      members.splice(membersCurrIndex, 1);
+    }
+
     this.setState({
+      items: items,
       selectItem: index
     });
   }

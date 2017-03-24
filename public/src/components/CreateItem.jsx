@@ -17,16 +17,29 @@ const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMem
                   onClick={() => itemOnClick(index)}
                   className={'itemName' + (selectItem === index ? 'Selected' : '')}
                 >
-                  <span>{item[0].name}</span>
-                  <span>{item[0].amount}</span>
-                  <span>{item[0].members}</span>
+                  <span className='receipt-item-name'>{item[0].name}</span>
+                  <span className='receipt-item-amount'>{item[0].amount}</span>
+                  <div className='receipt-members-list'>
+                    {item[0].members.map((member, index) => {
+                      return <span key={index} className='receipt-member'>{member}</span>
+                    })}
+                  </div>
                 </li>
               )
           })}
         </ul>
         <br/>
         <hr/>
-        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist} memberOnClick={memberOnClick} selectMember={selectMember} initialMemberSelect={initialMemberSelect}/>
+        <AddMember
+          addMember={addMember}
+          member={member}
+          members={members}
+          onInputChange={onInputChange}
+          memberExist={memberExist}
+          memberOnClick={memberOnClick}
+          selectMember={selectMember}
+          initialMemberSelect={initialMemberSelect}
+        />
       </div>
     )
   }
