@@ -1,7 +1,7 @@
 import React from 'react';
 import AddMember from './AddMember.jsx';
 
-const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMember, addMember, member, members, onInputChange, memberExist, itemOnClick, memberOnClick}) => {
+const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMember, addMember, member, members, onInputChange, memberExist, itemOnClick, memberOnClick,initialMemberSelect}) => {
   return (
       <div>
         <h2>Add your items</h2>
@@ -22,7 +22,7 @@ const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, selectMem
         </ul>
         <br/>
         <hr/>
-        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist} memberOnClick={memberOnClick} selectMember={selectMember}/>
+        <AddMember addMember={addMember} member={member} members={members} onInputChange={onInputChange} memberExist={memberExist} memberOnClick={memberOnClick} selectMember={selectMember} initialMemberSelect={initialMemberSelect}/>
       </div>
     )
   }
