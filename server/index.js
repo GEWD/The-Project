@@ -49,8 +49,8 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: KEYS.facebookAuth.clientID,
-  clientSecret: KEYS.facebookAuth.clientSecret,
+  clientID: process.env.FB_CLIENT_ID,
+  clientSecret: process.env.FB_CLIENT_SECRET,
   callbackURL: 'http://localhost:3000/auth/facebook/callback',
   profileFields: ['id', 'email', 'displayName', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
 },
