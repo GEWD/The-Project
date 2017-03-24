@@ -104,11 +104,14 @@ class App extends React.Component {
     });
   }
 
-   onGVision(itemizationObject) {
-    //{item: price, item: price}
+  onGVision(itemizationObject) {
     let itemArray = [];
     for (var key in itemizationObject) {
-      itemArray.push([key, itemizationObject[key]]);
+      itemArray.push([{
+        name:key,
+        amount:itemizationObject[key],
+        members: []
+      }]);
     }
     this.setState({items: itemArray});
     console.log('Successfully sent post to /vision, resulting array:', this.state.items);
