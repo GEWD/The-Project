@@ -7,7 +7,7 @@ const Promise = require('bluebird');
 const vision = gcloud.vision;
 const visionClient = vision({
   projectId: 'gewd-161701',
-  keyFilename: __dirname + '/../../env/goog.json'
+  keyFilename: process.env.GOOGKey
 });
 
 exports.promisifiedDetectText = function(image) {
