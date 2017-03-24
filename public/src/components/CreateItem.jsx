@@ -1,6 +1,7 @@
 import React from 'react';
 
-const CreateItem = ({addItem,itemName,itemAmount,items,onNameChange,onPriceChange}) => {
+const CreateItem = ({addItem,itemName,itemAmount,items,onNameChange,onPriceChange,deleteItem}) => {
+
   return (
       <div>
         <h2>Add your items</h2>
@@ -9,7 +10,9 @@ const CreateItem = ({addItem,itemName,itemAmount,items,onNameChange,onPriceChang
         <button onClick= {addItem}>Add</button><br/>
         <ul>      
           {items.map((item,index) => {
-            return <li key={index}>{item[0] + '   ' + item[1]}</li>
+            return <li onClick ={() => {
+              deleteItem(index);
+            }} key={index}>{item[0] + '   ' + item[1] }</li>
           })}
         </ul>
       </div>
