@@ -11,12 +11,14 @@ const CreateItem = ({addItem, itemName, itemAmount, items, selectItem, deleteIte
         <ul>
           {items.map((item,index) => {
             return (
-              <li
-                key={index}
-                onClick={() => itemOnClick(index)}
-                className={'itemName' + (selectItem === index ? 'Selected' : '')}
+                <li
+                  key={index}
+                  onClick={() => itemOnClick(index)}
+                  className={'itemName' + (selectItem === index ? 'Selected' : '')}
                 >
-                  {item[0] + '   ' + item[1]}
+                  <span>{item[0].name}</span>
+                  <span>{item[0].amount}</span>
+                  <span>{item[0].members}</span>
                   <button onClick={() => deleteItem(index) }>Delete</button>
                 </li>
               )

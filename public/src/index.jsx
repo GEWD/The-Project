@@ -62,7 +62,11 @@ class App extends React.Component {
 
   addItem (itemArray){
     this.setState({
-      items: this.state.items.concat([[this.state.name, this.state.amount]])
+      items: this.state.items.concat([[{
+        name: this.state.name,
+        amount: this.state.amount,
+        members: null
+      }]])
     })
     this.state.name = '';
     this.state.amount = '';
