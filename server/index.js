@@ -30,7 +30,7 @@ app.use(fileUpload());
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
-  secret: KEYS.sessionAuth.sessionSecret,
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));
