@@ -165,11 +165,6 @@ class App extends React.Component {
   }
 
   memberOnClick(member) {
-    // const items = this.state.items;
-    // let currItem = items[this.state.selectItem];
-    // console.log('===========currItemB4', currItem);
-    // currItem = items[this.state.selectItem].concat([[member]]);
-    // console.log('===========currItemafta', currItem);
     this.setState({
       selectMember: member
     });
