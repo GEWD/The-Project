@@ -93,7 +93,6 @@ class App extends React.Component {
 
   addMember (itemArray){
     this.memberExist(this.state.member,(exist) => {
-      console.log('=======exist',exist,'=====state.memberExist', this.state.memberExist,'member==========', this.state.member);
         this.setState({
           memberExist: exist
         });
