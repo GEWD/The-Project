@@ -19,6 +19,7 @@ class App extends React.Component {
       isAuthenticated: false,
       tripName: '',
       tripDesc: '',
+      receiptName:'',
       items:[],
       name:'',
       amount: 0
@@ -28,6 +29,7 @@ class App extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onPriceChange = this.onPriceChange.bind(this);
+    this.onReceiptNameChange = this.onReceiptNameChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
     this.handleTripNameChange = this.handleTripNameChange.bind(this);
     this.callGVision = this.callGVision.bind(this);
@@ -48,6 +50,12 @@ class App extends React.Component {
   addItem (itemArray){
     this.setState({
       items: this.state.items.concat([[this.state.name, this.state.amount]])
+    })
+  }
+
+  onReceiptNameChange(event){
+    this.setState({
+      receiptName:event.target.value
     })
   }
 
@@ -138,6 +146,7 @@ class App extends React.Component {
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
               callGVision={this.callGVision}
+              onReceiptNameChange={this.onReceiptNameChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={CreateItem}
               addItem={this.addItem}
