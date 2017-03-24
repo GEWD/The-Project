@@ -18,6 +18,7 @@ class App extends React.Component {
     this.state = {
       isAuthenticated: false,
       tripName: '',
+      username: '',
       tripDesc: '',
       receiptName:'',
       items:[],
@@ -42,11 +43,15 @@ class App extends React.Component {
     this.memberExist = this.memberExist.bind(this);
     this.itemOnClick = this.itemOnClick.bind(this);
     this.memberOnClick = this.memberOnClick.bind(this);
+    this.initialMemberSelect = this.initialMemberSelect.bind(this);
   }
 
-  verifyAuthentication(isAuthenticated) {
+  verifyAuthentication(userInfo) {
     this.setState({
-      isAuthenticated: isAuthenticated
+      isAuthenticated: userInfo.isAuthenitcated,
+      username: userInfo.name || '',
+      members: userInfo.name !== undefined ? this.state.members.concat([[userInfo.name]]) : this.state.members,
+      fb_id: userInfo.fb_id || ''
     });
   }
 
@@ -145,9 +150,22 @@ class App extends React.Component {
     });
   }
 
-  memberOnClick(index) {
+  initialMemberSelect() {
+    if (this.state.selectMember.length === 0) {
+      this.setState({
+        selectMember: this.state.username
+      });
+    }
+  }
+
+  memberOnClick(member) {
+    // const items = this.state.items;
+    // let currItem = items[this.state.selectItem];
+    // console.log('===========currItemB4', currItem);
+    // currItem = items[this.state.selectItem].concat([[member]]);
+    // console.log('===========currItemafta', currItem);
     this.setState({
-      selectMember: index
+      selectMember: member
     });
   }
 
@@ -200,6 +218,7 @@ class App extends React.Component {
               member={this.state.member}
               memberExist={this.state.memberExist}
               addMember={this.addMember}
+              initialMemberSelect={this.initialMemberSelect}
               itemOnClick={this.itemOnClick}
               memberOnClick={this.memberOnClick}
               onInputChange={this.onInputChange}/>

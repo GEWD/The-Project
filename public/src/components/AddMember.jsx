@@ -1,24 +1,39 @@
 import React from 'react';
 
-const AddMember = ({addMember, members, member, onInputChange, memberExist, memberOnClick, selectMember}) => (
-  <div>
-    <label>To:
-    <input placeholder='Name' name='member' type='text' value={member} onChange={onInputChange}/>
-    <button onClick={addMember}>Add Member</button><br/>
-    {memberExist ? <p>The name already exist!</p> : null}
-    <ul>
-      {members.map((member, index) => {
-        return (
-          <li
-            key={index}
-            onClick={() => memberOnClick(index)}
-            className={'selectMember' + (selectMember === index ? 'Selected' : '')}
-          >{member[0]}</li>
-        )
-      })}
-    </ul>
-    </label>
-  </div>
-)
+class AddMember extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    this.props.initialMemberSelect();
+  }
+
+  render() {
+
+    return (
+      <div>
+        <label>To:
+        <input placeholder='Name' name='member' type='text' value={this.props.member} onChange={this.props.onInputChange}/>
+        <button onClick={this.props.addMember}>Add Member</button><br/>
+        {this.props.memberExist ? <p>The name already exist!</p> : null}
+        <ul>
+          {this.props.members.map((member, index) => {
+            return (
+              <li
+                key={index}
+                onClick={() => this.props.memberOnClick(member[0])}
+                className={'selectMember' + (this.props.selectMember === member[0] ? 'Selected' : '')}
+              >{member[0]}</li>
+            )
+          })}
+        </ul>
+        </label>
+      </div>
+    ) 
+
+  }
+}
 
 export default AddMember;
