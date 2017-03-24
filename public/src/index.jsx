@@ -23,6 +23,7 @@ class App extends React.Component {
       items:[],
       members:[],
       member: '',
+      memberExist: false,
       name:'',
       amount: 0
     }
@@ -36,6 +37,7 @@ class App extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.addMember = this.addMember.bind(this);
+    this.memberExist = this.memberExist.bind(this);
   }
 
   verifyAuthentication(isAuthenticated) {
@@ -98,9 +100,17 @@ class App extends React.Component {
   }
 
   addMember (itemArray){
-    this.setState({
-      members: this.state.members.concat([[this.state.member]])
-    })
+    this.memberExist(this.state.member,(exist) => {
+        this.setState({
+          memberExist: exist
+        });
+        if (!exist) {
+          this.setState({
+            members: this.state.members.concat([[this.state.member]])
+          })
+        }
+    });
+
     this.state.member = '';
   }
 
@@ -109,6 +119,14 @@ class App extends React.Component {
     this.setState({
       [name]: event.target.value
     });
+  }
+
+  memberExist(member, cb) {
+    var exist = false;
+    this.state.members.forEach((val, index) => {
+      exist = val[0].toUpperCase() === member.toUpperCase();
+    })
+    cb(exist);
   }
 
   handleTripNameSubmit(event) {
@@ -161,8 +179,10 @@ class App extends React.Component {
               deleteItem={this.deleteItem}
               members={this.state.members}
               member={this.state.member}
-              onInputChange={this.onInputChange}
-              addMember={this.addMember}/>
+              addItem={this.addItem}
+              addMember={this.addMember}
+              memberExist={this.state.memberExist}
+              onInputChange={this.onInputChange}/>
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
