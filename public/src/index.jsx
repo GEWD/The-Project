@@ -5,6 +5,7 @@ import TripSummary from './components/TripSummary.jsx';
 import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
+import MemberSummary from './components/MemberSummary.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
@@ -18,6 +19,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
+      receiptUrl:'',
       tripName: '',
       username: '',
       tripDesc: '',
@@ -196,6 +198,7 @@ class App extends React.Component {
               <li><Link to="/upload-receipt">Upload Receipt</Link></li>
               <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/additems">Add Items</Link></li>
+              <li><Link to="/summary">Member Summary</Link></li>
               <li><Link to="/create-trip">Create Trip</Link></li>
               {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
               {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClickLogout}>Logout</Link></li>}
@@ -239,6 +242,12 @@ class App extends React.Component {
               itemOnClick={this.itemOnClick}
               memberOnClick={this.memberOnClick}
               onInputChange={this.onInputChange}/>
+            <PrivateRoute
+              path ="/summary"
+              isAuthenticated={this.state.isAuthenticated}
+              component={MemberSummary}
+              data={this.state}
+            />
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
