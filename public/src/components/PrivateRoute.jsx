@@ -18,3 +18,5 @@ const PrivateRoute = ({ component, isAuthenticated, path, ...props
 )
 
 export default PrivateRoute;
+
+
