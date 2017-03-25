@@ -40,12 +40,12 @@ class MemberSummary extends React.Component {
         <h4>{this.props.data.receiptName} {'URL'}</h4>
         <h4>Paid By: {this.props.data.username}</h4>
         <ul>
-          {this.props.data.items.map((el,index) => {
+          {this.props.data.items.map((el,idx) => {
             return (
-              <li>
-                <ul><strong>{el[0].name}</strong> ${parseInt(el[0].amount).toFixed(2)}
+              <li key={idx}>
+                <ul ><strong>{el[0].name}</strong> ${parseInt(el[0].amount).toFixed(2)}
                   {el[0].members.map((member,index) => {
-                    return (<li><i>{member}</i>   ${(parseInt(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
+                    return (<li key={index}><i>{member}</i>   ${(parseInt(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
                   })}
                 </ul> 
               </li> 
