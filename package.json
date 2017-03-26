@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "webpack -d --watch"
+    "start": "nodemon server/index.js & webpack -d --watch"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
