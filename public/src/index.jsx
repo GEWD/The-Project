@@ -5,7 +5,7 @@ import TripSummary from './components/TripSummary.jsx';
 import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
-import MemberSummary from './components/MemberSummary.jsx';
+import MemberSummary from './components/memberSummary.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
