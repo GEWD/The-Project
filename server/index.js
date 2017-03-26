@@ -10,13 +10,12 @@ const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = process.env.cloudKey;
+const cloudConfig = cloudinary.config(process.env.cloudKey);
 const path = require('path');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 //Google cloud vision setup:
 const gVision = require('./api/vision.js');
-//
 var localStorage = {};
 
 app.use( bodyParser.json() );
@@ -152,16 +151,20 @@ app.post('/createTripName', function(req, res) {
   res.redirect('/upload-receipt');
 });
 
+let uploadCloud = () => {
+  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
+  });
+}; 
 app.post('/upload', function(req, res) {
   //req.body should include receipt name, total, receipt_link;
   //should be an insert query
-  console.log('body',req.body)
+  // console.log('body', req.body);
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
-  console.log(sampleFile);
+  // console.log(sampleFile);
   // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
@@ -171,7 +174,7 @@ app.post('/upload', function(req, res) {
     gVision.promisifiedDetectText(image)
     .then(function(results) {
       let allItems = results[0];
-      uploadCloud();
+      // uploadCloud();
       res.send(gVision.spliceReceipt(allItems.split('\n')));
     })
     .error(function(e) {
@@ -185,16 +188,6 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
-let uploadCloud = () => {
-  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
-      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
-      // db.addReceipt(params, function(err, data) {
-      //   console.log(data);
-      //   res.send('File uploaded!');
-      // });
-      console.log('+++++++++',data);
-  });
-}
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
@@ -204,7 +197,7 @@ app.post('/vision', function(req, res) {
     let allItems = results[0];
     fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
