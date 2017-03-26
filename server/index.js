@@ -81,7 +81,7 @@ checkAuthentication = (req, res, next) => {
 
 authHelper = (req, res, next) => {
   localStorage.isAuthenitcated = req.isAuthenticated();
-  localStorage.user = req.user;
+  localStorage.user = req.user || {} ;
   next();
 };
 
@@ -118,8 +118,12 @@ app.get('/logout', authHelper, function(req, res) {
 });
 
 app.get('/verify', authHelper, function(req, res) {
-  let isAuthenticated = req.isAuthenticated() ? true : false;
-  res.send(req.isAuthenticated());
+  let userInfo = {
+    isAuthenitcated: localStorage.isAuthenitcated,
+    name: localStorage.user.name,
+    fb_id: localStorage.user.fb_id
+  }
+  res.send(userInfo);
 });
 
 app.get('*', checkAuthentication, authHelper, (req, res) => {
@@ -170,7 +174,7 @@ app.post('/upload', function(req, res) {
     if (err) {
       return res.status(500).send(err);
     }
-    let image = __dirname + '/temp/filename.jpg'; 
+    let image = __dirname + '/temp/filename.jpg';
     gVision.promisifiedDetectText(image)
     .then(function(results) {
       let allItems = results[0];
@@ -191,7 +195,7 @@ app.post('/upload/delete', function(req, res) {
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
