@@ -32,8 +32,10 @@ class App extends React.Component {
       member: '',
       memberExist: false,
       name:'',
-      amount: 0
+      amount: 0,
+      sideMenuState: false
     }
+
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
     this.addItem = this.addItem.bind(this);
@@ -48,6 +50,8 @@ class App extends React.Component {
     this.itemOnClick = this.itemOnClick.bind(this);
     this.memberOnClick = this.memberOnClick.bind(this);
     this.initialMemberSelect = this.initialMemberSelect.bind(this);
+    this.menuOnClick = this.menuOnClick.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   verifyAuthentication(userInfo) {
@@ -189,64 +193,84 @@ class App extends React.Component {
     });
   }
 
+  menuOnClick() {
+    this.setState({
+      sideMenuState: true
+    });
+    console.log('----menu state is when menu button is clicked', this.state.sideMenuState);
+  }
+
+  closeMenu() {
+    this.setState({
+      sideMenuState: !this.state.sideMenuState
+    });
+    console.log('----site-pusher is clicked', this.state.sideMenuState);
+  }
+
   render() {
     return (
-      <div>
+      <div className='site-container'>
         <Router>
-          <div>
+          <div
+            onClick={this.state.sideMenuState ? this.closeMenu : null}
+            className={this.state.sideMenuState ? 'site-pusher-on' : 'site-pusher'}
+          >
             <Navbar
               isAuthenticated={this.state.isAuthenticated}
               handleClickLogout={this.handleClickLogout}
+              menuOnClick={this.menuOnClick}
+              sideMenuState={this.state.sideMenuState}
             />
-            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
-            <PrivateRoute
-              path="/create-trip"
-              component={CreateTrip}
-              isAuthenticated={this.state.isAuthenticated}
-              tripName={this.state.tripName}
-              onInputChange={this.onInputChange}
-              handleTripNameSubmit={this.handleTripNameSubmit}
-            />
-            <PrivateRoute
-              path ="/profile"
-              isAuthenticated={this.state.isAuthenticated}
-              component={Profile}
-            />
-            <PrivateRoute
-              path ="/upload-receipt"
-              isAuthenticated={this.state.isAuthenticated}
-              component={UploadReceipt}
-              tripName={this.state.tripName}
-              tripDesc={this.state.tripDesc}
-              callGVision={this.callGVision}
-              onReceiptNameChange={this.onReceiptNameChange}
-            />
-            <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
-              addItem={this.addItem}
-              itemName={this.state.name}
-              itemAmount={this.state.amount}
-              selectItem={this.state.selectItem}
-              selectMember={this.state.selectMember}
-              items={this.state.items}
-              deleteItem={this.deleteItem}
-              members={this.state.members}
-              member={this.state.member}
-              memberExist={this.state.memberExist}
-              addMember={this.addMember}
-              initialMemberSelect={this.initialMemberSelect}
-              itemOnClick={this.itemOnClick}
-              memberOnClick={this.memberOnClick}
-              onInputChange={this.onInputChange}/>
-            <PrivateRoute
-              path ="/summary"
-              isAuthenticated={this.state.isAuthenticated}
-              component={MemberSummary}
-              data={this.state}
-            />
-            <Route path ="/login" render={() => (
-              this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
-            )}/>
-
+            <div className='content-container'>
+              <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
+              <PrivateRoute
+                path="/create-trip"
+                component={CreateTrip}
+                isAuthenticated={this.state.isAuthenticated}
+                tripName={this.state.tripName}
+                onInputChange={this.onInputChange}
+                handleTripNameSubmit={this.handleTripNameSubmit}
+              />
+              <PrivateRoute
+                path ="/profile"
+                isAuthenticated={this.state.isAuthenticated}
+                component={Profile}
+              />
+              <PrivateRoute
+                path ="/upload-receipt"
+                isAuthenticated={this.state.isAuthenticated}
+                component={UploadReceipt}
+                tripName={this.state.tripName}
+                tripDesc={this.state.tripDesc}
+                callGVision={this.callGVision}
+                onReceiptNameChange={this.onReceiptNameChange}
+              />
+              <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
+                addItem={this.addItem}
+                itemName={this.state.name}
+                itemAmount={this.state.amount}
+                selectItem={this.state.selectItem}
+                selectMember={this.state.selectMember}
+                items={this.state.items}
+                deleteItem={this.deleteItem}
+                members={this.state.members}
+                member={this.state.member}
+                memberExist={this.state.memberExist}
+                addMember={this.addMember}
+                initialMemberSelect={this.initialMemberSelect}
+                itemOnClick={this.itemOnClick}
+                memberOnClick={this.memberOnClick}
+                onInputChange={this.onInputChange}/>
+              <PrivateRoute
+                path ="/summary"
+                isAuthenticated={this.state.isAuthenticated}
+                component={MemberSummary}
+                data={this.state}
+              />
+              <Route path ="/login" render={() => (
+                this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
+              )}/>
+            </div>
           </div>
         </Router>
       </div>
