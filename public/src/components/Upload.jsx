@@ -26,7 +26,7 @@ class UploadReceipt extends React.Component {
           encType="multipart/form-data">
           <input type="file" name="sampleFile" />
           <Link to='/additems' value='submit' onClick={this.handleFormSubmit}>Submit</Link><br/>
-          <input type='text' onChange={this.props.onReceiptNameChange}/>
+          <input type='text' name='receiptName' onChange={this.props.onInputChange}/>
         </form>
       </div>
     )
