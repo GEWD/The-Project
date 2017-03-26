@@ -44,6 +44,14 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+input {
+  -webkit-appearance: none;
+  border: none;
+  box-shadow: none !important;
+}
+input:-webkit-autofill {
+  color: #fff !important;
+}
 
 /*App Styling*/
 html, body, #app {
@@ -75,6 +83,18 @@ p {
   font-size: 1em;
   font-weight: 400;
   line-height: 1.4em;
+}
+
+.btn-primary {
+  background-color: #4A90E2;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 2px;
+  width: 240px;
+  margin: auto;
+  height: 36px;
+  text-align: center;
+  padding: 0.6em 1em;
 }
 
 .site-container {
@@ -199,10 +219,57 @@ p {
   height: 100%;
 }
 
+/*Create Trip Page Container*/
+.create-trip-page-container {
+  padding-top: 2em;
+  text-align: center;
+}
+
+input#tripName {
+  display: block;
+  margin: 1em auto;
+  width: 240px;
+  -webkit-appearance: none;
+  background-color: #F7F7F7;
+  border-radius: 2px;
+  padding: 0.8em 1em;
+  color: #444242;
+  font-size: 16px;
+}
+
+input#tripName::-webkit-input-placeholder{
+  color: #AAAAAA;
+}
+
+textarea#tripDesc {
+  display: block;
+  margin: 1em auto;
+  width: 240px;
+  -webkit-appearance: none;
+  background-color: #F7F7F7;
+  border: none;
+  border-radius: 2px;
+  padding: 0.8em 1em;
+  color: #444242;
+  font-size: 16px;
+}
+
+textarea#tripDesc::-webkit-input-placeholder{
+  color: #AAAAAA;
+}
+
+.create-new-trip-btn{
+  text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+  vertical-align: -webkit-baseline-middle;
+}
+
 .itemNameSelected {
   color: white;
   background-color: blue;
 }
+
 .selectMemberSelected {
   color: white;
   background-color: blue;
