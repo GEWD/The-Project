@@ -1,20 +1,15 @@
 import React from 'react';
 import Util from '../lib/util.js';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
 class MemberSummary extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    // };
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.pricePerPerson = this.pricePerPerson.bind(this);
-    // this.items = this.props.data.items;
-    // this.trip = this.data.trip;
-    // this.payor = this.data.payor;
-    // this.items_split = this.data.items_split;
-    // this.receiptName = this.data.receiptName;
-    // this.receiptUrl = this.data.receiptUrl;
-    // let itemsArray = Object.keys(data.items_split);
+    this.sumBill = parseInt(this.props.data.sumBill);
+    this.sumTax = parseInt(this.props.data.sumTax);
+    this.sumTip = parseInt(this.props.data.sumTip);
+    this.memberCount = this.props.data.members.length;
+    this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount);
   }
 
   
@@ -26,11 +21,6 @@ class MemberSummary extends React.Component {
     Util.insertIntoDb(dummyData);
   }
 
-
-
-  pricePerPerson(totalCost,memberArray) {
-    return (totalCost / memberArray.length);
-  }
 
   
   render() {
@@ -52,7 +42,12 @@ class MemberSummary extends React.Component {
             )  
           })}
         </ul>
-        <input type="submit" value="Confirm"/>
+        <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
+        <p>Total Tax: ${this.sumTax.toFixed(2)}</p>
+        <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
+        <p>Total: ${(this.sumTip+this.sumTax+this.sumBill).toFixed(2)}</p>
+        <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
+        <Link to='/breakdown' onClick={this.props.calculateMemberSum}>Submit</Link>
       </div>
     )
   }
