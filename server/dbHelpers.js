@@ -87,7 +87,7 @@ const parseSummaryData = (summary) => {
   //     };
   //   }
   // }
-  // return summary;  
+  // return summary;
 }
 
 
@@ -117,7 +117,7 @@ const createNewTrip = (params) => {
                     VALUES ( LAST_INSERT_ID(),
                     (SELECT trips.adminID FROM trips
                     WHERE trips.id = LAST_INSERT_ID()));`
-  db.queryAsync(queryCheckIfTripExist, params)
+  return db.queryAsync(queryCheckIfTripExist, params)
     .then( result => {
       if (result[0]) {
         throw 'Trip already exist!';
@@ -125,61 +125,209 @@ const createNewTrip = (params) => {
     })
     .then( () => db.queryAsync(queryStringCreateNewTrip, params))
     .then( () => db.queryAsync(queryStringInsertTripMembers))
-    .catch( err => console.log('ERROR: createNewTrip in SQL', err) );
+    .catch( err => console.error('ERROR: createNewTrip in SQL', err) );
 }
 
 const addMembersToTrip = (params) => {
   // Total 3 fields: get TRIP_NAME, ADMIN_NAME and [MEMBER_ARRAY] from req.body
-  // const dummyMembersArray = ['May', 'Jon'];
+  let tripName = params.tripName;
+  let adminName = params.adminName;
+  let membersArray = params.noDupeMemberArray;
+
   console.log('addMembersToTrip!!!!!!! PARAMS!!!', params);
-  for (let i = 0; i < params[2].length; i++) {
 
-    db.query(queryString.createNewUser, [params[2][i]]);
+  const queryMemberId = `SELECT members.id FROM members WHERE members.name = ?`;
+  const addMembersToTrip = `INSERT INTO trips_members (tripID, memberID) VALUES ((SELECT trips.id FROM trips
+                      WHERE trips.name = ?), ?)`;
 
-    db.query(queryString.addMembersToTrip, [params[0], params[1], params[2][i]], (err, result) => {
-      if (err) {
-        console.log('ERROR: addMemberToTrip in SQL', err);
-      }
-   //    else {
-      //  console.log('SUCCESS: new member has been added to the trip.')
-      //  res.send(result);
-      // }
+  return Promise.map(membersArray, (member) => {
+    return db.queryAsync(queryMemberId, member)
+      .then(result => {
+        if (result[0]) {
+          console.log('member already exisit and id is=============', result[0].id);
+          return db.queryAsync(addMembersToTrip, [tripName, result[0].id ])
+        } else {
+          return db.queryAsync(queryString.createNewUser, member)
+          .then( () => {
+              db.queryAsync(queryMemberId, member)
+              .then( (memberId) => db.queryAsync(addMembersToTrip, [tripName, memberId[0].id]))
+            }
+          )
+        }
     })
-  }
+    .then( () => console.log('SUCCESS: new member has been added to the trip.'))
+    .catch(err => console.error('ERROR: addMemberToTrip in SQL', err));
+  })
 }
-
 
 
 const addReceipt = (params) => {
   // Total 8 fields: get PAYOR_AUTH, TRIP_NAME, PAYOR_AUTH, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
   console.log('addReceipt PARAMSSS!!!!', params);
-  db.query(queryString.addReceipt, params, (err, result) => {
-    if (err) {
-      console.log('ERROR: addReceipt in SQL', err);
-    }
-  //   else {
-    //  callback(null,result);
-    // }
+  return db.queryAsync(queryString.addReceipt, params)
+    .then( (result) => console.log('successful insert into addReceipt'))
+    .catch( err => console.error('SQL ERROR in addReceipt', err));
+}
+
+const storeReceiptItems = ({receiptUrl, allItemsArray, allPricesArray}) => {
+  // Total 4 fields from req.headers: get RECEIPT_URL, RECEIPT_URL, [ITEM NAMES], RAW_PX
+  return Promise.map(allItemsArray, (item, index) => {
+    return  db.queryAsync(queryString.storeReceiptItems, [receiptUrl, receiptUrl, item, allPricesArray[index], 'N/A' ])
+      .then( () => console.log('SUCCESS: insert storeReceiptItems'))
+      .catch(err => console.error('SQL ERROR in storeReceiptItems', err));
   })
 }
 
-const storeReceiptItems = (params) => {
-  // Total 4 fields from req.headers: get RECEIPT_URL, RECEIPT_URL, [ITEM NAMES], RAW_PX
-  // const dummyReceiptURL = 'walmart.com';
-  // const dummyItemNames = ['Beef', 'Chicken', 'Pork'];
-  // const dummyItemRawPrices = [3, 2, 5];
-  console.log('storeReceiptItems PARAMSSS!!!!', params);
+const createMemberSummary = (params) => {
+  console.log('----params passed down to Server here!!!!------', params);
+  let tripName = params.tripName;
 
-  if (params[2].length === params[3].length) {
-    for (let i = 0; i < params[2].length; i++) {
-      db.query(queryString.storeReceiptItems, [ params[0], params[1], params[2][i], params[3][i], params[4] ], (err, result) => {
-        if (err) {
-          console.log('ERROR: storeItem in SQL', err);
-        }
-      });
-    }
+  // NEED: fb_id, name, email, token
+  let adminName = params.username;
+  let payor = params.username;
+  let receiptName = params.receiptName;
+  let receiptUrl = params.receiptUrl || `${receiptName}${adminName}`;
+  let sumBill = Number(params.sumBill) || 0;
+  let sumTax = Number(params.sumTax) || 0;
+  let sumTip = Number(params.sumTip) || 0;
+
+  // let itemSplitsArray = Object.keys(params.items_split); // ['split_1', 'split_2']
+  // let allMembersArray = [];
+  // for (let i = 0; i < itemSplitsArray.length; i++) {
+    // allMembersArray = allMembersArray.concat(params.items_split[itemSplitsArray[i]].split.payees);
+    // allMembersArray.concat(allMembersArray.concat(params.items_split[itemSplitsArray[i]].split.payees));
+  // }
+  // remote duplicates from array, just in case
+  // let noDupeMemberArray = Array.from(new Set(allMembersArray));
+  let noDupeMemberArray = [].concat.apply([], params.members);
+  noDupeMemberArray.shift();
+  //   var arrays = [["$6"], ["$12"], ["$25"], ["$25"], ["$18"], ["$22"], ["$10"]];
+  // var merged = [].concat.apply([], arrays);
+  let allItemsArray = [];
+  for (let i = 0; i < params.items.length; i++) {
+    allItemsArray.push(params.items[i][0].name);
   }
+
+  let allPricesArray = [];
+  for (let i = 0; i < params.items.length; i++) {
+    allPricesArray.push(params.items[i][0].amount);
+  }
+
+  createNewTrip([tripName, adminName])
+  .then( () => {
+    return addMembersToTrip({
+      tripName: tripName,
+      adminName: adminName,
+      noDupeMemberArray: noDupeMemberArray
+    })
+    .then( () => {
+      return addReceipt([payor, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTip]);
+    })
+    .then( () => {
+      storeReceiptItems({
+        receiptUrl: receiptUrl,
+        allItemsArray: allItemsArray,
+        allPricesArray: allPricesArray
+      });
+    })
+  })
+  .catch( err => console.error('ERROR: createMemberSummary', err));
 }
+
+  //addReceipt([payor, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTip]);
+  //storeReceiptItems([receiptUrl, receiptUrl, allItemsArray, allPricesArray, 'N/A']);
+
+  // eachItemName, receiptUrl
+  // payorName
+  // each payeeName
+  // receiptUrl
+  // payorName
+
+  // for (var i = 0; i < allItemsArray.length; i++) {
+  //   for (var k = 0; k < params.items[i][0].members.length; k++)
+  //     // var eachItemName = params.items[i][0].name;
+  //     // var eachConsumer = params.items[i][0].members[k];
+
+  //     // var eachParams = [params.items[i][0].name, receiptUrl, payor, params.items[i][0].members[k], receiptUrl, payor];
+  //     db.query(queryString.assignItemsToMembers, [params.items[i][0].name, receiptUrl, payor, params.items[i][0].members[k], receiptUrl, payor], (err, result) => {
+  //     if (err) {
+  //       console.log('ERROR: assignItems in SQL', err);
+  //     }
+  //  //    else {
+  //     //  res.send(result);
+  //     // }
+  //   })
+
+  //     // assignItemsToMembers(['Candy', 'google.com/receipt01.jpg', 'Duy Nguyen', 'Gary', 'google.com/receipt01.jpg', 'Duy Nguyen']);
+  //     // assignItemsToMembers([eachItemName, receiptUrl, payor, eachConsumer, receiptUrl, payor]);
+  // }
+
+  // // let allCommentsArray = [];
+  // // for (let i = 0; i < itemSplitsArray.length; i++) {
+  // //   allCommentsArray = allCommentsArray.concat(params.items_split[itemSplitsArray[i]].split.comment);
+  // //   allCommentsArray.concat(allCommentsArray.concat(params.items_split[itemSplitsArray[i]].split.comment));
+  // // }
+
+  // // COMPLETE: add to members, trips and trips_members tables
+  //  for (let i = 0; i < noDupeMemberArray.length; i++) {
+  //    db.query(queryString.createNewUser, noDupeMemberArray[i]);
+  //  let paramsAddMembersToTrip = [tripName, adminName, noDupeMemberArray[i]];
+  //   db.query(queryString.addMembersToTrip, paramsAddMembersToTrip, (err, result) => {
+  //     if (err) {
+  //       console.log('ERROR: addMemberToTrip in SQL', err);
+  //     } else {
+  //       console.log('SUCCESS: new member has been added to the trip.')
+  //       // res.send(result);
+  //     }
+  //   })
+  // }
+  // NEED: payorID, tripID, name, url, sumBill, sumTax, sumTaxTip
+  // addReceipt([adminName, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTaxTip]);
+  // // NEED: receiptURL, receiptURL, eachItemName, rawPx, comment
+  // storeReceiptItems([receiptUrl, receiptUrl, allItemsArray, allPricesArray, allCommentsArray]);
+
+  // // itemName, receiptURL, payorName, payeeName, receiptUrl, adminName
+
+  // assignItemsToMembers([allItemsArray, receiptUrl, payor, 'May', receiptUrl, adminName]);
+
+
+  // const getPayeeItemsMatrix = (params) => {
+  //   let matrix = {};
+  //   let payeeName;
+  //   let itemsList = [];
+  //   for (let i = 0; i < itemSplitsArray.length; i++) {
+  //     for (let k = 0; k < params.items_split[itemSplitsArray[i]].split.payees.length; k++)
+  //       // itemsList = params.items_split[itemSplitsArray[i]].item;
+  //       payeeName = params.items_split[itemSplitsArray[i]].split.payees[k];
+  //       if (!matrix.payeeName) {
+  //         matrix = {
+  //           payeeName:
+  //         }
+  //       }
+  //     // console.log('these are teh payees', payeeName);
+  //       matrix = {
+  //         [payeeName]: itemsList
+  //       }
+  //       // matrix.payeeName = params.items_split[itemSplitsArray[i]].item;
+  //   }
+  //   console.log('this is the matrix', matrix);
+  //   return matrix;
+  // }
+
+  // assignItemsToMembers([allItemsArray, receiptUrl, payor, allMembersArray, receiptUrl, adminName]);
+  // const queryStringInsertIntoConsumedItems = ``;
+
+  // const queryStringCheckPayorView = ``
+  // const queryStringCheckPayeeView = ``
+  // return db.queryAsync(queryString.addReceipt, params)
+  //   .then( result => {
+  //     if (!result) {
+  //       throw 'Failed in getting member summary.'
+  //     }
+  //   })
+  //   .catch ( err => console.log('ERROR in getting member summary', err));
+// }
+
 
 // const assignItemsToMembers = (params) => {
 //  // After gVision data is returned, data will be funneled and immediately be stored in 2 different tables: receipts and items table. Consumed_Items only references items table and info passed down from request headers.
@@ -222,140 +370,6 @@ const storeReceiptItems = (params) => {
 //    })
 //  }
 // }
-
-const createMemberSummary = (params) => {
-  console.log('----params passed down to Server here!!!!------', params);
-  let tripName = params.tripName;
-
-  // NEED: fb_id, name, email, token
-  let adminName = params.username;
-  let payor = params.username;
-  let receiptName = params.receiptName;
-  let receiptUrl = params.receiptUrl;
-  let sumBill = Number(params.sumBill);
-  let sumTax = Number(params.sumTax);
-  let sumTip = Number(params.sumTip);
-
-  // let itemSplitsArray = Object.keys(params.items_split); // ['split_1', 'split_2']
-  // let allMembersArray = [];
-  // for (let i = 0; i < itemSplitsArray.length; i++) {
-    // allMembersArray = allMembersArray.concat(params.items_split[itemSplitsArray[i]].split.payees);
-    // allMembersArray.concat(allMembersArray.concat(params.items_split[itemSplitsArray[i]].split.payees));
-  // }
-  // remote duplicates from array, just in case
-  // let noDupeMemberArray = Array.from(new Set(allMembersArray));
-  let noDupeMemberArray = [].concat.apply([], params.members);
-  noDupeMemberArray.shift();
-//   var arrays = [["$6"], ["$12"], ["$25"], ["$25"], ["$18"], ["$22"], ["$10"]];
-// var merged = [].concat.apply([], arrays);
-  let allItemsArray = [];
-  for (let i = 0; i < params.items.length; i++) {
-    allItemsArray.push(params.items[i][0].name);
-  }
-  // console.log(allItemsArray);
-  
-  let allPricesArray = [];
-  for (let i = 0; i < params.items.length; i++) {
-    allPricesArray.push(params.items[i][0].amount);
-  }
-  // console.log(allPricesArray);
-  // db.query(queryString.createNewTrip, [tripName, adminName]);
-  console.log('=====createNewTrip', adminName);
-  createNewTrip([tripName, adminName]);
-  addMembersToTrip([tripName, adminName, noDupeMemberArray]);
-  addReceipt([payor, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTip]);
-  storeReceiptItems([receiptUrl, receiptUrl, allItemsArray, allPricesArray, 'N/A']);
-
-  // eachItemName, receiptUrl
-  // payorName
-  // each payeeName
-  // receiptUrl
-  // payorName
-  for (var i = 0; i < allItemsArray.length; i++) {
-    for (var k = 0; k < params.items[i][0].members.length; k++)
-      // var eachItemName = params.items[i][0].name;
-      // var eachConsumer = params.items[i][0].members[k];
-
-      // var eachParams = [params.items[i][0].name, receiptUrl, payor, params.items[i][0].members[k], receiptUrl, payor];
-      db.query(queryString.assignItemsToMembers, [params.items[i][0].name, receiptUrl, payor, params.items[i][0].members[k], receiptUrl, payor], (err, result) => {
-      if (err) {
-        console.log('ERROR: assignItems in SQL', err);
-      }
-   //    else {
-      //  res.send(result);
-      // }
-    })
-
-      // assignItemsToMembers(['Candy', 'google.com/receipt01.jpg', 'Duy Nguyen', 'Gary', 'google.com/receipt01.jpg', 'Duy Nguyen']);
-      // assignItemsToMembers([eachItemName, receiptUrl, payor, eachConsumer, receiptUrl, payor]);
-  }
-
-  // // let allCommentsArray = [];
-  // // for (let i = 0; i < itemSplitsArray.length; i++) {
-  // //   allCommentsArray = allCommentsArray.concat(params.items_split[itemSplitsArray[i]].split.comment);
-  // //   allCommentsArray.concat(allCommentsArray.concat(params.items_split[itemSplitsArray[i]].split.comment));
-  // // }
-
-  // // COMPLETE: add to members, trips and trips_members tables
-  //  for (let i = 0; i < noDupeMemberArray.length; i++) {
-  //    db.query(queryString.createNewUser, noDupeMemberArray[i]);
-  //  let paramsAddMembersToTrip = [tripName, adminName, noDupeMemberArray[i]];
-  //   db.query(queryString.addMembersToTrip, paramsAddMembersToTrip, (err, result) => {
-  //     if (err) {
-  //       console.log('ERROR: addMemberToTrip in SQL', err);
-  //     } else {
-  //       console.log('SUCCESS: new member has been added to the trip.')
-  //       // res.send(result);
-  //     }
-  //   })
-  // }
-  // NEED: payorID, tripID, name, url, sumBill, sumTax, sumTaxTip
-  // addReceipt([adminName, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTaxTip]);
-  // // NEED: receiptURL, receiptURL, eachItemName, rawPx, comment
-  // storeReceiptItems([receiptUrl, receiptUrl, allItemsArray, allPricesArray, allCommentsArray]);
-
-  // // itemName, receiptURL, payorName, payeeName, receiptUrl, adminName
-
-  // assignItemsToMembers([allItemsArray, receiptUrl, payor, 'May', receiptUrl, adminName]);
-
-
-  // const getPayeeItemsMatrix = (params) => {
-  //   let matrix = {};
-  //   let payeeName;
-  //   let itemsList = [];
-  //   for (let i = 0; i < itemSplitsArray.length; i++) {
-  //     for (let k = 0; k < params.items_split[itemSplitsArray[i]].split.payees.length; k++)
-  //       // itemsList = params.items_split[itemSplitsArray[i]].item;
-  //       payeeName = params.items_split[itemSplitsArray[i]].split.payees[k];
-  //       if (!matrix.payeeName) {
-  //         matrix = {
-  //           payeeName: 
-  //         }
-  //       }
-  //     // console.log('these are teh payees', payeeName);
-  //       matrix = {
-  //         [payeeName]: itemsList
-  //       }
-  //       // matrix.payeeName = params.items_split[itemSplitsArray[i]].item;
-  //   }
-  //   console.log('this is the matrix', matrix);
-  //   return matrix;
-  // }
-
-  // assignItemsToMembers([allItemsArray, receiptUrl, payor, allMembersArray, receiptUrl, adminName]);
-  // const queryStringInsertIntoConsumedItems = ``;
-
-  // const queryStringCheckPayorView = ``
-  // const queryStringCheckPayeeView = ``
-  // return db.queryAsync(queryString.addReceipt, params)
-  //   .then( result => {
-  //     if (!result) {
-  //       throw 'Failed in getting member summary.'
-  //     }
-  //   })
-  //   .catch ( err => console.log('ERROR in getting member summary', err));
-}
-
 
 
 const settlePayment = (req, res) => {

@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS receipts (
   tripID       int NOT NULL,
   -- poolID       int NOT NULL,
   name          varchar(50) NOT NULL,
-  url           varchar(100) NOT NULL UNIQUE,
+  url           varchar(100),
   sum_bill    int NOT NULL DEFAULT 0,
   sum_tax     int NOT NULL DEFAULT 0,
   sum_tip     int NOT NULL DEFAULT 0,
