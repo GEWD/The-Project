@@ -315,9 +315,9 @@ class App extends React.Component {
               component={Breakdown}
               data={this.state}
             />
-              <Route path ="/login" render={() => (
-                this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
-              )}/>
+            <Route path ="/login" render={() => (
+              this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
+            )}/>
             </div>
           </div>
         </Router>
