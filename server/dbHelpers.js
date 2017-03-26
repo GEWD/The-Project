@@ -178,6 +178,27 @@ const storeReceiptItems = ({receiptUrl, allItemsArray, allPricesArray}) => {
   })
 }
 
+const assignItemsToMembers = (allItemsArray, params) => {
+  console.log('assignItemsToMembers------', JSON.stringify(params));
+
+  for (let i = 0; i < allItemsArray.length; i++) {
+    for (let k = 0; k < params.items[i][0].members.length; k++) {
+      // let eachItemName = params.items[i][0].name;
+      // let eachConsumer = params.items[i][0].members[k];
+      db.queryAsync(queryString.assignItemsToMembers, [params.items[i][0].name, params.receiptUrl, params.username, params.items[i][0].members[k], params.receiptUrl, params.username])
+      .then( () => console.log('SUCCESS: assignItemsToMembers'));
+    }
+  }
+  // return Promise.map(allItemsArray, (item, index) => {
+  //   return Promise.map(memberArrayWithDupes, (member, index) => {
+
+      // return db.queryAsync(queryString.assignItemsToMembers, [item, receiptUrl, payor, member, receiptUrl, adminName])
+      // .then( () => console.log('SUCCESS: insert consumed_items'))
+      // .catch( err => console.error('ERROR: insert consumed_items', err));
+  //   })
+  // })
+}
+
 const createMemberSummary = (params) => {
   console.log('----params passed down to Server here!!!!------', params);
   let tripName = params.tripName;
@@ -199,6 +220,7 @@ const createMemberSummary = (params) => {
   // }
   // remote duplicates from array, just in case
   // let noDupeMemberArray = Array.from(new Set(allMembersArray));
+  let memberArrayWithDupes = [].concat.apply([], params.members);
   let noDupeMemberArray = [].concat.apply([], params.members);
   noDupeMemberArray.shift();
   //   var arrays = [["$6"], ["$12"], ["$25"], ["$25"], ["$18"], ["$22"], ["$10"]];
@@ -224,11 +246,14 @@ const createMemberSummary = (params) => {
       return addReceipt([payor, tripName, adminName, receiptName, receiptUrl, sumBill, sumTax, sumTip]);
     })
     .then( () => {
-      storeReceiptItems({
+      return storeReceiptItems({
         receiptUrl: receiptUrl,
         allItemsArray: allItemsArray,
         allPricesArray: allPricesArray
       });
+    })
+    .then ( () => {
+      return assignItemsToMembers(allItemsArray, params);
     })
   })
   .catch( err => console.error('ERROR: createMemberSummary', err));
