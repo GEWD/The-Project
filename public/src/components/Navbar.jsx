@@ -10,7 +10,7 @@ const Navbar = ({isAuthenticated, handleClickLogout}) => (
     <Link to="/summary">Member Summary</Link>
     <Link to="/create-trip">Create Trip</Link>
     {isAuthenticated ? null : <Link to="/login">Login</Link>}
-    {!isAuthenticated ? null : <Link to="/logout" onClick={this.handleClickLogout}>Logout</Link>}
+    {!isAuthenticated ? null : <Link to="/logout" onClick={handleClickLogout}>Logout</Link>}
   </nav>
 )
 
