@@ -6,28 +6,65 @@ class UploadReceipt extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      filename: ''
+    }
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
   handleFormSubmit(e) {
     this.props.callGVision(this.refs.uploadForm);
   }
 
-  render() {
+  handleFileUpload(e) {
+    this.setState({
+      filename: e.target.files[0].name
+    });
+  }
 
+  render() {
     return (
       <div>
-        <h2>{this.props.tripName}</h2>
-        <h3>Upload Your Receipt for </h3>
-        <form ref='uploadForm'
-          id='uploadForm'
-          action='localhost:3000/upload'
-          method='post'
-          encType="multipart/form-data">
-          <input type="file" name="sampleFile" />
-          <Link to='/additems' value='submit' onClick={this.handleFormSubmit}>Submit</Link><br/>
-          <input type='text' onChange={this.props.onReceiptNameChange}/>
-        </form>
+        <div >
+          <Link to='/create-trip' className='back-history'>{this.props.tripName.length > 0 ? this.props.tripName : 'Create Trip'}</Link>
+        </div>
+        <div className='page-container'>
+          <h1>Receipt Upload</h1>
+          <form ref='uploadForm'
+            id='uploadForm'
+            action='localhost:3000/upload'
+            method='post'
+            encType="multipart/form-data">
+            <input
+              id='text-field'
+              type='text'
+              placeholder='Receipt Name'
+              onChange={this.props.onReceiptNameChange}
+            />
+            <label className='file-upload-btn'>
+              {this.state.filename.length > 0 ?
+                <span className='upload-filename'>{this.state.filename}</span>
+                :
+                <span className='upload-btn-text'>Upload Receipt</span>
+              }
+              <input
+                type='file'
+                name='sampleFile'
+                className='file-field'
+                onChange={(e) => this.handleFileUpload(e) }
+              />
+            </label>
+            <div className='btn-primary'>
+              <Link
+                to='/additems'
+                value='submit'
+                onClick={this.handleFormSubmit}
+                className='btn-link'
+              >Submit</Link>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
