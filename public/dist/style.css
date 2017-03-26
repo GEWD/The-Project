@@ -108,6 +108,16 @@ p {
   font-size: 20px;
 }
 
+.delete-btn {
+
+}
+
+.delete-btn::before {
+  content: url(./asset/delete.svg);
+  position: relative;
+  bottom: 10px;
+}
+
 /*Input*/
 input#text-field {
   display: block;
@@ -348,6 +358,25 @@ textarea#tripDesc {
 
 textarea#tripDesc::-webkit-input-placeholder{
   color: #AAAAAA;
+}
+
+.flex-column-receiptItem {
+  flex-basis: 90%;
+}
+
+.flex-column-deleteItem {
+  flex-basis: 40px;
+}
+
+.flex-column-name {
+  flex-basis: 90%;
+}
+.flex-column-amount {
+  flex-basis: 10%;
+}
+
+.flex-column-members {
+  flex-basis: 90%;
 }
 
 .itemNameSelected {

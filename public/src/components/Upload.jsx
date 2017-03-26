@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class UploadReceipt extends React.Component {
 
@@ -26,9 +26,7 @@ class UploadReceipt extends React.Component {
   render() {
     return (
       <div>
-        <div >
-          <Link to='/create-trip' className='back-history'>{this.props.tripName.length > 0 ? this.props.tripName : 'Create Trip'}</Link>
-        </div>
+        <Link to='/create-trip' className='back-history'>{this.props.tripName.length > 0 ? this.props.tripName : 'Create Trip'}</Link>
         <div className='page-container'>
           <h1>Receipt Upload</h1>
           <form ref='uploadForm'

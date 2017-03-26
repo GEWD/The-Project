@@ -4,26 +4,29 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 
 const ReceiptItemEntryList = ({items, selectItem, itemOnClick, deleteItem,sumTax,sumTip,onInputChange,calculateTotal}) =>  (
   <div>
-    <ul>
-      {items.map((item,index) => {
-        return (
-            <div key={index}>
-              <li
-                className={'itemName' + (selectItem === index ? 'Selected' : '')}
-                onClick={() => itemOnClick(index)}
-              >
-              <ReceiptItemEntry
-                item={item}
-                deleteItem={deleteItem}
-                index={index}
-                key={index}
-              />
-              </li>
-              <button onClick={() => deleteItem(index) }>Delete</button>
-            </div>
-          )
-      })}
-    </ul>
+    {items.map((item,index) => {
+      return (
+        <span key={index} className='flex-container'>
+          <div
+            onClick={() => itemOnClick(index)}
+            className={'itemName' + (selectItem === index ? 'Selected' : '')}
+            className='flex-column-receiptItem'
+          >
+            <ReceiptItemEntry
+              item={item}
+              deleteItem={deleteItem}
+              index={index}
+              key={index}
+            />
+          </div>
+
+          <button
+          onClick={() => deleteItem(index)}
+          className='delete-btn flex-column-deleteItem'
+          ></button>
+        </span>
+      )
+    })}
     <input placeholder='Total Tip' type='number' name='sumTip' value={sumTip} onChange={onInputChange}/>
     <Link to='/summary' onClick={calculateTotal}> Submit </Link>
   </div>
