@@ -108,6 +108,11 @@ body {
   text-decoration: none;
 }
 
+.brand::after {
+  content: '';
+  padding-right: 50px;
+}
+
 .menu {
   position: absolute;
   left: 0;
