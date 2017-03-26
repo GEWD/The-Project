@@ -26,7 +26,7 @@ class UploadReceipt extends React.Component {
   render() {
     return (
       <div>
-        <div >
+        <div>
           <Link to='/create-trip' className='back-history'>{this.props.tripName.length > 0 ? this.props.tripName : 'Create Trip'}</Link>
         </div>
         <div className='page-container'>
