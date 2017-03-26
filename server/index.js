@@ -6,17 +6,16 @@ const db = require('./dbHelpers');
 const connection = require('./db-mysql');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-const KEYS = require('../env/KEYS.js');
+const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = require('../env/cloudKey.js');
+const cloudConfig = cloudinary.config(process.env.cloudKey);
 const path = require('path');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 //Google cloud vision setup:
 const gVision = require('./api/vision.js');
-//
 var localStorage = {};
 
 app.use( bodyParser.json() );
@@ -30,7 +29,7 @@ app.use(fileUpload());
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({
-  secret: KEYS.sessionAuth.sessionSecret,
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));
@@ -48,10 +47,11 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+
 passport.use(new FacebookStrategy({
-  clientID: KEYS.facebookAuth.clientID,
-  clientSecret: KEYS.facebookAuth.clientSecret,
-  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  clientID: process.env.FB_CLIENT_ID,
+  clientSecret: process.env.FB_CLIENT_SECRET,
+  callbackURL: '/auth/facebook/callback',
   profileFields: ['id', 'email', 'displayName', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
 },
 
@@ -81,7 +81,7 @@ checkAuthentication = (req, res, next) => {
 
 authHelper = (req, res, next) => {
   localStorage.isAuthenitcated = req.isAuthenticated();
-  localStorage.user = req.user;
+  localStorage.user = req.user || {} ;
   next();
 };
 
@@ -118,8 +118,12 @@ app.get('/logout', authHelper, function(req, res) {
 });
 
 app.get('/verify', authHelper, function(req, res) {
-  let isAuthenticated = req.isAuthenticated() ? true : false;
-  res.send(req.isAuthenticated());
+  let userInfo = {
+    isAuthenitcated: localStorage.isAuthenitcated,
+    name: localStorage.user.name,
+    fb_id: localStorage.user.fb_id
+  }
+  res.send(userInfo);
 });
 
 app.get('*', checkAuthentication, authHelper, (req, res) => {
@@ -151,26 +155,30 @@ app.post('/createTripName', function(req, res) {
   res.redirect('/upload-receipt');
 });
 
+let uploadCloud = () => {
+  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
+  });
+}; 
 app.post('/upload', function(req, res) {
   //req.body should include receipt name, total, receipt_link;
   //should be an insert query
-  console.log('body',req.body)
+  // console.log('body', req.body);
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
-  console.log(sampleFile);
+  // console.log(sampleFile);
   // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
       return res.status(500).send(err);
     }
-    let image = __dirname + '/temp/filename.jpg'; 
+    let image = __dirname + '/temp/filename.jpg';
     gVision.promisifiedDetectText(image)
     .then(function(results) {
       let allItems = results[0];
-      uploadCloud();
+      // uploadCloud();
       res.send(gVision.spliceReceipt(allItems.split('\n')));
     })
     .error(function(e) {
@@ -184,33 +192,23 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
-let uploadCloud = () => {
-  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
-      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
-      // db.addReceipt(params, function(err, data) {
-      //   console.log(data);
-      //   res.send('File uploaded!');
-      // });
-      console.log('+++++++++',data);
-  });
-}
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg'; 
+  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
     fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
   });
 });
 
-
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+const port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log(`Listening on ${port}`);
 });
