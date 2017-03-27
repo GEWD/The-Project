@@ -59,17 +59,7 @@ const queryString = {
                               WHERE trips.adminID = \
                               (SELECT members.id from members \
                               WHERE members.name = ?)\
-                              AND trips.name = ?));',
-  settlePayment: '',
-
-  getAllMembers: 'SELECT * FROM MEMBERS',
-  getAllTrips: 'SELECT * FROM TRIPS;',
-  getAllReceipts: 'SELECT * FROM RECEIPTS;',
-  getAllItems: 'SELECT * FROM ITEMS;',
-  getAllConsumedItems: 'SELECT * FROM CONSUMED_ITEMS;',
-}
-
-const parseSummaryData = (summary) => {
+                              AND trips.name = ?));'
 }
 
 const createNewUser = (userInfo) => {
@@ -188,13 +178,12 @@ const assignItemsToMembers = (allItemsArray, params) => {
           params.receiptUrl,
           params.username,
           params.tripName
-        ]
-        , (err, results) => {
+        ], (err, results) => {
           if (err) {
             console.log(err);
           }
         }
-        )
+      )
     //   .then( () => console.log('SUCCESS assignItemsToMembers'))
     // .catch( err => console.error('ERROR: assignItemsToMembers', err));
         // return db.queryAsync(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[j], params.receiptUrl, params.username])
@@ -252,18 +241,19 @@ const createMemberSummary = (params) => {
   .catch( err => console.error('ERROR: createMemberSummary', err));
 }
 
-const settlePayment = (req, res) => {
+const getReceiptsAndTrips = ({adminName}) => {
+  const queryStringGetAllTripsFromAdminName = `SELECT trips.name FROM heroku_a258462d4ded143.trips WHERE trips.adminID = (SELECT members.id FROM heroku_a258462d4ded143.members WHERE members.name = ?);`
+  const queryStringGetTripIDFromTripName = `SELECT trips.id from heroku_a258462d4ded143.trips WHERE trips.name = ?;`
+  const queryStringGetMemberIDFromTripID = `SELECT trips_members.memberID from heroku_a258462d4ded143.trips_members WHERE trips_members.tripID = ?;`
+  const queryStringGetMemberNameFromMemberID = `SELECT members.name FROM heroku_a258462d4ded143.members WHERE members.id = ?;`
 
-}
+  const queryStringGetReceiptNamesFromPayorIDAndTripID = `SELECT receipts.name FROM heroku_a258462d4ded143.receipts WHERE receipts.payorID = ? AND receipts.tripID = ?;`
 
-const getAllUsers = (req, res) => {
-  db.query(queryString.getAllMembers, (err, result) => {
-    if (err) {
-      console.log('error querying db', err);
-    } else {
-      res.send(result);
-    }
-  })
+  const queryStringGetSumBillFromReceiptName = `SELECT receipts.sum_bill FROM receipts WHERE receipts.name = ?;`
+  const queryStringGetSumTaxFromReceiptName = `SELECT receipts.sum_tax FROM receipts WHERE receipts.name = ?;`
+  const queryStringGetSumTipFromReceiptName = `SELECT receipts.sum_tip FROM receipts WHERE receipts.name = ?;`
+
+
 }
 
 module.exports = {
@@ -273,7 +263,5 @@ module.exports = {
   addReceipt,
   storeReceiptItems,
   assignItemsToMembers,
-  settlePayment,
-  createMemberSummary,
-  getAllUsers
+  createMemberSummary
 }
