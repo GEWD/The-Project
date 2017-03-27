@@ -40,7 +40,8 @@ class UploadReceipt extends React.Component {
               id='text-field'
               type='text'
               placeholder='Receipt Name'
-              onChange={this.props.onReceiptNameChange}
+              name='receiptName'
+              onChange={this.props.onInputChange}
             />
             <label className='file-upload-btn'>
               {this.state.filename.length > 0 ?

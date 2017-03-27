@@ -40,7 +40,8 @@ class App extends React.Component {
       sumTax: '',
       sumTip: 0,
       sumTotal: 0,
-      memberSum: {}
+      memberSum: {},
+      recent: {}
     };
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
@@ -145,6 +146,25 @@ class App extends React.Component {
         }
     });
     this.state.member = '';
+  }
+
+  getRecentTrip(user){
+    user = this.state;
+    $.ajax({
+      type: 'POST',
+      url: '/recent',
+      data: user,
+      success: (results) => {
+        console.log('results',results);
+        //this.setState({
+          // recent: results;
+        // })
+      },
+      error: (error) => {
+        console.log('error',error);
+      }
+    })
+
   }
 
   calculateTotal() {
@@ -277,6 +297,7 @@ class App extends React.Component {
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
               callGVision={this.callGVision}
+              data={this.state}
               onInputChange={this.onInputChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
