@@ -274,6 +274,7 @@ class App extends React.Component {
               path ="/upload-receipt"
               isAuthenticated={this.state.isAuthenticated}
               component={UploadReceipt}
+              data={this.state}
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
               callGVision={this.callGVision}
