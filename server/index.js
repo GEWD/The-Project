@@ -97,12 +97,14 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
+// // test database functions
+// app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
 app.get('/storeItems', db.storeReceiptItems);
-app.get('/assignItems', db.assignItemsToMembers);
+// app.get('/assignItems', db.assignItemsToMembers);
 
 app.get('/login', authHelper, (req, res) => {
   if (req.isAuthenticated()) {
@@ -147,6 +149,7 @@ app.post('/createTripName', function(req, res) {
 
   let params = [
     req.body.submittedTripName,
+    localStorage.user.name,
     req.body.submittedTripDesc,
     localStorage.user.fb_id
   ];
@@ -192,6 +195,10 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+app.post('/summary', (req, res) => {
+  console.log('=============', req.body);
+  db.createMemberSummary(req.body)
+})
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {

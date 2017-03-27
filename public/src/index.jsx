@@ -5,9 +5,11 @@ import TripSummary from './components/TripSummary.jsx';
 import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
-import MemberSummary from './components/memberSummary.jsx';
+import MemberSummary from './components/MemberSummary.jsx';
+import Breakdown from './components/Breakdown.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
+import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
@@ -19,24 +21,33 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      receiptUrl:'',
+      receiptUrl: '',
       tripName: '',
       username: '',
       tripDesc: '',
-      receiptName:'',
-      items:[],
-      selectItem:'',
-      selectMember:'',
-      members:[],
+      receiptName: '',
+      items: [],
+      selectItem: '',
+      selectMember: '',
+      members: [],
       member: '',
       memberExist: false,
-      name:'',
-      amount: 0
-    }
+      name: '',
+      sideMenuState: false,
+      amount: '',
+      sumBill: '',
+      sumTax: '',
+      sumTip: 0,
+      sumTotal: 0,
+      memberSum: {},
+      amount: '',
+      sideMenuState: false,
+      windowHeight: ''
+    };
+
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.onReceiptNameChange = this.onReceiptNameChange.bind(this);
     this.handleTripNameSubmit = this.handleTripNameSubmit.bind(this);
     this.callGVision = this.callGVision.bind(this);
     this.onGVision = this.onGVision.bind(this);
@@ -47,6 +58,11 @@ class App extends React.Component {
     this.itemOnClick = this.itemOnClick.bind(this);
     this.memberOnClick = this.memberOnClick.bind(this);
     this.initialMemberSelect = this.initialMemberSelect.bind(this);
+    this.menuOnClick = this.menuOnClick.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.calculateMemberSum = this.calculateMemberSum.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   verifyAuthentication(userInfo) {
@@ -63,29 +79,23 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     this.setState({
       items: this.state.items.concat([[{
         name: this.state.name,
         amount: this.state.amount,
         members: []
       }]])
-    })
+    });
     this.state.name = '';
     this.state.amount = '';
-  }
-
-  onReceiptNameChange(event){
-    this.setState({
-      receiptName:event.target.value
-    })
   }
 
   deleteItem(index) {
     delete this.state.items[index];
     this.setState({
       items: this.state.items
-    })
+    });
   }
 
   callGVision(form) {
@@ -95,13 +105,10 @@ class App extends React.Component {
       type: 'POST',
       url: '/upload',
       data: data,
-      processData:false,
-      contentType:false,
+      processData: false,
+      contentType: false,
       success: (results) => {
-        console.log('.as.d.awd.as.data', results);
-        console.log('this is ssss:', this, '....', currentScope);
         this.onGVision(results);
-        console.log('Successfully sent post to /vision, resulting array:', this.state.items);
       },
     });
   }
@@ -109,29 +116,52 @@ class App extends React.Component {
   onGVision(itemizationObject) {
     let itemArray = [];
     for (var key in itemizationObject) {
-      itemArray.push([{
-        name:key,
-        amount:itemizationObject[key],
-        members: []
-      }]);
+      if (key.search(/tax/ig) !== -1) {
+        this.setState({sumTax: Number(itemizationObject[key])});
+      }
+      if (key.search(/(\btotal|\btota)/i) !== -1) {
+        this.setState({sumTotal: Number(itemizationObject[key])});
+      }
+      if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
+        itemArray.push([{
+          name: key,
+          amount: itemizationObject[key],
+          members: []
+        }]);
+      }
+
+
     }
     this.setState({items: itemArray});
-    console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
-  addMember (itemArray){
-    this.memberExist(this.state.member,(exist) => {
+  addMember (itemArray) {
+    this.memberExist(this.state.member, (exist) => {
+      this.setState({
+        memberExist: exist
+      });
+      if (!exist) {
         this.setState({
-          memberExist: exist
+          members: this.state.members.concat([[this.state.member]])
         });
-        if (!exist) {
-          this.setState({
-            members: this.state.members.concat([[this.state.member]])
-          })
-        }
+      }
     });
-
     this.state.member = '';
+  }
+
+  calculateTotal() {
+    let sum = 0;
+    this.state.items.map((item, index) => {
+      if (item[0].members.length === 0) {
+        item[0].members = [].concat.apply([], this.state.members);
+      }
+      if (item[0].name !== '<NOTE>') {
+        sum += Number(item[0].amount);
+      } 
+    });
+    this.setState({
+      sumBill: sum.toFixed(2)
+    });
   }
 
   onInputChange(event) {
@@ -141,18 +171,40 @@ class App extends React.Component {
     });
   }
 
+  calculateMemberSum() {
+    var memberSum = {};
+    var currentScope = this;
+    this.state.items.forEach(function(itemArr) {
+      var itemObj = itemArr[0];
+      var eachPrice = itemObj.amount / itemObj.members.length;
+      console.log('....??', itemObj);
+      if (itemObj.members.length === 0) {
+        // itemObj.members = [].concat.apply([], this.state.members);
+        itemObj.members.push('Testing');
+      }
+      for (var i = 0; i < itemObj.members.length; i++) {
+        if (memberSum[itemObj.members[i]]) {
+          memberSum[itemObj.members[i]] += eachPrice;
+        } else {
+          memberSum[itemObj.members[i]] = eachPrice;
+        }
+      }
+    });
+    this.setState({memberSum: memberSum});
+  }
+
+
   memberExist(member, cb) {
     let exist = false;
     this.state.members.forEach((val, index) => {
       if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
         exist = true;
       }
-    })
+    });
     cb(exist);
   }
 
   handleTripNameSubmit(event) {
-    console.log('Tripname was submitted:' + this.state.tripName);
     Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
   }
 
@@ -188,21 +240,37 @@ class App extends React.Component {
     });
   }
 
+  menuOnClick() {
+    this.setState({
+      sideMenuState: true
+    });
+  }
+
+  closeMenu() {
+    this.setState({
+      sideMenuState: !this.state.sideMenuState
+    });
+  }
+
+  updateDimensions() {
+    this.setState({
+      windowHeight: window.innerHeight
+    });
+  }
+
   render() {
     return (
-      <div>
+      <div className='site-container'>
         <Router>
-          <div>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/upload-receipt">Upload Receipt</Link></li>
-              <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/additems">Add Items</Link></li>
-              <li><Link to="/summary">Member Summary</Link></li>
-              <li><Link to="/create-trip">Create Trip</Link></li>
-              {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClickLogout}>Logout</Link></li>}
-            </ul>
+          <div
+            onClick={this.state.sideMenuState ? this.closeMenu : null}
+            className={this.state.sideMenuState ? 'site-pusher-on' : 'site-pusher'}>
+            <Navbar
+              isAuthenticated={this.state.isAuthenticated}
+              handleClickLogout={this.handleClickLogout}
+              menuOnClick={this.menuOnClick}
+              sideMenuState={this.state.sideMenuState}/>
+          <div className='content-container'>
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
             <PrivateRoute
               path="/create-trip"
@@ -224,7 +292,7 @@ class App extends React.Component {
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
               callGVision={this.callGVision}
-              onReceiptNameChange={this.onReceiptNameChange}
+              onInputChange={this.onInputChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
               addItem={this.addItem}
@@ -236,6 +304,10 @@ class App extends React.Component {
               deleteItem={this.deleteItem}
               members={this.state.members}
               member={this.state.member}
+              sumBill={this.state.sumBill}
+              sumTax={this.state.sumTax}
+              sumTaxTip={this.state.sumTaxTip}
+              calculateTotal={this.calculateTotal}
               memberExist={this.state.memberExist}
               addMember={this.addMember}
               initialMemberSelect={this.initialMemberSelect}
@@ -246,12 +318,19 @@ class App extends React.Component {
               path ="/summary"
               isAuthenticated={this.state.isAuthenticated}
               component={MemberSummary}
+              calculateMemberSum={this.calculateMemberSum}
+              data={this.state}
+            />
+            <PrivateRoute
+              path ="/breakdown"
+              isAuthenticated={this.state.isAuthenticated}
+              component={Breakdown}
               data={this.state}
             />
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
-
+            </div>
           </div>
         </Router>
       </div>
@@ -259,6 +338,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions.bind(this));
     Util.verify(this.verifyAuthentication);
   }
 }
