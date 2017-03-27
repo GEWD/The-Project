@@ -94,9 +94,9 @@ const createNewTrip = (params) => {
                     VALUES (?, (SELECT members.id FROM members
                     WHERE members.name = ?));`
   const queryStringInsertTripMembers = `INSERT INTO trips_members (tripID, memberID)
-                    VALUES ( LAST_INSERT_ID(),
+                    VALUES ( (SELECT trips.id FROM trips WHERE trips.name = ?),
                     (SELECT trips.adminID FROM trips
-                    WHERE trips.id = LAST_INSERT_ID()));`
+                    WHERE trips.id = (SELECT trips.id FROM trips WHERE trips.name = ?)));`
   return db.queryAsync(queryCheckIfTripExist, params)
     .then( result => {
       if (result[0]) {
@@ -104,7 +104,7 @@ const createNewTrip = (params) => {
       }
     })
     .then( () => db.queryAsync(queryStringCreateNewTrip, params))
-    .then( () => db.queryAsync(queryStringInsertTripMembers))
+    .then( () => db.queryAsync(queryStringInsertTripMembers, [params[0], params[0]]))
     .catch( err => console.error('ERROR: createNewTrip in SQL', err) );
 }
 
