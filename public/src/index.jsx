@@ -133,7 +133,6 @@ class App extends React.Component {
 
     }
     this.setState({items: itemArray});
-    console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
   addMember (itemArray) {
@@ -153,6 +152,9 @@ class App extends React.Component {
   calculateTotal() {
     let sum = 0;
     this.state.items.map((item, index) => {
+      if (item[0].members.length === 0) {
+        item[0].members = [].concat.apply([], this.state.members);
+      }
       if (item[0].name !== '<NOTE>') {
         sum += Number(item[0].amount);
       } 
@@ -171,6 +173,7 @@ class App extends React.Component {
 
   calculateMemberSum() {
     var memberSum = {};
+    var currentScope = this;
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
       var eachPrice = itemObj.amount / itemObj.members.length;
@@ -202,7 +205,6 @@ class App extends React.Component {
   }
 
   handleTripNameSubmit(event) {
-    console.log('Tripname was submitted:' + this.state.tripName);
     Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
   }
 
@@ -242,14 +244,12 @@ class App extends React.Component {
     this.setState({
       sideMenuState: true
     });
-    console.log('----menu state is when menu button is clicked', this.state.sideMenuState);
   }
 
   closeMenu() {
     this.setState({
       sideMenuState: !this.state.sideMenuState
     });
-    console.log('----site-pusher is clicked', this.state.sideMenuState);
   }
 
   updateDimensions() {
