@@ -11,6 +11,7 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
+import PrivateRouteHome from './components/PrivateRouteHome.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
 import $ from 'jquery';
@@ -292,7 +293,7 @@ class App extends React.Component {
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
           <div className='content-container'>
-            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}
+            <PrivateRouteHome path="/" isAuthenticated={this.state.isAuthenticated}
               data={this.state}
             />
             <PrivateRoute
@@ -353,7 +354,7 @@ class App extends React.Component {
               recent={this.getRecentTrip}
             />
             <PrivateRoute
-              path ="/recent"
+              path ="/recent-trips"
               isAuthenticated={this.state.isAuthenticated}
               component={TripSummary}
               data={this.state}
