@@ -241,19 +241,38 @@ const createMemberSummary = (params) => {
   .catch( err => console.error('ERROR: createMemberSummary', err));
 }
 
-const getReceiptsAndTrips = ({adminName}) => {
-  const queryStringGetAllTripsFromAdminName = `SELECT trips.name FROM heroku_a258462d4ded143.trips WHERE trips.adminID = (SELECT members.id FROM heroku_a258462d4ded143.members WHERE members.name = ?);`
-  const queryStringGetTripIDFromTripName = `SELECT trips.id from heroku_a258462d4ded143.trips WHERE trips.name = ?;`
-  const queryStringGetMemberIDFromTripID = `SELECT trips_members.memberID from heroku_a258462d4ded143.trips_members WHERE trips_members.tripID = ?;`
-  const queryStringGetMemberNameFromMemberID = `SELECT members.name FROM heroku_a258462d4ded143.members WHERE members.id = ?;`
 
-  const queryStringGetReceiptNamesFromPayorIDAndTripID = `SELECT receipts.name FROM heroku_a258462d4ded143.receipts WHERE receipts.payorID = ? AND receipts.tripID = ?;`
+const getReceiptsAndTrips = (params) => {
+  let database = mysqlConfig.database;
+  if (database = 'gewd') {
+    database = '';
+  } else if (database = 'heroku_a258462d4ded143') {
+    database = 'heroku_a258462d4ded143' + '.';
+  }
 
-  const queryStringGetSumBillFromReceiptName = `SELECT receipts.sum_bill FROM receipts WHERE receipts.name = ?;`
-  const queryStringGetSumTaxFromReceiptName = `SELECT receipts.sum_tax FROM receipts WHERE receipts.name = ?;`
-  const queryStringGetSumTipFromReceiptName = `SELECT receipts.sum_tip FROM receipts WHERE receipts.name = ?;`
+  const queryStringGetAllTripsFromAdminName = `SELECT trips.name FROM ` + database + `trips WHERE trips.adminID = (SELECT members.id FROM ` + database + `members WHERE members.name = ?);`
+  const queryStringGetTripIDFromTripName = `SELECT trips.id from ` + database + `trips WHERE trips.name = ?;`
+  // const queryStringGetMemberIDFromTripID = `SELECT trips_members.memberID from heroku_a258462d4ded143.trips_members WHERE trips_members.tripID = ?;`
+  // const queryStringGetMemberNameFromMemberID = `SELECT members.name FROM heroku_a258462d4ded143.members WHERE members.id = ?;`
 
+  // const queryStringGetReceiptNamesFromPayorIDAndTripID = `SELECT receipts.name FROM heroku_a258462d4ded143.receipts WHERE receipts.payorID = ? AND receipts.tripID = ?;`
 
+  // const queryStringGetSumBillFromReceiptName = `SELECT receipts.sum_bill FROM receipts WHERE receipts.name = ?;`
+  // const queryStringGetSumTaxFromReceiptName = `SELECT receipts.sum_tax FROM receipts WHERE receipts.name = ?;`
+  // const queryStringGetSumTipFromReceiptName = `SELECT receipts.sum_tip FROM receipts WHERE receipts.name = ?;`
+
+  let adminName = params.adminName;
+  let tripName = params.tripName;
+
+  return db.queryAsync(queryStringGetAllTripsFromAdminName, adminName)
+    .then( tripsArray => tripsArray )
+    // .then( tripsArray => {
+    //   return Promise.map( tripsArray, trip => {
+    //     return db.queryAsync(queryStringGetTripIDFromTripName, trip.name)
+    //       .then( tripID => tripID )
+    //   })
+    // })
+    .catch( err => console.log('ERROR: getAllTripsFromAdminName', err ));
 }
 
 module.exports = {
@@ -263,5 +282,6 @@ module.exports = {
   addReceipt,
   storeReceiptItems,
   assignItemsToMembers,
-  createMemberSummary
+  createMemberSummary,
+  getReceiptsAndTrips
 }

@@ -20999,103 +20999,9 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 /* 98 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(15);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Breakdown = function (_React$Component) {
-  _inherits(Breakdown, _React$Component);
-
-  function Breakdown(props) {
-    _classCallCheck(this, Breakdown);
-
-    var _this = _possibleConstructorReturn(this, (Breakdown.__proto__ || Object.getPrototypeOf(Breakdown)).call(this, props));
-
-    _this.sumTax = Number(_this.props.data.sumTax);
-    _this.sumTip = Number(_this.props.data.sumTip);
-    _this.memberCount = _this.props.data.members.length;
-    _this.perPerson = (_this.sumTax + _this.sumTip) / _this.memberCount;
-    return _this;
-  }
-
-  _createClass(Breakdown, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/summary', className: 'back-history' },
-          'Calculation Summary'
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'div',
-            { className: 'receipt-info' },
-            _react2.default.createElement(
-              'h2',
-              null,
-              'Final Breakdown'
-            ),
-            _react2.default.createElement(
-              'h4',
-              null,
-              'Total per person due to ',
-              this.props.data.username
-            ),
-            _react2.default.createElement('div', null),
-            Object.keys(this.props.data.memberSum).map(function (member, index) {
-              return _react2.default.createElement(
-                'div',
-                { key: index, className: 'flex-container receipt-tax' },
-                _react2.default.createElement(
-                  'span',
-                  { className: 'flex-column-name' },
-                  member
-                ),
-                _react2.default.createElement(
-                  'span',
-                  { className: 'flex-column-amount receipt-item-amount' },
-                  (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
-                )
-              );
-            })
-          )
-        )
-      );
-    }
-  }]);
-
-  return Breakdown;
-}(_react2.default.Component);
-
-exports.default = Breakdown;
+throw new Error("Module build failed: Duplicate declaration \"Link\"\n\n\u001b[0m \u001b[90m 1 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mReact\u001b[39m from \u001b[32m'react'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 2 | \u001b[39m\u001b[36mimport\u001b[39m {\u001b[33mLink\u001b[39m} from \u001b[32m'react-router-dom'\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 3 | \u001b[39m\u001b[36mimport\u001b[39m { \u001b[33mBrowserRouter\u001b[39m as \u001b[33mRouter\u001b[39m\u001b[33m,\u001b[39m \u001b[33mRoute\u001b[39m\u001b[33m,\u001b[39m \u001b[33mLink\u001b[39m\u001b[33m,\u001b[39m \u001b[33mRedirect\u001b[39m} from \u001b[32m'react-router-dom'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m   | \u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 4 | \u001b[39m\n \u001b[90m 5 | \u001b[39m\n \u001b[90m 6 | \u001b[39m\u001b[36mclass\u001b[39m \u001b[33mBreakdown\u001b[39m \u001b[36mextends\u001b[39m \u001b[33mReact\u001b[39m\u001b[33m.\u001b[39m\u001b[33mComponent\u001b[39m {\u001b[0m\n");
 
 /***/ }),
 /* 99 */
@@ -21772,10 +21678,19 @@ var TripSummary = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'Trip Summary'
+          'Most Recent Trips'
         ),
-        _react2.default.createElement(_TripEntry2.default, null),
-        _react2.default.createElement(_TripEntry2.default, null)
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.data.recent.map(function (item, index) {
+            return _react2.default.createElement(
+              'p',
+              null,
+              item.name
+            );
+          })
+        )
       );
     }
   }]);
@@ -21985,39 +21900,63 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TripEntry = function TripEntry() {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h3',
-      null,
-      'Trip Name'
-    ),
-    ' ',
-    _react2.default.createElement(
-      'p',
-      null,
-      'Total: $193.00'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Date: 2014 March'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'People: '
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TripEntry = function (_React$Component) {
+  _inherits(TripEntry, _React$Component);
+
+  function TripEntry(props) {
+    _classCallCheck(this, TripEntry);
+
+    return _possibleConstructorReturn(this, (TripEntry.__proto__ || Object.getPrototypeOf(TripEntry)).call(this, props));
+  }
+
+  _createClass(TripEntry, [{
+    key: 'render',
+    value: function render() {
+      console.log('-------what is this??', this.props.data);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Trip Name'
+        ),
+        ' ',
+        _react2.default.createElement(
+          'p',
+          null,
+          'Total: $193.00'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Date: 2014 March'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'People: '
+        )
+      );
+    }
+  }]);
+
+  return TripEntry;
+}(_react2.default.Component);
 
 exports.default = TripEntry;
 
@@ -36539,7 +36478,7 @@ var App = function (_React$Component) {
       sumTip: 0,
       sumTotal: 0,
       memberSum: {}
-    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sideMenuState', false), _defineProperty(_this$state, 'windowHeight', ''), _this$state);
+    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sideMenuState', false), _defineProperty(_this$state, 'windowHeight', ''), _defineProperty(_this$state, 'recent', [{ name: 'No trips yet. Now create one!' }]), _this$state);
 
     _this.verifyAuthentication = _this.verifyAuthentication.bind(_this);
     _this.handleClickLogout = _this.handleClickLogout.bind(_this);
@@ -36559,6 +36498,7 @@ var App = function (_React$Component) {
     _this.calculateMemberSum = _this.calculateMemberSum.bind(_this);
     _this.calculateTotal = _this.calculateTotal.bind(_this);
     _this.updateDimensions = _this.updateDimensions.bind(_this);
+    _this.getRecentTrip = _this.getRecentTrip.bind(_this);
     return _this;
   }
 
@@ -36657,6 +36597,32 @@ var App = function (_React$Component) {
         }
       });
       this.state.member = '';
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getRecentTrip();
+    }
+  }, {
+    key: 'getRecentTrip',
+    value: function getRecentTrip() {
+      var _this4 = this;
+
+      var user = this.state;
+      _jquery2.default.ajax({
+        type: 'POST',
+        url: '/recent',
+        data: user,
+        success: function success(results) {
+          console.log('app component trips of this person', results);
+          _this4.setState({
+            recent: results
+          });
+        },
+        error: function error(_error) {
+          console.log('error', _error);
+        }
+      });
     }
   }, {
     key: 'calculateTotal',
@@ -36771,7 +36737,7 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _react2.default.createElement(
         'div',
@@ -36792,7 +36758,9 @@ var App = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'content-container' },
-              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default }),
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default,
+                data: this.state
+              }),
               _react2.default.createElement(_PrivateRoute2.default, {
                 path: '/create-trip',
                 component: _CreateTrip2.default,
@@ -36812,6 +36780,7 @@ var App = function (_React$Component) {
                 component: _Upload2.default,
                 tripName: this.state.tripName,
                 tripDesc: this.state.tripDesc,
+                data: this.state,
                 callGVision: this.callGVision,
                 onInputChange: this.onInputChange
               }),
@@ -36846,10 +36815,18 @@ var App = function (_React$Component) {
                 path: '/breakdown',
                 isAuthenticated: this.state.isAuthenticated,
                 component: _Breakdown2.default,
-                data: this.state
+                data: this.state,
+                recent: this.getRecentTrip
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/recent',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _TripSummary2.default,
+                data: this.state,
+                recent: this.getRecentTrip
               }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
-                  return _this4.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
+                  return _this5.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
                 } })
             )
           )
