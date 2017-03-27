@@ -47,8 +47,8 @@ class MemberSummary extends React.Component {
         <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
         <p>Total Tax: ${this.sumTax}</p>
         <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
-        <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
         <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
+        <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
         <Link to='/breakdown' onClick={this.handleSubmit}>Submit</Link>
       </div>
     )
