@@ -22556,8 +22556,15 @@ if ( document.readyState === "complete" ||
   }, {
     key: 'calculateTotal',
     value: function calculateTotal() {
+      var _this4 = this;
+
       var sum = 0;
       this.state.items.map(function (item, index) {
+        console.log('//////:', item[0]);
+        if (item[0].members.length === 0) {
+          item[0].members = [].concat.apply([], _this4.state.members);
+          // itemObj.members.push(123456678);
+        }
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
@@ -22576,13 +22583,15 @@ if ( document.readyState === "complete" ||
     key: 'calculateMemberSum',
     value: function calculateMemberSum() {
       var memberSum = {};
+      var currentScope = this;
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
         console.log('....??', itemObj);
-        if (itemObj.members.length === 0) {
-          itemObj.members = [].concat.apply([], this.state.members);
-        }
+        // if (itemObj.members.length === 0) {
+        //   itemObj.members = [].concat.apply([], currentScope.state.members);
+        //   // itemObj.members.push(123456678);
+        // }
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22620,6 +22629,7 @@ if ( document.readyState === "complete" ||
 >>>>>>> Made change so unclaimed items are split amongst all group members
 
 
+<<<<<<< HEAD
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
 var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
@@ -22633,6 +22643,139 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		for ( i in key ) {
 			access( elems, fn, i, key[ i ], true, emptyGet, raw );
 		}
+=======
+      this.setState({
+        items: items,
+        selectItem: index
+      });
+    }
+  }, {
+    key: 'initialMemberSelect',
+    value: function initialMemberSelect() {
+      if (this.state.selectMember.length === 0) {
+        this.setState({
+          selectMember: this.state.username
+        });
+      }
+    }
+  }, {
+    key: 'memberOnClick',
+    value: function memberOnClick(member) {
+      this.setState({
+        selectMember: member
+      });
+    }
+  }, {
+    key: 'menuOnClick',
+    value: function menuOnClick() {
+      this.setState({
+        sideMenuState: true
+      });
+      console.log('----menu state is when menu button is clicked', this.state.sideMenuState);
+    }
+  }, {
+    key: 'closeMenu',
+    value: function closeMenu() {
+      this.setState({
+        sideMenuState: !this.state.sideMenuState
+      });
+      console.log('----site-pusher is clicked', this.state.sideMenuState);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'site-container' },
+        _react2.default.createElement(
+          _reactRouterDom.BrowserRouter,
+          null,
+          _react2.default.createElement(
+            'div',
+            {
+              onClick: this.state.sideMenuState ? this.closeMenu : null,
+              className: this.state.sideMenuState ? 'site-pusher-on' : 'site-pusher' },
+            _react2.default.createElement(_Navbar2.default, {
+              isAuthenticated: this.state.isAuthenticated,
+              handleClickLogout: this.handleClickLogout,
+              menuOnClick: this.menuOnClick,
+              sideMenuState: this.state.sideMenuState }),
+            _react2.default.createElement(
+              'div',
+              { className: 'content-container' },
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/create-trip',
+                component: _CreateTrip2.default,
+                isAuthenticated: this.state.isAuthenticated,
+                tripName: this.state.tripName,
+                onInputChange: this.onInputChange,
+                handleTripNameSubmit: this.handleTripNameSubmit
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/profile',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Profile2.default
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/upload-receipt',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Upload2.default,
+                tripName: this.state.tripName,
+                tripDesc: this.state.tripDesc,
+                callGVision: this.callGVision,
+                onInputChange: this.onInputChange
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/additems', isAuthenticated: this.state.isAuthenticated, component: _Itemization2.default,
+                addItem: this.addItem,
+                itemName: this.state.name,
+                itemAmount: this.state.amount,
+                selectItem: this.state.selectItem,
+                selectMember: this.state.selectMember,
+                items: this.state.items,
+                deleteItem: this.deleteItem,
+                members: this.state.members,
+                member: this.state.member,
+                sumBill: this.state.sumBill,
+                sumTax: this.state.sumTax,
+                sumTaxTip: this.state.sumTaxTip,
+                calculateTotal: this.calculateTotal,
+                memberExist: this.state.memberExist,
+                addMember: this.addMember,
+                initialMemberSelect: this.initialMemberSelect,
+                itemOnClick: this.itemOnClick,
+                memberOnClick: this.memberOnClick,
+                onInputChange: this.onInputChange }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/summary',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _MemberSummary2.default,
+                calculateMemberSum: this.calculateMemberSum,
+                data: this.state
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/breakdown',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Breakdown2.default,
+                data: this.state
+              }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
+                  return _this5.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
+                } })
+            )
+          )
+        )
+      );
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      _util2.default.verify(this.verifyAuthentication);
+    }
+  }]);
+>>>>>>> Implement feature for automatic item claim
 
 	// Sets one value
 	} else if ( value !== undefined ) {
