@@ -86,43 +86,90 @@ p {
 }
 
 /*Btn*/
-.btn-primary {
+
+.btn {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background-color: #4A90E2;
   text-decoration: none;
-  color: #fff;
   border-radius: 2px;
   width: 240px;
-  margin: 1.4em auto;
+  margin: 0.6em auto;
   height: 36px;
   text-align: center;
   padding: 0.6em 1em;
 }
 
-.btn-link{
+.btn-primary {
+  background-color: #4A90E2;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  border: #4A90E2 1px solid;
+}
+
+.btn-wide {
+  padding: 0.1em 0;
+  width: 100%;
+}
+
+.btn-link {
   text-decoration: none;
   color: #fff;
-  font-size: 20px;
+  font-size: 1.2em;
+}
+
+.btn-link-secondary {
+  text-decoration: none;
+  color: #4A90E2;
+  font-size: 1em;
+}
+
+.btn-circle {
+/*  border-radius: 100%;
+  border: #4A90E2 1px solid;
+  padding: 1em;
+  color: #4A90E2;*/
+  padding-left: 1.4em;
+}
+
+.btn-circle::before {
+  content: url(./asset/add_ppl.svg);
+}
+
+.delete-btn {
+
+}
+
+.delete-btn::before {
+  content: url(./asset/delete.svg);
+  position: relative;
+  bottom: 4px;
 }
 
 /*Input*/
+input {
+  padding: 0.8em 1em;
+  -webkit-appearance: none;
+  border-radius: 2px;
+  background-color: #F7F7F7;
+  color: #444242;
+  font-size: 0.8em;
+}
+
+input::-webkit-input-placeholder{
+  color: #AAAAAA;
+}
+
 input#text-field {
   display: block;
   margin: 1em auto;
   width: 240px;
-  -webkit-appearance: none;
-  background-color: #F7F7F7;
-  border-radius: 2px;
   padding: 0.8em 1em;
-  color: #444242;
-  font-size: 16px;
-}
-
-input#text-field::-webkit-input-placeholder{
-  color: #AAAAAA;
+  font-size: 1em;
 }
 
 input[type='file'] {
@@ -132,6 +179,28 @@ input[type='file'] {
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+input#input-name {
+  margin-right: 10px;
+  width: 90%;
+  font-size: 0.9em;
+}
+
+input#input-amount{
+  width: 40%;
+  font-size: 0.9em;
+}
+
+input#input-amount-tip{
+  width: 80%;
+  font-size: 0.9em;
+}
+
+input#input-member {
+  background-color: #fff;
+  width: 80%;
+  font-size: 0.9em;
 }
 
 label.file-upload-btn {
@@ -175,6 +244,15 @@ label.file-upload-btn {
   -webkit-flex-flow: row nowrap;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+
+.flex-container-horizontal {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  align-items: center;
+  /*justify-content: space-between;*/
 }
 
 .site-container {
@@ -259,12 +337,15 @@ label.file-upload-btn {
 /*Content*/
 .content-container {
   padding: 0 1.4em;
+  height: 100%
 }
 
 /*Pages*/
 .page-container {
   /*padding-top: 0.4em;*/
   text-align: center;
+  height: 100%;
+  overflow-y: auto;
 }
 
 /*Back Button*/
@@ -350,12 +431,111 @@ textarea#tripDesc::-webkit-input-placeholder{
   color: #AAAAAA;
 }
 
+
+/*itemization-page*/
+.itemization-page h2{
+  text-align: center;
+}
+
+/*Receipt Item Entry*/
+.flex-column-receiptItem {
+  flex-basis: 90%;
+  margin: .1em 0
+}
+
+.flex-column-deleteItem {
+  flex-basis: 40px;
+}
+
+.flex-column-name {
+  flex-basis: 80%;
+}
+.flex-column-amount {
+  flex-basis: 20%;
+}
+
+.flex-column-members {
+  flex-basis: 90%;
+}
+
+.receipt-entry-list-container {
+  max-height: 240px;
+  margin-bottom: 1em;
+  overflow-y: auto;
+}
+
+.receipt-item-amount {
+  display: flex;
+  align-items: flex-end;
+  align-items: center;
+}
+
+.receipt-item-amount::before {
+  content: '$';
+  margin-right: 10px;
+}
+
+.receipt-member {
+  color: #AAAAAA;
+  font-size: 0.8em;
+  margin-right: 10px;
+}
+
+/*Receipt Members*/
+.receipt-members-bar-outer-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  background-color: #F8F8F8
+}
+
+.receipt-members-bar-inner-container {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0 1.4em;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.receipt-add-members {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0.6em 0;
+}
+
+.receipt-members-list {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+}
+
+.receipt-members-bar-mem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin: 0 4px;
+  height: 20px;
+  border-radius: 100px;
+  padding: 0.2em 0.4em;
+  border: #444242 solid 1px;
+  font-size: 0.9em;
+}
+
 .itemNameSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
 }
 
 .selectMemberSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
+  border: #4A90E2 1px solid;
 }
