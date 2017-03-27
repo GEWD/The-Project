@@ -181,20 +181,47 @@ const storeReceiptItems = ({receiptUrl, allItemsArray, allPricesArray}) => {
 const assignItemsToMembers = (allItemsArray, params) => {
   console.log('assignItemsToMembers------', JSON.stringify(params));
 
+  let allConsumers = [];
+  let allItems = [];
+
   for (let i = 0; i < allItemsArray.length; i++) {
     for (let k = 0; k < params.items[i][0].members.length; k++) {
-      // let eachItemName = params.items[i][0].name;
+      // console.log('itemNames', params.items[i][0].name);
+      // console.log('names', params.items[i][0].members[k]);
       // let eachConsumer = params.items[i][0].members[k];
-      db.queryAsync(queryString.assignItemsToMembers, [params.items[i][0].name, params.receiptUrl, params.username, params.items[i][0].members[k], params.receiptUrl, params.username])
-      .then( () => console.log('SUCCESS: assignItemsToMembers'));
+      let count = 0;
+      while (k !== params.items[i][0].members.length) {
+        allConsumers.push(params.items[i][0].members[k]);
+        allItems.push(params.items[i][0].name);
+        k++;
+      }
+      // return db.queryAsync(queryString.assignItemsToMembers, [params.items[i][0].name, params.receiptUrl, params.username, params.items[i][0].members[k], params.receiptUrl, params.username])
+      // .then( () => console.log('SUCCESS: assignItemsToMembers'));
     }
   }
+  console.log('allitems----------------', allItems);
+  console.log('consumers----------------',allConsumers);
+  console.log('url and username -----', params.receiptUrl, params.username);
+  // return Promise.map(allItems, (item, index) => {
+  //   return Promise.map(allConsumers, (consumer, index) => {
+    for (let i = 0; i < allItems.length; i++) {
+        db.query(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[i], params.receiptUrl, params.username])
+        // return db.queryAsync(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[j], params.receiptUrl, params.username])
+        // .then( () => console.log('SUCCESS: assignItemsToMembers'))
+        // .catch( err => console.error('ERROR: insert consumed_items', err));   
+    }
+      // return db.queryAsync(queryString.assignItemsToMembers, [allItems[index], params.receiptUrl, params.username, allConsumers[index], params.receiptUrl, params.username])
+      // .then( () => console.log('SUCCESS: assignItemsToMembers'))
+      // .catch( err => console.error('ERROR: insert consumed_items', err));
+  //   })
+  // })
+
   // return Promise.map(allItemsArray, (item, index) => {
   //   return Promise.map(memberArrayWithDupes, (member, index) => {
 
-      // return db.queryAsync(queryString.assignItemsToMembers, [item, receiptUrl, payor, member, receiptUrl, adminName])
-      // .then( () => console.log('SUCCESS: insert consumed_items'))
-      // .catch( err => console.error('ERROR: insert consumed_items', err));
+  //     return db.queryAsync(queryString.assignItemsToMembers, [item, receiptUrl, payor, member, receiptUrl, adminName])
+  //     .then( () => console.log('SUCCESS: insert consumed_items'))
+  //     .catch( err => console.error('ERROR: insert consumed_items', err));
   //   })
   // })
 }
@@ -207,7 +234,8 @@ const createMemberSummary = (params) => {
   let adminName = params.username;
   let payor = params.username;
   let receiptName = params.receiptName;
-  let receiptUrl = params.receiptUrl || `${receiptName}${adminName}`;
+  params.receiptUrl = params.receiptUrl || `${receiptName}${adminName}`;
+  let receiptUrl = params.receiptUrl;
   let sumBill = Number(params.sumBill) || 0;
   let sumTax = Number(params.sumTax) || 0;
   let sumTip = Number(params.sumTip) || 0;
