@@ -176,7 +176,8 @@ class App extends React.Component {
       var eachPrice = itemObj.amount / itemObj.members.length;
       console.log('....??', itemObj);
       if (itemObj.members.length === 0) {
-        itemObj.members = this.state.members;
+        // itemObj.members = [].concat.apply([], this.state.members);
+        itemObj.members.push('Testing');
       }
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
