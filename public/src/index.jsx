@@ -117,7 +117,9 @@ class App extends React.Component {
     let itemArray = [];
     for (var key in itemizationObject) {
       if (key.search(/tax/ig) !== -1) {
-        this.setState({sumTax: Number(itemizationObject[key])});
+        if (!isNaN) {
+          this.setState({sumTax: Number(itemizationObject[key])});
+        }
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {
         this.setState({sumTotal: Number(itemizationObject[key])});
