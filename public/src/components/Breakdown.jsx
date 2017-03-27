@@ -21,7 +21,7 @@ class Breakdown extends React.Component {
             <h2>Final Breakdown</h2>
             <h4>Total per person due to {this.props.data.username}</h4>
           </div>
-          <div>
+          <div className='receipt-summary'>
             {Object.keys(this.props.data.memberSum).map((member,index) => {
               return (
                 <div key={index} className='flex-container receipt-tax'>
