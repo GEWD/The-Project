@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+
 
 class Breakdown extends React.Component {
   constructor(props) {
@@ -30,6 +32,7 @@ class Breakdown extends React.Component {
             })}
           </div>
         </div>
+        <Link to='/' onClick={this.props.recent}> Back To Homepage (Recent) </Link>
       </div>
     );
   }
