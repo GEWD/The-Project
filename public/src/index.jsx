@@ -33,15 +33,17 @@ class App extends React.Component {
       member: '',
       memberExist: false,
       name:'',
-      amount: 0,
       sideMenuState: false,
       amount: '',
       sumBill: '',
       sumTax: '',
       sumTip: 0,
       sumTotal: 0,
-      memberSum: {}
-    };
+      memberSum: {},
+      amount: '',
+      sideMenuState: false,
+      windowHeight: ''
+    }
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
@@ -60,6 +62,7 @@ class App extends React.Component {
     this.closeMenu = this.closeMenu.bind(this);
     this.calculateMemberSum = this.calculateMemberSum.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   verifyAuthentication(userInfo) {
@@ -120,7 +123,7 @@ class App extends React.Component {
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {
         this.setState({sumTotal: Number(itemizationObject[key])});
-      } 
+      }
       if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
         itemArray.push([{
           name:key,
@@ -128,7 +131,7 @@ class App extends React.Component {
           members: []
         }]);
       }
-      
+
 
     }
     this.setState({items: itemArray});
@@ -245,6 +248,12 @@ class App extends React.Component {
     console.log('----site-pusher is clicked', this.state.sideMenuState);
   }
 
+  updateDimensions() {
+    this.setState({
+      windowHeight: window.innerHeight
+    });
+  }
+
   render() {
     return (
       <div className='site-container'>
@@ -325,6 +334,9 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    console.log('=========window innerHeight',window.innerHeight);
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
     Util.verify(this.verifyAuthentication);
   }
 }
