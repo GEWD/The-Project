@@ -182,11 +182,13 @@ class App extends React.Component {
     console.log('inside calculate Total')
     let sum = 0;
     this.state.items.map((item,index) => {
-      sum+= Number(item[0].amount);
-    })
+      if (item[0].name !== '<NOTE>') {
+        sum += Number(item[0].amount);
+      } 
+    });
     this.setState({
       sumBill: sum.toFixed(2)
-    })
+    });
   }
 
   onInputChange(event) {

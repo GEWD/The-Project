@@ -17,9 +17,10 @@ class MemberSummary extends React.Component {
 
 
   handleSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
     // this.setState({dummyData});
     Util.insertIntoDb(this.props.data);
+    this.props.calculateMemberSum();
   }
 
 
@@ -35,7 +36,7 @@ class MemberSummary extends React.Component {
             <h4>Paid By: {this.props.data.username}</h4>
           </div>
           <div className='receipt-summary'>
-            {this.props.data.items.map((el,idx) => {
+            {this.props.data.items.map((el, idx) => {
               return (
                 <div>
                   <div key={idx} className='flex-container'>
@@ -47,7 +48,7 @@ class MemberSummary extends React.Component {
                         return (
                           <div key={index} className='summary-mem-item'>
                             <span className='flex-column-name summary-mem-name'><i>{member}</i></span>
-                            <span className='flex-column-amount receipt-item-amount'>${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</span>
+                            <span className='flex-column-amount receipt-item-amount'>${(Number(el[0].amount) / el[0].members.length).toFixed(2)}</span>
                           </div>
                         )
                       })}
@@ -86,7 +87,7 @@ class MemberSummary extends React.Component {
             <div className='sumbit-btn-bar-inner-container'>
               <Link
                 to='/breakdown'
-                onClick={this.props.calculateMemberSum}
+                onClick={this.handleSubmit}
                 className='btn btn-primary btn-wide btn-link'
               >Submit</Link>
             </div>
