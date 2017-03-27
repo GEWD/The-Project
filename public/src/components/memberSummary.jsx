@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import Util from '../lib/util.js';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
@@ -22,7 +24,6 @@ class MemberSummary extends React.Component {
     Util.insertIntoDb(this.props.data);
     this.props.calculateMemberSum();
   }
-
 
 
   render() {
@@ -50,11 +51,11 @@ class MemberSummary extends React.Component {
                             <span className='flex-column-name summary-mem-name'><i>{member}</i></span>
                             <span className='flex-column-amount receipt-item-amount'>${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</span>
                           </div>
-                        );
+                        )
                       })}
                   </div>
                 </div>
-              );
+              )
             })}
             <hr/>
             <div className='flex-container receipt-tax'>
@@ -98,3 +99,4 @@ class MemberSummary extends React.Component {
   }
 }
 export default MemberSummary;
+
