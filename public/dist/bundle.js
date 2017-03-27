@@ -21069,8 +21069,11 @@ var Breakdown = function (_React$Component) {
               null,
               'Total per person due to ',
               this.props.data.username
-            ),
-            _react2.default.createElement('div', null),
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
             Object.keys(this.props.data.memberSum).map(function (member, index) {
               return _react2.default.createElement(
                 'div',
@@ -21090,9 +21093,21 @@ var Breakdown = function (_React$Component) {
           )
         ),
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/', onClick: this.props.recent },
-          ' Back To Homepage (Recent) '
+          'div',
+          { className: 'sumbit-btn-bar-outer-container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'sumbit-btn-bar-inner-container' },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              {
+                to: '/recent-trips',
+                onClick: this.props.recent,
+                className: 'btn btn-primary btn-wide btn-link'
+              },
+              'Recent Trips'
+            )
+          )
         )
       );
     }

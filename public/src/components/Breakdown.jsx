@@ -20,8 +20,8 @@ class Breakdown extends React.Component {
           <div className='receipt-info'>
             <h2>Final Breakdown</h2>
             <h4>Total per person due to {this.props.data.username}</h4>
-            <div>
           </div>
+          <div>
             {Object.keys(this.props.data.memberSum).map((member,index) => {
               return (
                 <div key={index} className='flex-container receipt-tax'>
@@ -32,7 +32,15 @@ class Breakdown extends React.Component {
             })}
           </div>
         </div>
-        <Link to='/' onClick={this.props.recent}> Back To Homepage (Recent) </Link>
+        <div className='sumbit-btn-bar-outer-container'>
+            <div className='sumbit-btn-bar-inner-container'>
+              <Link
+                to='/recent-trips'
+                onClick={this.props.recent}
+                className='btn btn-primary btn-wide btn-link'
+              >Recent Trips</Link>
+            </div>
+        </div>
       </div>
     );
   }
