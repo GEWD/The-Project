@@ -24,7 +24,6 @@ build/
 env/
 temp/
 api/testResults/
-bundle.js
 .env
 
 # Dependency directorys
