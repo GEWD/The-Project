@@ -78,13 +78,17 @@ class App extends React.Component {
   }
 
   addItem (itemArray){
-    this.setState({
-      items: this.state.items.concat([[{
-        name: this.state.name,
-        amount: this.state.amount,
-        members: []
-      }]])
-    })
+    if (this.state.name === '' || this.state.amount === '') {
+      console.log('Please include item and price')
+    } else {
+      this.setState({
+        items: this.state.items.concat([[{
+          name: this.state.name,
+          amount: this.state.amount,
+          members: []
+        }]])
+      })
+    }
     this.state.name = '';
     this.state.amount = '';
   }
