@@ -59,7 +59,7 @@ exports.spliceReceipt = function(receiptArray) {
     //Subtract totalPrice because it will be included within the obj loop
     accumPrice -= totalPrice;
     if (totalPrice !== accumPrice) {
-      itemToPriceObj['<NOTE>'] = 'We apologize for the inconvenience, our <strike>sick</strike> algorithm was unable to accurately parse your receipt. Please utilize the delete and add items buttons to adjust the results and to remove this note';
+      itemToPriceObj['<NOTE>'] = 'We apologize for the inconvenience, our <strike>sick</strike> algorithm was unable to accurately parse your receipt. You can utilize the delete and add items buttons to adjust the results and to remove this note';
     }
   };
   checkPricesAddToTotal();
