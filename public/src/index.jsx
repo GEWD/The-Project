@@ -6,7 +6,7 @@ import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import MemberSummary from './components/MemberSummary.jsx';
-import Breakdown from './components/Breakdown.jsx'
+import Breakdown from './components/Breakdown.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -21,18 +21,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      receiptUrl:'',
+      receiptUrl: '',
       tripName: '',
       username: '',
       tripDesc: '',
-      receiptName:'',
-      items:[],
-      selectItem:'',
-      selectMember:'',
-      members:[],
+      receiptName: '',
+      items: [],
+      selectItem: '',
+      selectMember: '',
+      members: [],
       member: '',
       memberExist: false,
-      name:'',
+      name: '',
       sideMenuState: false,
       amount: '',
       sumBill: '',
@@ -43,7 +43,7 @@ class App extends React.Component {
       amount: '',
       sideMenuState: false,
       windowHeight: ''
-    }
+    };
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
@@ -79,14 +79,14 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     this.setState({
       items: this.state.items.concat([[{
         name: this.state.name,
         amount: this.state.amount,
         members: []
       }]])
-    })
+    });
     this.state.name = '';
     this.state.amount = '';
   }
@@ -95,7 +95,7 @@ class App extends React.Component {
     delete this.state.items[index];
     this.setState({
       items: this.state.items
-    })
+    });
   }
 
   callGVision(form) {
@@ -105,8 +105,8 @@ class App extends React.Component {
       type: 'POST',
       url: '/upload',
       data: data,
-      processData:false,
-      contentType:false,
+      processData: false,
+      contentType: false,
       success: (results) => {
         this.onGVision(results);
       },
@@ -124,8 +124,8 @@ class App extends React.Component {
       }
       if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
         itemArray.push([{
-          name:key,
-          amount:itemizationObject[key],
+          name: key,
+          amount: itemizationObject[key],
           members: []
         }]);
       }
@@ -136,24 +136,23 @@ class App extends React.Component {
     console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
-  addMember (itemArray){
-    this.memberExist(this.state.member,(exist) => {
+  addMember (itemArray) {
+    this.memberExist(this.state.member, (exist) => {
+      this.setState({
+        memberExist: exist
+      });
+      if (!exist) {
         this.setState({
-          memberExist: exist
+          members: this.state.members.concat([[this.state.member]])
         });
-        if (!exist) {
-          this.setState({
-            members: this.state.members.concat([[this.state.member]])
-          })
-        }
+      }
     });
     this.state.member = '';
   }
 
   calculateTotal() {
-    console.log('inside calculate Total')
     let sum = 0;
-    this.state.items.map((item,index) => {
+    this.state.items.map((item, index) => {
       if (item[0].name !== '<NOTE>') {
         sum += Number(item[0].amount);
       } 
@@ -175,6 +174,10 @@ class App extends React.Component {
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
       var eachPrice = itemObj.amount / itemObj.members.length;
+      console.log('....??', itemObj);
+      if (itemObj.members.length === 0) {
+        itemObj.members = this.state.members;
+      }
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;
@@ -193,7 +196,7 @@ class App extends React.Component {
       if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
         exist = true;
       }
-    })
+    });
     cb(exist);
   }
 
@@ -334,9 +337,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('=========window innerHeight',window.innerHeight);
     this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener('resize', this.updateDimensions.bind(this));
     Util.verify(this.verifyAuthentication);
   }
 }

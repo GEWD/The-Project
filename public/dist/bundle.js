@@ -22539,6 +22539,85 @@ if ( document.readyState === "complete" ||
 }
 
 
+<<<<<<< HEAD
+=======
+      this.memberExist(this.state.member, function (exist) {
+        _this3.setState({
+          memberExist: exist
+        });
+        if (!exist) {
+          _this3.setState({
+            members: _this3.state.members.concat([[_this3.state.member]])
+          });
+        }
+      });
+      this.state.member = '';
+    }
+  }, {
+    key: 'calculateTotal',
+    value: function calculateTotal() {
+      var sum = 0;
+      this.state.items.map(function (item, index) {
+        if (item[0].name !== '<NOTE>') {
+          sum += Number(item[0].amount);
+        }
+      });
+      this.setState({
+        sumBill: sum.toFixed(2)
+      });
+    }
+  }, {
+    key: 'onInputChange',
+    value: function onInputChange(event) {
+      var name = event.target.name;
+      this.setState(_defineProperty({}, name, event.target.value));
+    }
+  }, {
+    key: 'calculateMemberSum',
+    value: function calculateMemberSum() {
+      var memberSum = {};
+      this.state.items.forEach(function (itemArr) {
+        var itemObj = itemArr[0];
+        var eachPrice = itemObj.amount / itemObj.members.length;
+        console.log('....??', itemObj);
+        if (itemObj.members.length === 0) {
+          itemObj.members = this.state.members;
+        }
+        for (var i = 0; i < itemObj.members.length; i++) {
+          if (memberSum[itemObj.members[i]]) {
+            memberSum[itemObj.members[i]] += eachPrice;
+          } else {
+            memberSum[itemObj.members[i]] = eachPrice;
+          }
+        }
+      });
+      this.setState({ memberSum: memberSum });
+    }
+  }, {
+    key: 'memberExist',
+    value: function memberExist(member, cb) {
+      var exist = false;
+      this.state.members.forEach(function (val, index) {
+        if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
+          exist = true;
+        }
+      });
+      cb(exist);
+    }
+  }, {
+    key: 'handleTripNameSubmit',
+    value: function handleTripNameSubmit(event) {
+      console.log('Tripname was submitted:' + this.state.tripName);
+      _util2.default.sendServerTripName(this.state.tripName, this.state.tripDesc);
+    }
+  }, {
+    key: 'itemOnClick',
+    value: function itemOnClick(index) {
+      var member = this.state.selectMember;
+      var members = this.state.items[index][0].members;
+      var items = this.state.items.slice();
+      var membersCurrIndex = members.indexOf(member);
+>>>>>>> Made change so unclaimed items are split amongst all group members
 
 
 // Multifunctional method to get and set values of a collection
