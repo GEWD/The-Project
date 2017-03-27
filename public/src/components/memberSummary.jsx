@@ -8,6 +8,7 @@ class MemberSummary extends React.Component {
     this.sumBill = Number(this.props.data.sumBill);
     this.sumTax = Number(this.props.data.sumTax);
     this.sumTip = Number(this.props.data.sumTip);
+    this.sumTotal = Number(this.props.data.sumTotal);
     this.memberCount = this.props.data.members.length;
     this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount);
   }
@@ -34,7 +35,7 @@ class MemberSummary extends React.Component {
             return (
               <li key={idx}>
                 <ul ><strong>{el[0].name}</strong> ${Number(el[0].amount).toFixed(2)}
-                  {el[0].members.map((member,index) => {
+                  {el[0].members.map((member, index) => {
                     return (<li key={index}><i>{member}</i>   ${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
                   })}
                 </ul> 
@@ -43,14 +44,12 @@ class MemberSummary extends React.Component {
           })}
         </ul>
         <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
-        <p>Total Tax: ${this.sumTax.toFixed(2)}</p>
         <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
-        <p>Total: ${(this.sumTip+this.sumTax+this.sumBill).toFixed(2)}</p>
+        <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
         <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
         <Link to='/breakdown' onClick={this.props.calculateMemberSum}>Submit</Link>
       </div>
     )
   }
 }
-
 export default MemberSummary;

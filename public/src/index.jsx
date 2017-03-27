@@ -38,9 +38,10 @@ class App extends React.Component {
       amount: '',
       sumBill: '',
       sumTax: '',
-      sumTip: '',
+      sumTip: 0,
+      sumTotal: 0,
       memberSum: {}
-    }
+    };
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
@@ -113,13 +114,18 @@ class App extends React.Component {
     let itemArray = [];
     for (var key in itemizationObject) {
       if (key.search(/tax/ig) !== -1) {
-        this.setState({sumTax: itemizationObject[key]});
+        this.setState({sumTax: Number(itemizationObject[key])});
       }
-      itemArray.push([{
-        name:key,
-        amount:itemizationObject[key],
-        members: []
-      }]);
+      if (key.search(/(\btotal|\btota)/i) !== -1) {
+        this.setState({sumTotal: Number(itemizationObject[key])});
+      } else {
+        itemArray.push([{
+          name:key,
+          amount:itemizationObject[key],
+          members: []
+        }]);
+      }
+
     }
     this.setState({items: itemArray});
     console.log('Successfully sent post to /vision, resulting array:', this.state.items);
