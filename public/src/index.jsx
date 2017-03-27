@@ -118,13 +118,15 @@ class App extends React.Component {
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {
         this.setState({sumTotal: Number(itemizationObject[key])});
-      } else {
+      } 
+      if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
         itemArray.push([{
           name:key,
           amount:itemizationObject[key],
           members: []
         }]);
       }
+      
 
     }
     this.setState({items: itemArray});
