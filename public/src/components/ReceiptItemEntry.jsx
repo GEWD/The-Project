@@ -8,7 +8,7 @@ const ReceiptItemEntry = ({item, index, deleteItem}) => (
     </div>
     <div className='flex-container receipt-members-list'>
       {item[0].members.map((member, index) => {
-        return <span key={index} className='flex-column-members receipt-member'>{member}</span>
+        return <span key={index} className='receipt-member'>{member}</span>
       })}
     </div>
   </div>

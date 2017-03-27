@@ -95,7 +95,7 @@ p {
   text-decoration: none;
   border-radius: 2px;
   width: 240px;
-  margin: 1.4em auto;
+  margin: 0.6em auto;
   height: 36px;
   text-align: center;
   padding: 0.6em 1em;
@@ -112,7 +112,7 @@ p {
 }
 
 .btn-wide {
-  padding: 0.4em 0;
+  padding: 0.1em 0;
   width: 100%;
 }
 
@@ -133,6 +133,7 @@ p {
   border: #4A90E2 1px solid;
   padding: 1em;
   color: #4A90E2;*/
+  padding-left: 1.4em;
 }
 
 .btn-circle::before {
@@ -168,7 +169,7 @@ input#text-field {
   margin: 1em auto;
   width: 240px;
   padding: 0.8em 1em;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 input[type='file'] {
@@ -183,10 +184,12 @@ input[type='file'] {
 input#input-name {
   margin-right: 10px;
   width: 90%;
+  font-size: 0.9em;
 }
 
 input#input-amount{
   width: 40%;
+  font-size: 0.9em;
 }
 
 input#input-amount::before{
@@ -194,6 +197,12 @@ input#input-amount::before{
   margin-right: 10px;
 }
 
+
+input#input-member {
+  background-color: #fff;
+  width: 80%;
+  font-size: 0.9em;
+}
 
 label.file-upload-btn {
   display: flex;
@@ -429,8 +438,10 @@ textarea#tripDesc::-webkit-input-placeholder{
   text-align: center;
 }
 
+/*Receipt Item Entry*/
 .flex-column-receiptItem {
   flex-basis: 90%;
+  margin: .1em 0
 }
 
 .flex-column-deleteItem {
@@ -449,7 +460,7 @@ textarea#tripDesc::-webkit-input-placeholder{
 }
 
 .receipt-entry-list-container {
-  max-height: 320px;
+  max-height: 240px;
   margin-bottom: 1em;
   overflow-y: auto;
 }
@@ -460,19 +471,50 @@ textarea#tripDesc::-webkit-input-placeholder{
 
 .receipt-member {
   color: #AAAAAA;
-  font-size: 0.6em;
+  font-size: 0.8em;
+  margin-right: 10px;
 }
 
-.receipt-members-bar {
+/*Receipt Members*/
+.receipt-members-bar-outer-container {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 60px;
+  height: 100px;
   width: 100%;
   background-color: #F8F8F8
 }
 
+.receipt-members-bar-inner-container {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0 1.4em;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.receipt-add-members {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0.6em 0;
+}
+
+.receipt-members-list {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+}
+
 .receipt-members-bar-mem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   margin: 0 4px;
   height: 20px;
   border-radius: 100px;

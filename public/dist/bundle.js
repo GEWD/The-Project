@@ -17811,35 +17811,47 @@ var AddMember = function (_React$Component) {
         ) : null,
         _react2.default.createElement(
           'div',
-          { className: 'receipt-members-bar flex-container-horizontal' },
+          { className: 'receipt-members-bar-outer-container' },
           _react2.default.createElement(
             'div',
-            { className: 'flex-container-horizontal' },
-            this.props.members.map(function (member, index) {
-              return _react2.default.createElement(
-                'span',
-                {
-                  key: index,
-                  onClick: function onClick() {
-                    return _this2.props.memberOnClick(member[0]);
+            { className: 'receipt-members-bar-inner-container' },
+            _react2.default.createElement(
+              'div',
+              { className: 'receipt-add-members' },
+              _react2.default.createElement('input', {
+                placeholder: 'Name',
+                name: 'member',
+                type: 'text',
+                value: this.props.member,
+                id: 'input-member',
+                onChange: this.props.onInputChange
+              }),
+              _react2.default.createElement('a', {
+                onClick: this.props.addMember,
+                className: 'btn-circle'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'receipt-members-list' },
+              this.props.members.map(function (member, index) {
+                return _react2.default.createElement(
+                  'div',
+                  {
+                    key: index,
+                    onClick: function onClick() {
+                      return _this2.props.memberOnClick(member[0]);
+                    },
+                    className: 'receipt-members-bar-mem selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
                   },
-                  className: 'receipt-members-bar-mem selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
-                },
-                member[0]
-              );
-            }),
-            _react2.default.createElement('input', {
-              placeholder: 'Name',
-              name: 'member',
-              type: 'text',
-              value: this.props.member,
-              id: 'input-member',
-              onChange: this.props.onInputChange
-            }),
-            _react2.default.createElement('a', {
-              onClick: this.props.addMember,
-              className: 'btn-circle'
-            })
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'receipt-members-bar-mem-name' },
+                    member[0]
+                  )
+                );
+              })
+            )
           )
         )
       );
@@ -21872,7 +21884,7 @@ var ReceiptItemEntry = function ReceiptItemEntry(_ref) {
       item[0].members.map(function (member, index) {
         return _react2.default.createElement(
           'span',
-          { key: index, className: 'flex-column-members receipt-member' },
+          { key: index, className: 'receipt-member' },
           member
         );
       })
