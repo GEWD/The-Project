@@ -17,9 +17,10 @@ class MemberSummary extends React.Component {
   
 
   handleSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
     // this.setState({dummyData});
     Util.insertIntoDb(this.props.data);
+    this.props.calculateMemberSum();
   }
 
 
@@ -48,8 +49,7 @@ class MemberSummary extends React.Component {
         <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
         <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
         <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
-        <Link to='/breakdown' onClick={this.props.calculateMemberSum}>Submit</Link>
-        <input type="submit" value="Confirm" onClick={this.handleSubmit}/>
+        <Link to='/breakdown' onClick={this.handleSubmit}>Submit</Link>
       </div>
     )
   }
