@@ -22656,7 +22656,7 @@ if ( document.readyState === "complete" ||
         var eachPrice = itemObj.amount / itemObj.members.length;
         console.log('....??', itemObj);
         if (itemObj.members.length === 0) {
-          itemObj.members = this.state.members;
+          itemObj.members = [].concat.apply([], this.state.members);
         }
 >>>>>>> Made change so unclaimed items are split amongst all group members
         for (var i = 0; i < itemObj.members.length; i++) {
