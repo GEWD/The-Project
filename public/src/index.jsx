@@ -38,16 +38,10 @@ class App extends React.Component {
       amount: '',
       sumBill: '',
       sumTax: '',
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
       sumTip: 0,
       sumTotal: 0,
       memberSum: {}
     };
-=======
-      sumTip: '',
-      memberSum: {}
-    }
->>>>>>> Successfully break down each member's portion
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
     this.handleClickLogout = this.handleClickLogout.bind(this);
@@ -157,11 +151,7 @@ class App extends React.Component {
     console.log('inside calculate Total')
     let sum = 0;
     this.state.items.map((item,index) => {
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
       sum+= Number(item[0].amount);
-=======
-      sum+= parseInt(item[0].amount);
->>>>>>> Successfully break down each member's portion
     })
     this.setState({
       sumBill: sum.toFixed(2)
@@ -179,11 +169,7 @@ class App extends React.Component {
     var memberSum = {};
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
       var eachPrice = itemObj.amount / itemObj.members.length;
-=======
-      var eachPrice = itemObj.amount/itemObj.members.length;
->>>>>>> Successfully break down each member's portion
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;
@@ -191,11 +177,7 @@ class App extends React.Component {
           memberSum[itemObj.members[i]] = eachPrice;
         }
       }
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
     });
-=======
-    })
->>>>>>> Successfully break down each member's portion
     this.setState({memberSum: memberSum});
   }
 
@@ -273,22 +255,7 @@ class App extends React.Component {
               handleClickLogout={this.handleClickLogout}
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
           <div className='content-container'>
-=======
-          <div>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/upload-receipt">Upload Receipt</Link></li>
-              <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/additems">Add Items</Link></li>
-              <li><Link to="/summary">Member Summary</Link></li>
-              <li><Link to="/breakdown">Breakdown</Link></li>
-              <li><Link to="/create-trip">Create Trip</Link></li>
-              {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClickLogout}>Logout</Link></li>}
-            </ul>
->>>>>>> Successfully break down each member's portion
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
             <PrivateRoute
               path="/create-trip"
@@ -345,15 +312,9 @@ class App extends React.Component {
               component={Breakdown}
               data={this.state}
             />
-<<<<<<< e1d0001f30fefab04c0ee07f6d799ebd43bf1848
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
             )}/>
-=======
-              <Route path ="/login" render={() => (
-                this.state.isAuthenticated ? <Redirect to="/" /> : <Login />
-              )}/>
->>>>>>> Successfully break down each member's portion
             </div>
           </div>
         </Router>
