@@ -175,7 +175,7 @@ input#input-name {
 }
 
 input#input-amount{
-  width: 90%;
+  width: 40%;
 }
 
 input#input-amount::before{

@@ -7488,7 +7488,7 @@ var CreateItem = function CreateItem(_ref) {
       _react2.default.createElement(
         'a',
         { onClick: addItem, className: 'btn-link-secondary' },
-        'Add Item'
+        '+ Add Item'
       ),
       _react2.default.createElement('br', null)
     )
@@ -17947,11 +17947,26 @@ var ReceiptItemEntryList = function (_React$Component) {
             )
           );
         }),
-        _react2.default.createElement('input', { placeholder: 'Total Tip', type: 'number', name: 'sumTip', value: this.props.sumTip, onChange: this.props.onInputChange }),
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/summary', onClick: this.props.calculateTotal },
-          ' Submit '
+          'div',
+          { className: 'flex-container flex-column-receiptItem' },
+          _react2.default.createElement(
+            'span',
+            { className: 'flex-column-name receipt-item-name' },
+            'Tip'
+          ),
+          _react2.default.createElement(
+            'span',
+            { className: 'flex-column-amount receipt-item-amount' },
+            _react2.default.createElement('input', {
+              placeholder: 'Total Tip',
+              type: 'number',
+              name: 'sumTip',
+              value: this.props.sumTip,
+              onChange: this.props.onInputChange,
+              id: 'input-amount'
+            })
+          )
         )
       );
     }
@@ -21129,7 +21144,6 @@ var Itemization = function Itemization(_ref) {
         sumTax: sumTax,
         sumTip: sumTip,
         onInputChange: onInputChange,
-        calculateTotal: calculateTotal,
         windowHeight: windowHeight
       }),
       _react2.default.createElement(_CreateItem2.default, {
@@ -21138,6 +21152,19 @@ var Itemization = function Itemization(_ref) {
         onInputChange: onInputChange,
         addItem: addItem
       }),
+      _react2.default.createElement(
+        'div',
+        { className: 'btn btn-primary btn-wide' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          {
+            to: '/summary',
+            onClick: calculateTotal,
+            className: 'btn-link'
+          },
+          ' Calculate '
+        )
+      ),
       _react2.default.createElement(_AddMember2.default, {
         addMember: addMember,
         member: member,

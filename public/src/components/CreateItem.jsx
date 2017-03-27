@@ -25,7 +25,7 @@ const CreateItem = ({addItem, itemName, itemAmount, onInputChange,sumBill,sumTax
       />
     </div>
     <div className='btn btn-secondary btn-wide'>
-      <a onClick={addItem} className='btn-link-secondary'>Add Item</a><br/>
+      <a onClick={addItem} className='btn-link-secondary'>+ Add Item</a><br/>
     </div>
   </div>
 )

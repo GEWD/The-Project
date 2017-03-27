@@ -18,7 +18,6 @@ const Itemization = ({addItem, itemName, itemAmount, items, selectItem, deleteIt
         sumTax={sumTax}
         sumTip={sumTip}
         onInputChange={onInputChange}
-        calculateTotal={calculateTotal}
         windowHeight={windowHeight}
       />
       <CreateItem
@@ -27,6 +26,13 @@ const Itemization = ({addItem, itemName, itemAmount, items, selectItem, deleteIt
         onInputChange={onInputChange}
         addItem={addItem}
       />
+      <div className='btn btn-primary btn-wide'>
+        <Link
+          to='/summary'
+          onClick={calculateTotal}
+          className='btn-link'
+        > Calculate </Link>
+      </div>
       <AddMember
         addMember={addMember}
         member={member}
