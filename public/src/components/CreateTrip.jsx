@@ -22,7 +22,7 @@ const CreateTrip = ({tripName, tripDesc, handleTripNameSubmit, onInputChange}) =
         placeholder='Your Trip Description'
         value={tripDesc}
         onChange={onInputChange}/>
-      <div className='btn-primary'>
+      <div className='btn btn-primary'>
         <Link
           to='/upload-receipt'
           value='submit'

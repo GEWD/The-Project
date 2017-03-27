@@ -7462,19 +7462,36 @@ var CreateItem = function CreateItem(_ref) {
     'div',
     null,
     _react2.default.createElement(
-      'h2',
-      null,
-      'Add your items'
+      'div',
+      { className: 'flex-container flex-column-receiptItem' },
+      _react2.default.createElement('input', {
+        placeholder: 'Item Name',
+        name: 'name', type: 'text',
+        value: itemName,
+        onChange: onInputChange,
+        id: 'input-name',
+        className: 'flex-column-name'
+      }),
+      _react2.default.createElement('input', {
+        placeholder: '$00.00',
+        name: 'amount',
+        type: 'number',
+        value: itemAmount,
+        onChange: onInputChange,
+        id: 'input-amount',
+        className: 'flex-column-amount'
+      })
     ),
-    _react2.default.createElement('input', { placeholder: 'Item name', name: 'name', type: 'text', value: itemName, onChange: onInputChange }),
-    _react2.default.createElement('input', { placeholder: 'Amount', name: 'amount', type: 'number', value: itemAmount, onChange: onInputChange }),
     _react2.default.createElement(
-      'button',
-      { onClick: addItem },
-      'Add Item'
-    ),
-    _react2.default.createElement('br', null),
-    _react2.default.createElement('br', null)
+      'div',
+      { className: 'btn btn-secondary btn-wide' },
+      _react2.default.createElement(
+        'a',
+        { onClick: addItem, className: 'btn-link-secondary' },
+        'Add Item'
+      ),
+      _react2.default.createElement('br', null)
+    )
   );
 };
 
@@ -17759,6 +17776,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -17787,35 +17806,48 @@ var AddMember = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'label',
+        this.props.memberExist ? _react2.default.createElement(
+          'p',
           null,
-          'To:',
-          _react2.default.createElement('input', { placeholder: 'Name', name: 'member', type: 'text', value: this.props.member, onChange: this.props.onInputChange }),
+          'The name already exist!'
+        ) : null,
+        _react2.default.createElement(
+          'div',
+          { className: 'receipt-members-bar flex-container-horizontal' },
           _react2.default.createElement(
-            'button',
-            { onClick: this.props.addMember },
-            'Add Member'
-          ),
-          _react2.default.createElement('br', null),
-          this.props.memberExist ? _react2.default.createElement(
-            'p',
-            null,
-            'The name already exist!'
-          ) : null,
-          this.props.members.map(function (member, index) {
-            return _react2.default.createElement(
-              'span',
+            'div',
+            { className: 'flex-container-horizontal' },
+            this.props.members.map(function (member, index) {
+              return _react2.default.createElement(
+                'span',
+                _defineProperty({
+                  key: index,
+                  onClick: function onClick() {
+                    return _this2.props.memberOnClick(member[0]);
+                  },
+                  className: 'selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
+                }, 'className', 'receipt-members-bar-mem'),
+                member[0]
+              );
+            }),
+            _react2.default.createElement('input', {
+              placeholder: 'Name',
+              name: 'member',
+              type: 'text',
+              value: this.props.member,
+              id: 'input-member',
+              onChange: this.props.onInputChange
+            }),
+            _react2.default.createElement(
+              'button',
               {
-                key: index,
-                onClick: function onClick() {
-                  return _this2.props.memberOnClick(member[0]);
-                },
-                className: 'selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
+                onClick: this.props.addMember,
+                className: 'btn-secondary'
               },
-              member[0]
-            );
-          })
+              '+'
+            ),
+            _react2.default.createElement('br', null)
+          )
         )
       );
     }
@@ -17837,6 +17869,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
@@ -17851,53 +17885,80 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var ReceiptItemEntryList = function ReceiptItemEntryList(_ref) {
-  var items = _ref.items,
-      selectItem = _ref.selectItem,
-      itemOnClick = _ref.itemOnClick,
-      deleteItem = _ref.deleteItem,
-      sumTax = _ref.sumTax,
-      sumTip = _ref.sumTip,
-      onInputChange = _ref.onInputChange,
-      calculateTotal = _ref.calculateTotal;
-  return _react2.default.createElement(
-    'div',
-    null,
-    items.map(function (item, index) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReceiptItemEntryList = function (_React$Component) {
+  _inherits(ReceiptItemEntryList, _React$Component);
+
+  function ReceiptItemEntryList(props) {
+    _classCallCheck(this, ReceiptItemEntryList);
+
+    var _this = _possibleConstructorReturn(this, (ReceiptItemEntryList.__proto__ || Object.getPrototypeOf(ReceiptItemEntryList)).call(this, props));
+
+    _this.state = {
+      maxHeight: {
+        'overflow-y': 'auto',
+        'max-height': '' + _this.props.windowHeight / 2.5
+      }
+    };
+    return _this;
+  }
+
+  _createClass(ReceiptItemEntryList, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        'span',
-        { key: index, className: 'flex-container' },
+        'div',
+        { className: 'receipt-entry-list-container' },
+        this.props.items.map(function (item, index) {
+          return _react2.default.createElement(
+            'span',
+            { key: index, className: 'flex-container' },
+            _react2.default.createElement(
+              'div',
+              _defineProperty({
+                onClick: function onClick() {
+                  return _this2.props.itemOnClick(index);
+                },
+                className: 'itemName' + (_this2.props.selectItem === index ? 'Selected' : '')
+              }, 'className', 'flex-column-receiptItem'),
+              _react2.default.createElement(_ReceiptItemEntry2.default, {
+                key: index,
+                item: item,
+                deleteItem: _this2.props.deleteItem,
+                index: index
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container' },
+              _react2.default.createElement('a', {
+                onClick: function onClick() {
+                  return _this2.props.deleteItem(index);
+                },
+                className: 'delete-btn flex-column-deleteItem'
+              })
+            )
+          );
+        }),
+        _react2.default.createElement('input', { placeholder: 'Total Tip', type: 'number', name: 'sumTip', value: this.props.sumTip, onChange: this.props.onInputChange }),
         _react2.default.createElement(
-          'div',
-          _defineProperty({
-            onClick: function onClick() {
-              return itemOnClick(index);
-            },
-            className: 'itemName' + (selectItem === index ? 'Selected' : '')
-          }, 'className', 'flex-column-receiptItem'),
-          _react2.default.createElement(_ReceiptItemEntry2.default, {
-            item: item,
-            deleteItem: deleteItem,
-            index: index,
-            key: index
-          })
-        ),
-        _react2.default.createElement('button', {
-          onClick: function onClick() {
-            return deleteItem(index);
-          },
-          className: 'delete-btn flex-column-deleteItem'
-        })
+          _reactRouterDom.Link,
+          { to: '/summary', onClick: this.props.calculateTotal },
+          ' Submit '
+        )
       );
-    }),
-    _react2.default.createElement('input', { placeholder: 'Total Tip', type: 'number', name: 'sumTip', value: sumTip, onChange: onInputChange }),
-    _react2.default.createElement(
-      _reactRouterDom.Link,
-      { to: '/summary', onClick: calculateTotal },
-      ' Submit '
-    )
-  );
-};
+    }
+  }]);
+
+  return ReceiptItemEntryList;
+}(_react2.default.Component);
 
 exports.default = ReceiptItemEntryList;
 
@@ -20976,7 +21037,7 @@ var CreateTrip = function CreateTrip(_ref) {
       onChange: onInputChange }),
     _react2.default.createElement(
       'div',
-      { className: 'btn-primary' },
+      { className: 'btn btn-primary' },
       _react2.default.createElement(
         _reactRouterDom.Link,
         {
@@ -21036,6 +21097,7 @@ var Itemization = function Itemization(_ref) {
       member = _ref.member,
       members = _ref.members,
       onInputChange = _ref.onInputChange,
+      windowHeight = _ref.windowHeight,
       memberExist = _ref.memberExist,
       itemOnClick = _ref.itemOnClick,
       memberOnClick = _ref.memberOnClick,
@@ -21054,6 +21116,11 @@ var Itemization = function Itemization(_ref) {
     _react2.default.createElement(
       'div',
       null,
+      _react2.default.createElement(
+        'h2',
+        null,
+        'Receipt Items'
+      ),
       _react2.default.createElement(_ReceiptItemEntryList2.default, {
         items: items,
         selectItem: selectItem,
@@ -21062,7 +21129,8 @@ var Itemization = function Itemization(_ref) {
         sumTax: sumTax,
         sumTip: sumTip,
         onInputChange: onInputChange,
-        calculateTotal: calculateTotal
+        calculateTotal: calculateTotal,
+        windowHeight: windowHeight
       }),
       _react2.default.createElement(_CreateItem2.default, {
         itemName: itemName,
@@ -21470,7 +21538,7 @@ var UploadReceipt = function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'btn-primary' },
+              { className: 'btn btn-primary' },
               _react2.default.createElement(
                 _reactRouterDom.Link,
                 {
@@ -21646,9 +21714,14 @@ var App = function (_React$Component) {
       member: '',
       memberExist: false,
       name: '',
-      amount: 0,
-      sideMenuState: false
-    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sumBill', ''), _defineProperty(_this$state, 'sumTax', ''), _defineProperty(_this$state, 'sumTip', 0), _defineProperty(_this$state, 'sumTotal', 0), _defineProperty(_this$state, 'memberSum', {}), _this$state);
+      sideMenuState: false,
+      amount: '',
+      sumBill: '',
+      sumTax: '',
+      sumTip: 0,
+      sumTotal: 0,
+      memberSum: {}
+    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sideMenuState', false), _defineProperty(_this$state, 'windowHeight', ''), _this$state);
 
     _this.verifyAuthentication = _this.verifyAuthentication.bind(_this);
     _this.handleClickLogout = _this.handleClickLogout.bind(_this);
@@ -21667,6 +21740,7 @@ var App = function (_React$Component) {
     _this.closeMenu = _this.closeMenu.bind(_this);
     _this.calculateMemberSum = _this.calculateMemberSum.bind(_this);
     _this.calculateTotal = _this.calculateTotal.bind(_this);
+    _this.updateDimensions = _this.updateDimensions.bind(_this);
     return _this;
   }
 
@@ -21868,6 +21942,13 @@ var App = function (_React$Component) {
       console.log('----site-pusher is clicked', this.state.sideMenuState);
     }
   }, {
+    key: 'updateDimensions',
+    value: function updateDimensions() {
+      this.setState({
+        windowHeight: window.innerHeight
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this4 = this;
@@ -21958,6 +22039,9 @@ var App = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      console.log('=========window innerHeight', window.innerHeight);
+      this.updateDimensions();
+      window.addEventListener("resize", this.updateDimensions.bind(this));
       _util2.default.verify(this.verifyAuthentication);
     }
   }]);
@@ -36396,16 +36480,20 @@ var ReceiptItemEntry = function ReceiptItemEntry(_ref) {
       deleteItem = _ref.deleteItem;
   return _react2.default.createElement(
     'div',
-    { className: 'flex-container flex-column-receiptItem' },
+    null,
     _react2.default.createElement(
-      'span',
-      { className: 'flex-column-name receipt-item-name' },
-      item[0].name
-    ),
-    _react2.default.createElement(
-      'span',
-      { className: 'flex-column-amount receipt-item-amount' },
-      item[0].amount
+      'div',
+      { className: 'flex-container flex-column-receiptItem' },
+      _react2.default.createElement(
+        'span',
+        { className: 'flex-column-name receipt-item-name' },
+        item[0].name
+      ),
+      _react2.default.createElement(
+        'span',
+        { className: 'flex-column-amount receipt-item-amount' },
+        item[0].amount
+      )
     ),
     _react2.default.createElement(
       'div',
