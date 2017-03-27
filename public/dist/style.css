@@ -192,11 +192,10 @@ input#input-amount{
   font-size: 0.9em;
 }
 
-input#input-amount::before{
-  content: '$'
-  margin-right: 10px;
+input#input-amount-tip{
+  width: 80%;
+  font-size: 0.9em;
 }
-
 
 input#input-member {
   background-color: #fff;
@@ -465,8 +464,15 @@ textarea#tripDesc::-webkit-input-placeholder{
   overflow-y: auto;
 }
 
+.receipt-item-amount {
+  display: flex;
+  align-items: flex-end;
+  align-items: center;
+}
+
 .receipt-item-amount::before {
   content: '$';
+  margin-right: 10px;
 }
 
 .receipt-member {

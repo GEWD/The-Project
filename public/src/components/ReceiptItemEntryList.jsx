@@ -42,14 +42,14 @@ class ReceiptItemEntryList extends React.Component {
         })}
         <div className='flex-container flex-column-receiptItem'>
           <span className='flex-column-name receipt-item-name'>Tip</span>
-          <span className='flex-column-amount receipt-item-amount'>
+          <span className='receipt-item-amount'>
             <input
               placeholder='Total Tip'
               type='number'
               name='sumTip'
               value={this.props.sumTip}
               onChange={this.props.onInputChange}
-              id='input-amount'
+              id='input-amount-tip'
             />
           </span>
         </div>

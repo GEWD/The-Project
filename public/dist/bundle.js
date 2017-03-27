@@ -17962,14 +17962,14 @@ var ReceiptItemEntryList = function (_React$Component) {
           ),
           _react2.default.createElement(
             'span',
-            { className: 'flex-column-amount receipt-item-amount' },
+            { className: 'receipt-item-amount' },
             _react2.default.createElement('input', {
               placeholder: 'Total Tip',
               type: 'number',
               name: 'sumTip',
               value: this.props.sumTip,
               onChange: this.props.onInputChange,
-              id: 'input-amount'
+              id: 'input-amount-tip'
             })
           )
         )
