@@ -21391,91 +21391,162 @@ var MemberSummary = function (_React$Component) {
           'div',
           { className: 'container' },
           _react2.default.createElement(
-            'h4',
-            null,
-            this.props.data.tripName
+            'div',
+            { className: 'receipt-info' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Receipt Summary'
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              this.props.data.tripName
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Paid By: ',
+              this.props.data.username
+            )
           ),
           _react2.default.createElement(
-            'h4',
-            null,
-            this.props.data.receiptName,
-            ' ',
-            'URL'
-          ),
-          _react2.default.createElement(
-            'h4',
-            null,
-            'Paid By: ',
-            this.props.data.username
-          ),
-          this.props.data.items.map(function (el, idx) {
-            return _react2.default.createElement(
+            'div',
+            { className: 'receipt-summary' },
+            this.props.data.items.map(function (el, idx) {
+              return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'div',
+                  { key: idx, className: 'flex-container' },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'flex-column-name receipt-item-name' },
+                    el[0].name
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'flex-column-amount receipt-item-amount' },
+                    ' $',
+                    Number(el[0].amount).toFixed(2)
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'receipt-item-mem-summary' },
+                  el[0].members.map(function (member, index) {
+                    return _react2.default.createElement(
+                      'div',
+                      { key: index, className: 'summary-mem-item' },
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'flex-column-name summary-mem-name' },
+                        _react2.default.createElement(
+                          'i',
+                          null,
+                          member
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'flex-column-amount receipt-item-amount' },
+                        '$',
+                        (Number(el[0].amount) / el[0].members.length).toFixed(2)
+                      )
+                    );
+                  })
+                )
+              );
+            }),
+            _react2.default.createElement('hr', null),
+            _react2.default.createElement(
               'div',
-              { key: idx, className: 'flex-container' },
+              { className: 'flex-container receipt-tax' },
               _react2.default.createElement(
                 'span',
                 { className: 'flex-column-name' },
-                el[0].name
+                'Sub Total:'
               ),
               _react2.default.createElement(
                 'span',
-                { className: 'flex-column-amount' },
-                ' $',
-                Number(el[0].amount).toFixed(2)
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumBill.toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total Tax:'
               ),
-              el[0].members.map(function (member, index) {
-                return _react2.default.createElement(
-                  'span',
-                  { key: index },
-                  _react2.default.createElement(
-                    'i',
-                    null,
-                    member
-                  ),
-                  '   $',
-                  (Number(el[0].amount) / el[0].members.length).toFixed(2)
-                );
-              })
-            );
-          }),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Sub Total: $',
-            this.sumBill.toFixed(2)
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumTax
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total Tip:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumTip.toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                (Number(this.sumTip) + Number(this.sumBill)).toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Tax + Tip per person:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.perPerson.toFixed(2)
+              )
+            )
           ),
           _react2.default.createElement(
-            'p',
-            null,
-            'Total Tax: $',
-            this.sumTax
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Total Tip: $',
-            this.sumTip.toFixed(2)
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Total: $',
-            (Number(this.sumTip) + Number(this.sumBill)).toFixed(2)
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Tax + Tip per person: $',
-            this.perPerson.toFixed(2)
-          ),
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            {
-              to: '/breakdown',
-              onClick: this.props.calculateMemberSum,
-              className: 'btn btn-primary btn-wide btn-link'
-            },
-            'Submit'
+            'div',
+            { className: 'sumbit-btn-bar-outer-container' },
+            _react2.default.createElement(
+              'div',
+              { className: 'sumbit-btn-bar-inner-container' },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                {
+                  to: '/breakdown',
+                  onClick: this.props.calculateMemberSum,
+                  className: 'btn btn-primary btn-wide btn-link'
+                },
+                'Submit'
+              )
+            )
           )
         )
       );
@@ -21688,7 +21759,7 @@ var TripSummary = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'page-container' },
         _react2.default.createElement(
           'h1',
           null,
@@ -21779,7 +21850,7 @@ var UploadReceipt = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'page-container' },
+          { className: 'page-container-center' },
           _react2.default.createElement(
             'h1',
             null,
