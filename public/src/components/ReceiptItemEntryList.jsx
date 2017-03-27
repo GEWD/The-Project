@@ -24,7 +24,6 @@ const ReceiptItemEntryList = ({items, selectItem, itemOnClick, deleteItem,sumTax
           )
       })}
     </ul>
-    <input placeholder='Total Tax' type='number' name='sumTax' value={sumTax} onChange={onInputChange}/>
     <input placeholder='Total Tip' type='number' name='sumTip' value={sumTip} onChange={onInputChange}/>
     <Link to='/summary' onClick={calculateTotal}> Submit </Link>
   </div>

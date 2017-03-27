@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 class MemberSummary extends React.Component {
   constructor(props) {
     super(props);
-    this.sumBill = parseInt(this.props.data.sumBill);
-    this.sumTax = parseInt(this.props.data.sumTax);
-    this.sumTip = parseInt(this.props.data.sumTip);
+    this.sumBill = Number(this.props.data.sumBill);
+    this.sumTax = Number(this.props.data.sumTax);
+    this.sumTip = Number(this.props.data.sumTip);
     this.memberCount = this.props.data.members.length;
     this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount);
   }
@@ -33,9 +33,9 @@ class MemberSummary extends React.Component {
           {this.props.data.items.map((el,idx) => {
             return (
               <li key={idx}>
-                <ul ><strong>{el[0].name}</strong> ${parseInt(el[0].amount).toFixed(2)}
+                <ul ><strong>{el[0].name}</strong> ${Number(el[0].amount).toFixed(2)}
                   {el[0].members.map((member,index) => {
-                    return (<li key={index}><i>{member}</i>   ${(parseInt(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
+                    return (<li key={index}><i>{member}</i>   ${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
                   })}
                 </ul> 
               </li> 

@@ -104,10 +104,7 @@ class App extends React.Component {
       processData:false,
       contentType:false,
       success: (results) => {
-        console.log('.as.d.awd.as.data', results);
-        console.log('this is ssss:', this, '....', currentScope);
         this.onGVision(results);
-        console.log('Successfully sent post to /vision, resulting array:', this.state.items);
       },
     });
   }
@@ -115,6 +112,9 @@ class App extends React.Component {
   onGVision(itemizationObject) {
     let itemArray = [];
     for (var key in itemizationObject) {
+      if (key.search(/tax/ig) !== -1) {
+        this.setState({sumTax: itemizationObject[key]});
+      }
       itemArray.push([{
         name:key,
         amount:itemizationObject[key],
@@ -143,7 +143,7 @@ class App extends React.Component {
     console.log('inside calculate Total')
     let sum = 0;
     this.state.items.map((item,index) => {
-      sum+= parseInt(item[0].amount);
+      sum+= Number(item[0].amount);
     })
     this.setState({
       sumBill: sum.toFixed(2)
@@ -161,7 +161,7 @@ class App extends React.Component {
     var memberSum = {};
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
-      var eachPrice = itemObj.amount/itemObj.members.length;
+      var eachPrice = itemObj.amount / itemObj.members.length;
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;
@@ -169,7 +169,7 @@ class App extends React.Component {
           memberSum[itemObj.members[i]] = eachPrice;
         }
       }
-    })
+    });
     this.setState({memberSum: memberSum});
   }
 

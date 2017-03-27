@@ -3,8 +3,8 @@ import React from 'react';
 class Breakdown extends React.Component {
   constructor(props) {
     super(props);
-    this.sumTax = parseInt(this.props.data.sumTax);
-    this.sumTip = parseInt(this.props.data.sumTip);
+    this.sumTax = Number(this.props.data.sumTax);
+    this.sumTip = Number(this.props.data.sumTip);
     this.memberCount = this.props.data.members.length;
     this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount) ;
   }
