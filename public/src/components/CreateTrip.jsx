@@ -7,7 +7,14 @@ import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 const CreateTrip = ({tripName, tripDesc, handleTripNameSubmit, onInputChange}) => (
   <div className='create-trip-page-container'>
     <h1>Create Trip</h1>
-      <input id='tripName' name='tripName'placeholder='Trip Name' type='text' value={tripName} onChange={onInputChange}/>
+      <input
+        id='text-field'
+        name='tripName'
+        placeholder='Trip Name'
+        type='text'
+        value={tripName}
+        onChange={onInputChange}
+      />
       <textarea
         rows='4'
         id='tripDesc'
@@ -19,7 +26,7 @@ const CreateTrip = ({tripName, tripDesc, handleTripNameSubmit, onInputChange}) =
         <Link
           to='/upload-receipt'
           value='submit'
-          className='create-new-trip-btn'
+          className='btn-link'
           onClick={handleTripNameSubmit}
         >New Trip
         </Link>
