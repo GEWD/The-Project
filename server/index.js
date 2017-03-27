@@ -97,12 +97,14 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
+// // test database functions
+// app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
 app.get('/storeItems', db.storeReceiptItems);
-app.get('/assignItems', db.assignItemsToMembers);
+// app.get('/assignItems', db.assignItemsToMembers);
 
 app.get('/login', authHelper, (req, res) => {
   if (req.isAuthenticated()) {
@@ -192,6 +194,21 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+let uploadCloud = () => {
+  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
+      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
+      // db.addReceipt(params, function(err, data) {
+      //   console.log(data);
+      //   res.send('File uploaded!');
+      // });
+      console.log('+++++++++',data);
+  });
+}
+
+app.post('/summary', (req, res) => {
+  console.log('=============', req.body);
+  db.createMemberSummary(req.body);
+})
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {

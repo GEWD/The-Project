@@ -11,15 +11,37 @@ class MemberSummary extends React.Component {
     this.sumTotal = Number(this.props.data.sumTotal);
     this.memberCount = this.props.data.members.length;
     this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount);
+    // this.state = {
+    // };
+    // this.handleSubmit = this.handleSubmit.bind(this);
+    // this.pricePerPerson = this.pricePerPerson.bind(this);
+    // this.items = this.props.data.items;
+    // this.trip = this.data.trip;
+    // this.payor = this.data.payor;
+    // this.items_split = this.data.items_split;
+    // this.receiptName = this.data.receiptName;
+    // this.receiptUrl = this.data.receiptUrl;
+    // let itemsArray = Object.keys(data.items_split);
+
+    // this.state = {
+    // };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.pricePerPerson = this.pricePerPerson.bind(this);
+    // this.items = this.props.data.items;
+    // this.trip = this.data.trip;
+    // this.payor = this.data.payor;
+    // this.items_split = this.data.items_split;
+    // this.receiptName = this.data.receiptName;
+    // this.receiptUrl = this.data.receiptUrl;
+    // let itemsArray = Object.keys(data.items_split);
   }
 
   
 
   handleSubmit(event) {
-    // TODO: the dummyData will be passed down from MemberSummary's parent component
     event.preventDefault();
     // this.setState({dummyData});
-    Util.insertIntoDb(dummyData);
+    Util.insertIntoDb(this.props.data);
   }
 
 
@@ -49,6 +71,7 @@ class MemberSummary extends React.Component {
         <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
         <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
         <Link to='/breakdown' onClick={this.props.calculateMemberSum}>Submit</Link>
+        <input type="submit" value="Confirm" onClick={this.handleSubmit}/>
       </div>
     )
   }
