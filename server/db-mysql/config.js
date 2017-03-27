@@ -1,5 +1,5 @@
 module.exports = {
-  connectionLimit: 1000,
+  connectionLimit: 10,
   host: 'us-cdbr-iron-east-03.cleardb.net',
   user: 'bc13f161df8ceb',
   password: process.env.CLEARDB_PASS,
