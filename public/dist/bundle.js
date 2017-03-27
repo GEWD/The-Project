@@ -22058,8 +22058,15 @@ var App = function (_React$Component) {
   }, {
     key: 'calculateTotal',
     value: function calculateTotal() {
+      var _this4 = this;
+
       var sum = 0;
       this.state.items.map(function (item, index) {
+        console.log('//////:', item[0]);
+        if (item[0].members.length === 0) {
+          item[0].members = [].concat.apply([], _this4.state.members);
+          // itemObj.members.push(123456678);
+        }
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
@@ -22078,13 +22085,15 @@ var App = function (_React$Component) {
     key: 'calculateMemberSum',
     value: function calculateMemberSum() {
       var memberSum = {};
+      var currentScope = this;
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
         console.log('....??', itemObj);
-        if (itemObj.members.length === 0) {
-          itemObj.members = [].concat.apply([], this.state.members);
-        }
+        // if (itemObj.members.length === 0) {
+        //   itemObj.members = [].concat.apply([], currentScope.state.members);
+        //   // itemObj.members.push(123456678);
+        // }
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22166,7 +22175,7 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _react2.default.createElement(
         'div',
@@ -22244,7 +22253,7 @@ var App = function (_React$Component) {
                 data: this.state
               }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
-                  return _this4.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
+                  return _this5.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
                 } })
             )
           )
