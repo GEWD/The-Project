@@ -22580,6 +22580,7 @@ if ( document.readyState === "complete" ||
     value: function addMember(itemArray) {
       var _this3 = this;
 >>>>>>> Revise receipt summary page and note
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -22599,6 +22600,8 @@ if ( document.readyState === "complete" ||
     key: 'calculateTotal',
     value: function calculateTotal() {
       var _this4 = this;
+=======
+>>>>>>> Revise receipt summary page and note
 
 <<<<<<< HEAD
       var sum = 0;
@@ -22626,7 +22629,16 @@ if ( document.readyState === "complete" ||
     value: function calculateTotal() {
       var sum = 0;
       this.state.items.map(function (item, index) {
+<<<<<<< HEAD
 >>>>>>> Made change so unclaimed items are split amongst all group members
+=======
+<<<<<<< HEAD
+=======
+        if (item[0].members.length === 0) {
+          item[0].members = [].concat.apply([], _this4.state.members);
+        }
+>>>>>>> Revise receipt summary page and note
+>>>>>>> Revise receipt summary page and note
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
@@ -22654,11 +22666,17 @@ if ( document.readyState === "complete" ||
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
+<<<<<<< HEAD
         console.log('....??', itemObj);
         if (itemObj.members.length === 0) {
           itemObj.members = [].concat.apply([], this.state.members);
         }
+<<<<<<< HEAD
 >>>>>>> Made change so unclaimed items are split amongst all group members
+=======
+=======
+>>>>>>> Revise receipt summary page and note
+>>>>>>> Revise receipt summary page and note
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22684,9 +22702,12 @@ if ( document.readyState === "complete" ||
     key: 'handleTripNameSubmit',
     value: function handleTripNameSubmit(event) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       console.log('Tripname was submitted:' + this.state.tripName);
 >>>>>>> Made change so unclaimed items are split amongst all group members
+=======
+>>>>>>> Revise receipt summary page and note
       _util2.default.sendServerTripName(this.state.tripName, this.state.tripDesc);
     }
   }, {
@@ -22706,6 +22727,47 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 	var i = 0,
 		len = elems.length,
 		bulk = key == null;
+=======
+      this.setState({
+        items: items,
+        selectItem: index
+      });
+    }
+  }, {
+    key: 'initialMemberSelect',
+    value: function initialMemberSelect() {
+      if (this.state.selectMember.length === 0) {
+        this.setState({
+          selectMember: this.state.username
+        });
+      }
+    }
+  }, {
+    key: 'memberOnClick',
+    value: function memberOnClick(member) {
+      this.setState({
+        selectMember: member
+      });
+    }
+  }, {
+    key: 'menuOnClick',
+    value: function menuOnClick() {
+      this.setState({
+        sideMenuState: true
+      });
+    }
+  }, {
+    key: 'closeMenu',
+    value: function closeMenu() {
+      this.setState({
+        sideMenuState: !this.state.sideMenuState
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+>>>>>>> Revise receipt summary page and note
 
 	// Sets many values
 	if ( jQuery.type( key ) === "object" ) {
