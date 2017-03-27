@@ -6,7 +6,7 @@ import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import MemberSummary from './components/MemberSummary.jsx';
-import Breakdown from './components/Breakdown.jsx'
+import Breakdown from './components/Breakdown.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -205,6 +205,10 @@ class App extends React.Component {
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
       var eachPrice = itemObj.amount / itemObj.members.length;
+      console.log('....??', itemObj);
+      if (itemObj.members.length === 0) {
+        itemObj.members = this.state.members;
+      }
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;
@@ -223,7 +227,7 @@ class App extends React.Component {
       if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
         exist = true;
       }
-    })
+    });
     cb(exist);
   }
 
@@ -372,9 +376,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('=========window innerHeight',window.innerHeight);
     this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener('resize', this.updateDimensions.bind(this));
     Util.verify(this.verifyAuthentication);
   }
 }

@@ -22600,11 +22600,33 @@ if ( document.readyState === "complete" ||
     value: function calculateTotal() {
       var _this4 = this;
 
+<<<<<<< HEAD
       var sum = 0;
       this.state.items.map(function (item, index) {
         if (item[0].members.length === 0) {
           item[0].members = [].concat.apply([], _this4.state.members);
         }
+=======
+<<<<<<< HEAD
+=======
+      this.memberExist(this.state.member, function (exist) {
+        _this3.setState({
+          memberExist: exist
+        });
+        if (!exist) {
+          _this3.setState({
+            members: _this3.state.members.concat([[_this3.state.member]])
+          });
+        }
+      });
+      this.state.member = '';
+    }
+  }, {
+    key: 'calculateTotal',
+    value: function calculateTotal() {
+      var sum = 0;
+      this.state.items.map(function (item, index) {
+>>>>>>> Made change so unclaimed items are split amongst all group members
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
@@ -22623,10 +22645,20 @@ if ( document.readyState === "complete" ||
     key: 'calculateMemberSum',
     value: function calculateMemberSum() {
       var memberSum = {};
+<<<<<<< HEAD
       var currentScope = this;
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
+=======
+      this.state.items.forEach(function (itemArr) {
+        var itemObj = itemArr[0];
+        var eachPrice = itemObj.amount / itemObj.members.length;
+        console.log('....??', itemObj);
+        if (itemObj.members.length === 0) {
+          itemObj.members = this.state.members;
+        }
+>>>>>>> Made change so unclaimed items are split amongst all group members
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22651,6 +22683,10 @@ if ( document.readyState === "complete" ||
   }, {
     key: 'handleTripNameSubmit',
     value: function handleTripNameSubmit(event) {
+<<<<<<< HEAD
+=======
+      console.log('Tripname was submitted:' + this.state.tripName);
+>>>>>>> Made change so unclaimed items are split amongst all group members
       _util2.default.sendServerTripName(this.state.tripName, this.state.tripDesc);
     }
   }, {
