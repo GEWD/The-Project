@@ -256,17 +256,6 @@ class App extends React.Component {
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
           <div className='content-container'>
-           {/* <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/upload-receipt">Upload Receipt</Link></li>
-              <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/additems">Add Items</Link></li>
-              <li><Link to="/summary">Member Summary</Link></li>
-              <li><Link to="/breakdown">Breakdown</Link></li>
-              <li><Link to="/create-trip">Create Trip</Link></li>
-              {this.state.isAuthenticated ? null : <li><Link to="/login">Login</Link></li>}
-              {!this.state.isAuthenticated ? null : <li><Link to="/logout" onClick={this.handleClickLogout}>Logout</Link></li>}
-            </ul>*/}
             <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
             <PrivateRoute
               path="/create-trip"
