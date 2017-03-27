@@ -42,7 +42,8 @@ class App extends React.Component {
       memberSum: {},
       amount: '',
       sideMenuState: false,
-      windowHeight: ''
+      windowHeight: '',
+      recent: [ {name: 'No trips yet. Now create one!'}]
     };
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
@@ -63,6 +64,7 @@ class App extends React.Component {
     this.calculateMemberSum = this.calculateMemberSum.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
+    this.getRecentTrip = this.getRecentTrip.bind(this);
   }
 
   verifyAuthentication(userInfo) {
@@ -117,7 +119,9 @@ class App extends React.Component {
     let itemArray = [];
     for (var key in itemizationObject) {
       if (key.search(/tax/ig) !== -1) {
-        this.setState({sumTax: Number(itemizationObject[key])});
+        if (!isNaN) {
+          this.setState({sumTax: Number(itemizationObject[key])});
+        }
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {
         this.setState({sumTotal: Number(itemizationObject[key])});
@@ -147,6 +151,29 @@ class App extends React.Component {
       }
     });
     this.state.member = '';
+  }
+
+
+  componentDidMount() {
+    this.getRecentTrip();
+  }
+
+  getRecentTrip() {
+    let user = this.state;
+    $.ajax({
+      type: 'POST',
+      url: '/recent',
+      data: user,
+      success: (results) => {
+        console.log('app component trips of this person', results);
+        this.setState({
+          recent: results
+        });
+      },
+      error: (error) => {
+        console.log('error', error);
+      }
+    });
   }
 
   calculateTotal() {
@@ -179,7 +206,6 @@ class App extends React.Component {
       var eachPrice = itemObj.amount / itemObj.members.length;
       console.log('....??', itemObj);
       if (itemObj.members.length === 0) {
-        // itemObj.members = [].concat.apply([], this.state.members);
         itemObj.members.push('Testing');
       }
       for (var i = 0; i < itemObj.members.length; i++) {
@@ -271,7 +297,9 @@ class App extends React.Component {
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
           <div className='content-container'>
-            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
+            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}
+              data={this.state}
+            />
             <PrivateRoute
               path="/create-trip"
               component={CreateTrip}
@@ -291,6 +319,7 @@ class App extends React.Component {
               component={UploadReceipt}
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
+              data={this.state}
               callGVision={this.callGVision}
               onInputChange={this.onInputChange}
             />
@@ -326,6 +355,14 @@ class App extends React.Component {
               isAuthenticated={this.state.isAuthenticated}
               component={Breakdown}
               data={this.state}
+              recent={this.getRecentTrip}
+            />
+            <PrivateRoute
+              path ="/recent"
+              isAuthenticated={this.state.isAuthenticated}
+              component={TripSummary}
+              data={this.state}
+              recent={this.getRecentTrip}
             />
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />

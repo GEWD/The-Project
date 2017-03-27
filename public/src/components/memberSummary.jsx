@@ -30,30 +30,68 @@ class MemberSummary extends React.Component {
       <div className='member-summary-page'>
         <Link to='/additems' className='back-history'>Receipt Items</Link>
         <div className='container'>
-          <h4>{this.props.data.tripName}</h4>
-          <h4>{this.props.data.receiptName} {'URL'}</h4>
-          <h4>Paid By: {this.props.data.username}</h4>
-          {this.props.data.items.map((el, idx) => {
-            return (
-              <div key={idx} className='flex-container'>
-                <span className='flex-column-name'>{el[0].name}</span>
-                <span className='flex-column-amount'> ${Number(el[0].amount).toFixed(2)}</span>
-                  {el[0].members.map((member, index) => {
-                    return (<span key={index}><i>{member}</i>   ${(Number(el[0].amount) / el[0].members.length).toFixed(2)}</span>)
-                  })}
-              </div>
-            )
-          })}
-          <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
-          <p>Total Tax: ${this.sumTax}</p>
-          <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
-          <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
-          <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
-          <Link
-            to='/breakdown'
-            onClick={this.handleSubmit}
-            className='btn btn-primary btn-wide btn-link'
-          >Submit</Link>
+          <div className='receipt-info'>
+            <h2>Receipt Summary</h2>
+            <h4>{this.props.data.tripName}</h4>
+            <h4>Paid By: {this.props.data.username}</h4>
+          </div>
+          <div className='receipt-summary'>
+            {this.props.data.items.map((el,idx) => {
+              return (
+                <div>
+                  <div key={idx} className='flex-container'>
+                    <span className='flex-column-name receipt-item-name'>{el[0].name}</span>
+                    <span className='flex-column-amount receipt-item-amount'> ${Number(el[0].amount).toFixed(2)}</span>
+                  </div>
+                  <div className='receipt-item-mem-summary'>
+                      {el[0].members.map((member, index) => {
+                        return (
+                          <div key={index} className='summary-mem-item'>
+                            <span className='flex-column-name summary-mem-name'><i>{member}</i></span>
+                            <span className='flex-column-amount receipt-item-amount'>${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</span>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              );
+            })}
+            <hr/>
+            <div className='flex-container receipt-tax'>
+              <span className='flex-column-name'>Sub Total:</span>
+              <span className='flex-column-amount receipt-item-amount'>{this.sumBill.toFixed(2)}</span>
+            </div>
+
+            <div className='flex-container receipt-tax'>
+              <span className='flex-column-name'>Total Tax:</span>
+              <span className='flex-column-amount receipt-item-amount'>{this.sumTax}</span>
+            </div>
+
+            <div className='flex-container receipt-tax'>
+              <span className='flex-column-name'>Total Tip:</span>
+              <span className='flex-column-amount receipt-item-amount'>{this.sumTip.toFixed(2)}</span>
+            </div>
+
+            <div className='flex-container receipt-tax'>
+              <span className='flex-column-name'>Total:</span>
+              <span className='flex-column-amount receipt-item-amount'>{(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</span>
+            </div>
+
+            <div className='flex-container receipt-tax'>
+              <span className='flex-column-name'>Tax + Tip per person:</span>
+              <span className='flex-column-amount receipt-item-amount'>{this.perPerson.toFixed(2)}</span>
+            </div>
+
+          </div>
+          <div className='sumbit-btn-bar-outer-container'>
+            <div className='sumbit-btn-bar-inner-container'>
+              <Link
+                to='/breakdown'
+                onClick={this.handleSubmit}
+                className='btn btn-primary btn-wide btn-link'
+              >Submit</Link>
+            </div>
+          </div>
         </div>
       </div>
     )

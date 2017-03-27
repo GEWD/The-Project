@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+
 
 class Breakdown extends React.Component {
   constructor(props) {
@@ -15,14 +17,22 @@ class Breakdown extends React.Component {
       <div>
           <Link to='/summary' className='back-history'>Calculation Summary</Link>
         <div>
-          <h1>Final Breakdown</h1>
-          <h3>Total per person due to {this.props.data.username}</h3>
-          <ul>
+          <div className='receipt-info'>
+            <h2>Final Breakdown</h2>
+            <h4>Total per person due to {this.props.data.username}</h4>
+            <div>
+          </div>
             {Object.keys(this.props.data.memberSum).map((member,index) => {
-              return (<li key={index}>{member} : ${(this.props.data.memberSum[member] + this.perPerson).toFixed(2)}</li>)
+              return (
+                <div key={index} className='flex-container receipt-tax'>
+                  <span className='flex-column-name'>{member}</span>
+                  <span className='flex-column-amount receipt-item-amount'>{(this.props.data.memberSum[member] + this.perPerson).toFixed(2)}</span>
+                </div>
+              )
             })}
-          </ul>
+          </div>
         </div>
+        <Link to='/' onClick={this.props.recent}> Back To Homepage (Recent) </Link>
       </div>
     );
   }
