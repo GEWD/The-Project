@@ -22,18 +22,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      receiptUrl:'',
+      receiptUrl: '',
       tripName: '',
       username: '',
       tripDesc: '',
-      receiptName:'',
-      items:[],
-      selectItem:'',
-      selectMember:'',
-      members:[],
+      receiptName: '',
+      items: [],
+      selectItem: '',
+      selectMember: '',
+      members: [],
       member: '',
       memberExist: false,
-      name:'',
+      name: '',
       sideMenuState: false,
       amount: '',
       sumBill: '',
@@ -82,14 +82,14 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     this.setState({
       items: this.state.items.concat([[{
         name: this.state.name,
         amount: this.state.amount,
         members: []
       }]])
-    })
+    });
     this.state.name = '';
     this.state.amount = '';
   }
@@ -98,7 +98,7 @@ class App extends React.Component {
     delete this.state.items[index];
     this.setState({
       items: this.state.items
-    })
+    });
   }
 
   callGVision(form) {
@@ -108,8 +108,8 @@ class App extends React.Component {
       type: 'POST',
       url: '/upload',
       data: data,
-      processData:false,
-      contentType:false,
+      processData: false,
+      contentType: false,
       success: (results) => {
         this.onGVision(results);
       },
@@ -129,8 +129,8 @@ class App extends React.Component {
       }
       if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
         itemArray.push([{
-          name:key,
-          amount:itemizationObject[key],
+          name: key,
+          amount: itemizationObject[key],
           members: []
         }]);
       }
@@ -140,41 +140,41 @@ class App extends React.Component {
     this.setState({items: itemArray});
   }
 
-  addMember (itemArray){
-    this.memberExist(this.state.member,(exist) => {
+  addMember (itemArray) {
+    this.memberExist(this.state.member, (exist) => {
+      this.setState({
+        memberExist: exist
+      });
+      if (!exist) {
         this.setState({
-          memberExist: exist
+          members: this.state.members.concat([[this.state.member]])
         });
-        if (!exist) {
-          this.setState({
-            members: this.state.members.concat([[this.state.member]])
-          })
-        }
+      }
     });
     this.state.member = '';
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     this.getRecentTrip();
   }
 
-  getRecentTrip(){
-     let user = this.state;
-     $.ajax({
-       type: 'POST',
-       url: '/recent',
-       data: user,
-       success: (results) => {
-         console.log('app component trips of this person',results);
-         this.setState({
-           recent: results
-         })
-       },
-       error: (error) => {
-         console.log('error',error);
-       }
-     })
+  getRecentTrip() {
+    let user = this.state;
+    $.ajax({
+      type: 'POST',
+      url: '/recent',
+      data: user,
+      success: (results) => {
+        console.log('app component trips of this person', results);
+        this.setState({
+          recent: results
+        });
+      },
+      error: (error) => {
+        console.log('error', error);
+      }
+    });
   }
 
   calculateTotal() {
