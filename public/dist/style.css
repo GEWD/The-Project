@@ -588,6 +588,7 @@ textarea#tripDesc::-webkit-input-placeholder{
   margin-top: 12px;
   max-height: 420px;
   overflow-y: auto;
+
 }
 
 .receipt-tax {
