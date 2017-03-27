@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import Util from '../lib/util.js';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
@@ -22,7 +24,6 @@ class MemberSummary extends React.Component {
     Util.insertIntoDb(this.props.data);
     this.props.calculateMemberSum();
   }
-
 
 
   render() {
@@ -98,3 +99,4 @@ class MemberSummary extends React.Component {
   }
 }
 export default MemberSummary;
+

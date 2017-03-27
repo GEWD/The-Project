@@ -801,10 +801,14 @@ module.exports = ExecutionEnvironment;
 var _prodInvariant = __webpack_require__(19);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var ReactCurrentOwner = __webpack_require__(14);
 =======
 var ReactCurrentOwner = __webpack_require__(13);
 >>>>>>> Add optimizations
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+>>>>>>> Revise item summary page
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -1264,7 +1268,6 @@ module.exports = emptyFunction;
 
 /***/ }),
 /* 12 */
-<<<<<<< HEAD
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1321,7 +1324,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+<<<<<<< HEAD
 =======
+=======
+
+/***/ }),
+/* 13 */
+>>>>>>> Revise item summary page
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1579,7 +1588,7 @@ module.exports = ReactUpdates;
 >>>>>>> Add optimizations
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1864,7 +1873,7 @@ module.exports = ReactCurrentOwner;
 >>>>>>> Add optimizations
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2439,6 +2448,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+<<<<<<< HEAD
 /* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2499,6 +2509,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 >>>>>>> Add optimizations
 
 /***/ }),
+=======
+>>>>>>> Revise item summary page
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2852,10 +2864,14 @@ module.exports = PooledClass;
 var _assign = __webpack_require__(5);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var ReactCurrentOwner = __webpack_require__(14);
 =======
 var ReactCurrentOwner = __webpack_require__(13);
 >>>>>>> Add optimizations
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+>>>>>>> Revise item summary page
 
 var warning = __webpack_require__(2);
 var canDefineProperty = __webpack_require__(62);
@@ -4292,10 +4308,14 @@ module.exports = ReactInstanceMap;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticEvent = __webpack_require__(15);
 =======
 var SyntheticEvent = __webpack_require__(14);
 >>>>>>> Add optimizations
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 var getEventTarget = __webpack_require__(53);
 
@@ -6683,6 +6703,7 @@ module.exports = ReactErrorUtils;
 var _prodInvariant = __webpack_require__(3);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var ReactCurrentOwner = __webpack_require__(14);
 var ReactInstanceMap = __webpack_require__(28);
 var ReactInstrumentation = __webpack_require__(9);
@@ -6693,6 +6714,12 @@ var ReactInstanceMap = __webpack_require__(28);
 var ReactInstrumentation = __webpack_require__(9);
 var ReactUpdates = __webpack_require__(12);
 >>>>>>> Add optimizations
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+var ReactInstanceMap = __webpack_require__(28);
+var ReactInstrumentation = __webpack_require__(9);
+var ReactUpdates = __webpack_require__(13);
+>>>>>>> Revise item summary page
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -18650,7 +18677,11 @@ var indexOf = arr.indexOf;
 
 var class2type = {};
 
+<<<<<<< HEAD
 var toString = class2type.toString;
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 var hasOwn = class2type.hasOwnProperty;
 
@@ -19212,6 +19243,7 @@ var i,
 		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
 		"*\\]",
 
+<<<<<<< HEAD
 	pseudos = ":(" + identifier + ")(?:\\((" +
 		// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
 		// 1. quoted (capture 3; capture 4 or capture 5)
@@ -19221,6 +19253,11 @@ var i,
 		// 3. anything else (capture 2)
 		".*" +
 		")\\)|)",
+=======
+var LinkedValueUtils = __webpack_require__(46);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactUpdates = __webpack_require__(13);
+>>>>>>> Revise item summary page
 
 	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
 	rwhitespace = new RegExp( whitespace + "+", "g" ),
@@ -19562,8 +19599,16 @@ function siblingCheck( a, b ) {
 		}
 	}
 
+<<<<<<< HEAD
 	return a ? 1 : -1;
 }
+=======
+var ReactDOMSelection = __webpack_require__(153);
+
+var containsNode = __webpack_require__(114);
+var focusNode = __webpack_require__(69);
+var getActiveElement = __webpack_require__(70);
+>>>>>>> Revise item summary page
 
 /**
  * Returns a function to use in pseudos for input types
@@ -19610,6 +19655,7 @@ function createDisabledPseudo( disabled ) {
 			// All such elements have a "form" property.
 			if ( elem.parentNode && elem.disabled === false ) {
 
+<<<<<<< HEAD
 				// Option elements defer to a parent optgroup if present
 				if ( "label" in elem ) {
 					if ( "label" in elem.parentNode ) {
@@ -19618,6 +19664,97 @@ function createDisabledPseudo( disabled ) {
 						return elem.disabled === disabled;
 					}
 				}
+=======
+    if ('selectionStart' in input) {
+      // Modern browser with input or textarea.
+      selection = {
+        start: input.selectionStart,
+        end: input.selectionEnd
+      };
+    } else if (document.selection && input.nodeName && input.nodeName.toLowerCase() === 'input') {
+      // IE8 input.
+      var range = document.selection.createRange();
+      // There can only be one selection per document in IE, so it must
+      // be in our element.
+      if (range.parentElement() === input) {
+        selection = {
+          start: -range.moveStart('character', -input.value.length),
+          end: -range.moveEnd('character', -input.value.length)
+        };
+      }
+    } else {
+      // Content editable or old IE textarea.
+      selection = ReactDOMSelection.getOffsets(input);
+    }
+
+    return selection || { start: 0, end: 0 };
+  },
+
+  /**
+   * @setSelection: Sets the selection bounds of a textarea or input and focuses
+   * the input.
+   * -@input     Set selection bounds of this input or textarea
+   * -@offsets   Object of same form that is returned from get*
+   */
+  setSelection: function (input, offsets) {
+    var start = offsets.start;
+    var end = offsets.end;
+    if (end === undefined) {
+      end = start;
+    }
+
+    if ('selectionStart' in input) {
+      input.selectionStart = start;
+      input.selectionEnd = Math.min(end, input.value.length);
+    } else if (document.selection && input.nodeName && input.nodeName.toLowerCase() === 'input') {
+      var range = input.createTextRange();
+      range.collapse(true);
+      range.moveStart('character', start);
+      range.moveEnd('character', end - start);
+      range.select();
+    } else {
+      ReactDOMSelection.setOffsets(input, offsets);
+    }
+  }
+};
+
+module.exports = ReactInputSelection;
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+
+
+var _prodInvariant = __webpack_require__(3);
+
+var DOMLazyTree = __webpack_require__(21);
+var DOMProperty = __webpack_require__(16);
+var React = __webpack_require__(23);
+var ReactBrowserEventEmitter = __webpack_require__(33);
+var ReactCurrentOwner = __webpack_require__(14);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDOMContainerInfo = __webpack_require__(145);
+var ReactDOMFeatureFlags = __webpack_require__(147);
+var ReactFeatureFlags = __webpack_require__(78);
+var ReactInstanceMap = __webpack_require__(28);
+var ReactInstrumentation = __webpack_require__(9);
+var ReactMarkupChecksum = __webpack_require__(167);
+var ReactReconciler = __webpack_require__(22);
+var ReactUpdateQueue = __webpack_require__(49);
+var ReactUpdates = __webpack_require__(13);
+>>>>>>> Revise item summary page
 
 				// Support: IE 6 - 11
 				// Use the isDisabled shortcut property to check for disabled fieldset ancestors
@@ -20635,12 +20772,17 @@ Expr = Sizzle.selectors = {
 		"enabled": createDisabledPseudo( false ),
 		"disabled": createDisabledPseudo( true ),
 
+<<<<<<< HEAD
 		"checked": function( elem ) {
 			// In CSS3, :checked should return both checked and selected elements
 			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
 			var nodeName = elem.nodeName.toLowerCase();
 			return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.selected);
 		},
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+var REACT_ELEMENT_TYPE = __webpack_require__(161);
+>>>>>>> Revise item summary page
 
 		"selected": function( elem ) {
 			// Accessing this property makes selected-by-default
@@ -20911,6 +21053,7 @@ function elementMatcher( matchers ) {
 		matchers[0];
 }
 
+<<<<<<< HEAD
 function multipleContexts( selector, contexts, results ) {
 	var i = 0,
 		len = contexts.length;
@@ -20919,6 +21062,9 @@ function multipleContexts( selector, contexts, results ) {
 	}
 	return results;
 }
+=======
+/* harmony default export */ __webpack_exports__["a"] = (Link);
+>>>>>>> Revise item summary page
 
 function condense( unmatched, map, filter, context, xml ) {
 	var elem,
@@ -21189,11 +21335,15 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				}
 			}
 
+<<<<<<< HEAD
 			// Override manipulation of globals by nested matchers
 			if ( outermost ) {
 				dirruns = dirrunsUnique;
 				outermostContext = contextBackup;
 			}
+=======
+/* harmony default export */ __webpack_exports__["a"] = (Route);
+>>>>>>> Revise item summary page
 
 			return unmatched;
 		};
@@ -21267,6 +21417,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 				context = context.parentNode;
 			}
 
+<<<<<<< HEAD
 			selector = selector.slice( tokens.shift().value.length );
 		}
 
@@ -21274,6 +21425,13 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 		i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
 		while ( i-- ) {
 			token = tokens[i];
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+var ReactComponentTreeHook = __webpack_require__(8);
+var ReactElement = __webpack_require__(18);
+
+var checkReactTypeSpec = __webpack_require__(228);
+>>>>>>> Revise item summary page
 
 			// Abort if we hit a combinator
 			if ( Expr.relative[ (type = token.type) ] ) {
@@ -21427,8 +21585,115 @@ var siblings = function( n, elem ) {
 var rneedsContext = jQuery.expr.match.needsContext;
 
 
+<<<<<<< HEAD
 
 function nodeName( elem, name ) {
+=======
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(12);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Breakdown = function (_React$Component) {
+  _inherits(Breakdown, _React$Component);
+
+  function Breakdown(props) {
+    _classCallCheck(this, Breakdown);
+
+    var _this = _possibleConstructorReturn(this, (Breakdown.__proto__ || Object.getPrototypeOf(Breakdown)).call(this, props));
+
+    _this.sumTax = Number(_this.props.data.sumTax);
+    _this.sumTip = Number(_this.props.data.sumTip);
+    _this.memberCount = _this.props.data.members.length;
+    _this.perPerson = (_this.sumTax + _this.sumTip) / _this.memberCount;
+    return _this;
+  }
+
+  _createClass(Breakdown, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/summary', className: 'back-history' },
+          'Calculation Summary'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'receipt-info' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Final Breakdown'
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Total per person due to ',
+              this.props.data.username
+            ),
+            _react2.default.createElement('div', null),
+            Object.keys(this.props.data.memberSum).map(function (member, index) {
+              return _react2.default.createElement(
+                'div',
+                { key: index, className: 'flex-container receipt-tax' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'flex-column-name' },
+                  member
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'flex-column-amount receipt-item-amount' },
+                  (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
+                )
+              );
+            })
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/', onClick: this.props.recent },
+          ' Back To Homepage (Recent) '
+        )
+      );
+    }
+  }]);
+
+  return Breakdown;
+}(_react2.default.Component);
+
+exports.default = Breakdown;
+>>>>>>> Revise item summary page
 
   return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 
@@ -21454,12 +21719,18 @@ function winnow( elements, qualifier, not ) {
 		} );
 	}
 
+<<<<<<< HEAD
 	// Arraylike of elements (jQuery, arguments, Array)
 	if ( typeof qualifier !== "string" ) {
 		return jQuery.grep( elements, function( elem ) {
 			return ( indexOf.call( qualifier, elem ) > -1 ) !== not;
 		} );
 	}
+=======
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _serverInteraction = __webpack_require__(111);
+>>>>>>> Revise item summary page
 
 	// Simple selector that can be filtered directly, removing non-Elements
 	if ( risSimple.test( qualifier ) ) {
@@ -21476,9 +21747,13 @@ function winnow( elements, qualifier, not ) {
 jQuery.filter = function( expr, elems, not ) {
 	var elem = elems[ 0 ];
 
+<<<<<<< HEAD
 	if ( not ) {
 		expr = ":not(" + expr + ")";
 	}
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 	if ( elems.length === 1 && elem.nodeType === 1 ) {
 		return jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [];
@@ -21554,9 +21829,13 @@ var rootjQuery,
 			return this;
 		}
 
+<<<<<<< HEAD
 		// Method init() accepts an alternate rootjQuery
 		// so migrate can support jQuery.sub (gh-2101)
 		root = root || rootjQuery;
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 		// Handle HTML strings
 		if ( typeof selector === "string" ) {
@@ -21651,6 +21930,10 @@ init.prototype = jQuery.fn;
 // Initialize central reference
 rootjQuery = jQuery( document );
 
+<<<<<<< HEAD
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
@@ -21697,12 +21980,202 @@ jQuery.fn.extend( {
 						cur.nodeType === 1 &&
 							jQuery.find.matchesSelector( cur, selectors ) ) ) {
 
+<<<<<<< HEAD
 						matched.push( cur );
 						break;
 					}
 				}
 			}
 		}
+=======
+  _createClass(MemberSummary, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      // event.preventDefault();
+      // this.setState({dummyData});
+      _util2.default.insertIntoDb(this.props.data);
+      this.props.calculateMemberSum();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'member-summary-page' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/additems', className: 'back-history' },
+          'Receipt Items'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'receipt-info' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Receipt Summary'
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              this.props.data.tripName
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Paid By: ',
+              this.props.data.username
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'receipt-summary' },
+            this.props.data.items.map(function (el, idx) {
+              return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'div',
+                  { key: idx, className: 'flex-container' },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'flex-column-name receipt-item-name' },
+                    el[0].name
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'flex-column-amount receipt-item-amount' },
+                    ' $',
+                    Number(el[0].amount).toFixed(2)
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'receipt-item-mem-summary' },
+                  el[0].members.map(function (member, index) {
+                    return _react2.default.createElement(
+                      'div',
+                      { key: index, className: 'summary-mem-item' },
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'flex-column-name summary-mem-name' },
+                        _react2.default.createElement(
+                          'i',
+                          null,
+                          member
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'span',
+                        { className: 'flex-column-amount receipt-item-amount' },
+                        '$',
+                        (Number(el[0].amount) / el[0].members.length).toFixed(2)
+                      )
+                    );
+                  })
+                )
+              );
+            }),
+            _react2.default.createElement('hr', null),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Sub Total:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumBill.toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total Tax:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumTax
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total Tip:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.sumTip.toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Total:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                (Number(this.sumTip) + Number(this.sumBill)).toFixed(2)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'flex-container receipt-tax' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                'Tax + Tip per person:'
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount receipt-item-amount' },
+                this.perPerson.toFixed(2)
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'sumbit-btn-bar-outer-container' },
+            _react2.default.createElement(
+              'div',
+              { className: 'sumbit-btn-bar-inner-container' },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                {
+                  to: '/breakdown',
+                  onClick: this.handleSubmit,
+                  className: 'btn btn-primary btn-wide btn-link'
+                },
+                'Submit'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return MemberSummary;
+}(_react2.default.Component);
+>>>>>>> Revise item summary page
 
 		return this.pushStack( matched.length > 1 ? jQuery.uniqueSort( matched ) : matched );
 	},
@@ -21736,12 +22209,16 @@ jQuery.fn.extend( {
 		);
 	},
 
+<<<<<<< HEAD
 	addBack: function( selector ) {
 		return this.add( selector == null ?
 			this.prevObject : this.prevObject.filter( selector )
 		);
 	}
 } );
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 function sibling( cur, dir ) {
 	while ( ( cur = cur[ dir ] ) && cur.nodeType !== 1 ) {}
@@ -21827,6 +22304,10 @@ jQuery.each( {
 } );
 var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
 
+<<<<<<< HEAD
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 
 // Convert String-formatted options into Object-formatted ones
@@ -22079,11 +22560,15 @@ function adoptValue( value, resolve, reject, noValue ) {
 		// Other non-thenables
 		} else {
 
+<<<<<<< HEAD
 			// Control `resolve` arguments by letting Array#slice cast boolean `noValue` to integer:
 			// * false: [ value ].slice( 0 ) => resolve( value )
 			// * true: [ value ].slice( 1 ) => resolve()
 			resolve.apply( undefined, [ value ].slice( noValue ) );
 		}
+=======
+var _reactRouterDom = __webpack_require__(12);
+>>>>>>> Revise item summary page
 
 	// For Promises/A+, convert exceptions into rejections
 	// Since jQuery.when doesn't unwrap thenables, we can skip the extra checks appearing in
@@ -22332,6 +22817,7 @@ jQuery.extend( {
 			var list = tuple[ 2 ],
 				stateString = tuple[ 5 ];
 
+<<<<<<< HEAD
 			// promise.progress = list.add
 			// promise.done = list.add
 			// promise.fail = list.add
@@ -22538,6 +23024,222 @@ if ( document.readyState === "complete" ||
 	// A fallback to window.onload, that will always work
 	window.addEventListener( "load", completed );
 }
+=======
+  _createClass(TripEntry, [{
+    key: 'render',
+    value: function render() {
+      console.log('-------what is this??', this.props.data);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Trip Name'
+        ),
+        ' ',
+        _react2.default.createElement(
+          'p',
+          null,
+          'Total: $193.00'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Date: 2014 March'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'People: '
+        )
+      );
+    }
+  }]);
+
+  return TripEntry;
+}(_react2.default.Component);
+
+exports.default = TripEntry;
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(30);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(12);
+
+var _TripSummary = __webpack_require__(106);
+
+var _TripSummary2 = _interopRequireDefault(_TripSummary);
+
+var _CreateTrip = __webpack_require__(99);
+
+var _CreateTrip2 = _interopRequireDefault(_CreateTrip);
+
+var _Itemization = __webpack_require__(100);
+
+var _Itemization2 = _interopRequireDefault(_Itemization);
+
+var _Upload = __webpack_require__(107);
+
+var _Upload2 = _interopRequireDefault(_Upload);
+
+var _MemberSummary = __webpack_require__(102);
+
+var _MemberSummary2 = _interopRequireDefault(_MemberSummary);
+
+var _Breakdown = __webpack_require__(98);
+
+var _Breakdown2 = _interopRequireDefault(_Breakdown);
+
+var _Profile = __webpack_require__(105);
+
+var _Profile2 = _interopRequireDefault(_Profile);
+
+var _Login = __webpack_require__(101);
+
+var _Login2 = _interopRequireDefault(_Login);
+
+var _Navbar = __webpack_require__(103);
+
+var _Navbar2 = _interopRequireDefault(_Navbar);
+
+var _PrivateRoute = __webpack_require__(104);
+
+var _PrivateRoute2 = _interopRequireDefault(_PrivateRoute);
+
+var _util = __webpack_require__(38);
+
+var _util2 = _interopRequireDefault(_util);
+
+var _CreateItem = __webpack_require__(64);
+
+var _CreateItem2 = _interopRequireDefault(_CreateItem);
+
+var _jquery = __webpack_require__(65);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    var _this$state;
+
+    _classCallCheck(this, App);
+
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = (_this$state = {
+      isAuthenticated: false,
+      receiptUrl: '',
+      tripName: '',
+      username: '',
+      tripDesc: '',
+      receiptName: '',
+      items: [],
+      selectItem: '',
+      selectMember: '',
+      members: [],
+      member: '',
+      memberExist: false,
+      name: '',
+      sideMenuState: false,
+      amount: '',
+      sumBill: '',
+      sumTax: '',
+      sumTip: 0,
+      sumTotal: 0,
+      memberSum: {}
+    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sideMenuState', false), _defineProperty(_this$state, 'windowHeight', ''), _defineProperty(_this$state, 'recent', [{ name: 'No trips yet. Now create one!' }]), _this$state);
+
+    _this.verifyAuthentication = _this.verifyAuthentication.bind(_this);
+    _this.handleClickLogout = _this.handleClickLogout.bind(_this);
+    _this.addItem = _this.addItem.bind(_this);
+    _this.handleTripNameSubmit = _this.handleTripNameSubmit.bind(_this);
+    _this.callGVision = _this.callGVision.bind(_this);
+    _this.onGVision = _this.onGVision.bind(_this);
+    _this.deleteItem = _this.deleteItem.bind(_this);
+    _this.onInputChange = _this.onInputChange.bind(_this);
+    _this.addMember = _this.addMember.bind(_this);
+    _this.memberExist = _this.memberExist.bind(_this);
+    _this.itemOnClick = _this.itemOnClick.bind(_this);
+    _this.memberOnClick = _this.memberOnClick.bind(_this);
+    _this.initialMemberSelect = _this.initialMemberSelect.bind(_this);
+    _this.menuOnClick = _this.menuOnClick.bind(_this);
+    _this.closeMenu = _this.closeMenu.bind(_this);
+    _this.calculateMemberSum = _this.calculateMemberSum.bind(_this);
+    _this.calculateTotal = _this.calculateTotal.bind(_this);
+    _this.updateDimensions = _this.updateDimensions.bind(_this);
+    _this.getRecentTrip = _this.getRecentTrip.bind(_this);
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: 'verifyAuthentication',
+    value: function verifyAuthentication(userInfo) {
+      this.setState({
+        isAuthenticated: userInfo.isAuthenitcated,
+        username: userInfo.name || '',
+        members: userInfo.name !== undefined ? this.state.members.concat([[userInfo.name]]) : this.state.members,
+        fb_id: userInfo.fb_id || ''
+      });
+    }
+  }, {
+    key: 'handleClickLogout',
+    value: function handleClickLogout(event) {
+      event.preventDefault();
+      _util2.default.logout(this.verifyAuthentication);
+    }
+  }, {
+    key: 'addItem',
+    value: function addItem(itemArray) {
+      this.setState({
+        items: this.state.items.concat([[{
+          name: this.state.name,
+          amount: this.state.amount,
+          members: []
+        }]])
+      });
+      this.state.name = '';
+      this.state.amount = '';
+    }
+  }, {
+    key: 'deleteItem',
+    value: function deleteItem(index) {
+      delete this.state.items[index];
+      this.setState({
+        items: this.state.items
+      });
+    }
+  }, {
+    key: 'callGVision',
+    value: function callGVision(form) {
+      var _this2 = this;
+>>>>>>> Revise item summary page
 
 <<<<<<< HEAD
 =======
@@ -22560,7 +23262,9 @@ if ( document.readyState === "complete" ||
       var itemArray = [];
       for (var key in itemizationObject) {
         if (key.search(/tax/ig) !== -1) {
-          this.setState({ sumTax: Number(itemizationObject[key]) });
+          if (!isNaN) {
+            this.setState({ sumTax: Number(itemizationObject[key]) });
+          }
         }
         if (key.search(/(\btotal|\btota)/i) !== -1) {
           this.setState({ sumTotal: Number(itemizationObject[key]) });
@@ -22597,11 +23301,41 @@ if ( document.readyState === "complete" ||
       this.state.member = '';
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getRecentTrip();
+    }
+  }, {
+    key: 'getRecentTrip',
+    value: function getRecentTrip() {
+      var _this4 = this;
+
+      var user = this.state;
+      _jquery2.default.ajax({
+        type: 'POST',
+        url: '/recent',
+        data: user,
+        success: function success(results) {
+          console.log('app component trips of this person', results);
+          _this4.setState({
+            recent: results
+          });
+        },
+        error: function error(_error) {
+          console.log('error', _error);
+        }
+      });
+    }
+  }, {
     key: 'calculateTotal',
     value: function calculateTotal() {
+<<<<<<< HEAD
       var _this4 = this;
 =======
 >>>>>>> Revise receipt summary page and note
+=======
+      var _this5 = this;
+>>>>>>> Revise item summary page
 
 <<<<<<< HEAD
       var sum = 0;
@@ -22635,7 +23369,7 @@ if ( document.readyState === "complete" ||
 <<<<<<< HEAD
 =======
         if (item[0].members.length === 0) {
-          item[0].members = [].concat.apply([], _this4.state.members);
+          item[0].members = [].concat.apply([], _this5.state.members);
         }
 >>>>>>> Revise receipt summary page and note
 >>>>>>> Revise receipt summary page and note
@@ -22669,7 +23403,11 @@ if ( document.readyState === "complete" ||
 <<<<<<< HEAD
         console.log('....??', itemObj);
         if (itemObj.members.length === 0) {
+<<<<<<< HEAD
           itemObj.members = [].concat.apply([], this.state.members);
+=======
+          itemObj.members.push('Testing');
+>>>>>>> Revise item summary page
         }
 <<<<<<< HEAD
 >>>>>>> Made change so unclaimed items are split amongst all group members
@@ -22766,6 +23504,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
   }, {
     key: 'render',
     value: function render() {
+<<<<<<< HEAD
       var _this5 = this;
 >>>>>>> Revise receipt summary page and note
 
@@ -22780,6 +23519,103 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
         items: items,
         selectItem: index
       });
+=======
+      var _this6 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'site-container' },
+        _react2.default.createElement(
+          _reactRouterDom.BrowserRouter,
+          null,
+          _react2.default.createElement(
+            'div',
+            {
+              onClick: this.state.sideMenuState ? this.closeMenu : null,
+              className: this.state.sideMenuState ? 'site-pusher-on' : 'site-pusher' },
+            _react2.default.createElement(_Navbar2.default, {
+              isAuthenticated: this.state.isAuthenticated,
+              handleClickLogout: this.handleClickLogout,
+              menuOnClick: this.menuOnClick,
+              sideMenuState: this.state.sideMenuState }),
+            _react2.default.createElement(
+              'div',
+              { className: 'content-container' },
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default,
+                data: this.state
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/create-trip',
+                component: _CreateTrip2.default,
+                isAuthenticated: this.state.isAuthenticated,
+                tripName: this.state.tripName,
+                onInputChange: this.onInputChange,
+                handleTripNameSubmit: this.handleTripNameSubmit
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/profile',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Profile2.default
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/upload-receipt',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Upload2.default,
+                tripName: this.state.tripName,
+                tripDesc: this.state.tripDesc,
+                data: this.state,
+                callGVision: this.callGVision,
+                onInputChange: this.onInputChange
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/additems', isAuthenticated: this.state.isAuthenticated, component: _Itemization2.default,
+                addItem: this.addItem,
+                itemName: this.state.name,
+                itemAmount: this.state.amount,
+                selectItem: this.state.selectItem,
+                selectMember: this.state.selectMember,
+                items: this.state.items,
+                deleteItem: this.deleteItem,
+                members: this.state.members,
+                member: this.state.member,
+                sumBill: this.state.sumBill,
+                sumTax: this.state.sumTax,
+                sumTaxTip: this.state.sumTaxTip,
+                calculateTotal: this.calculateTotal,
+                memberExist: this.state.memberExist,
+                addMember: this.addMember,
+                initialMemberSelect: this.initialMemberSelect,
+                itemOnClick: this.itemOnClick,
+                memberOnClick: this.memberOnClick,
+                onInputChange: this.onInputChange }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/summary',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _MemberSummary2.default,
+                calculateMemberSum: this.calculateMemberSum,
+                data: this.state
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/breakdown',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _Breakdown2.default,
+                data: this.state,
+                recent: this.getRecentTrip
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/recent',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _TripSummary2.default,
+                data: this.state,
+                recent: this.getRecentTrip
+              }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
+                  return _this6.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
+                } })
+            )
+          )
+        )
+      );
+>>>>>>> Revise item summary page
     }
   }, {
     key: 'initialMemberSelect',
@@ -22790,6 +23626,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
         });
       }
     }
+<<<<<<< HEAD
   }, {
     key: 'memberOnClick',
     value: function memberOnClick(member) {
@@ -22828,6 +23665,18 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 
 		// Last fire value for non-forgettable lists
 		memory,
+=======
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Flag to know if list was already fired
 		fired,
@@ -22838,8 +23687,14 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		// Actual callback list
 		list = [],
 
+<<<<<<< HEAD
 		// Queue of execution data for repeatable lists
 		queue = [],
+=======
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Index of currently firing callback (modified by add/remove as needed)
 		firingIndex = -1,
@@ -22868,10 +23723,16 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 				}
 			}
 
+<<<<<<< HEAD
 			// Forget the data if we're done with it
 			if ( !options.memory ) {
 				memory = false;
 			}
+=======
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 			firing = false;
 
@@ -22882,12 +23743,16 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 				if ( memory ) {
 					list = [];
 
+<<<<<<< HEAD
 				// Otherwise, this object is spent
 				} else {
 					list = "";
 				}
 			}
 		},
+=======
+var camelize = __webpack_require__(112);
+>>>>>>> Revise item summary page
 
 		// Actual Callbacks object
 		self = {
@@ -22902,6 +23767,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 						queue.push( memory );
 					}
 
+<<<<<<< HEAD
 					( function add( args ) {
 						jQuery.each( args, function( _, arg ) {
 							if ( jQuery.isFunction( arg ) ) {
@@ -22909,6 +23775,11 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 									list.push( arg );
 								}
 							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
+=======
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 								// Inspect recursively
 								add( arg );
@@ -22930,6 +23801,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 					while ( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
 						list.splice( index, 1 );
 
+<<<<<<< HEAD
 						// Handle firing indexes
 						if ( index <= firingIndex ) {
 							firingIndex--;
@@ -22938,6 +23810,9 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 				} );
 				return this;
 			},
+=======
+var isTextNode = __webpack_require__(122);
+>>>>>>> Revise item summary page
 
 			// Check if a given callback is in the list.
 			// If no argument is given, return whether or not list has callbacks attached.
@@ -22967,6 +23842,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 				return !list;
 			},
 
+<<<<<<< HEAD
 			// Disable .fire
 			// Also disable .add unless we have memory (since it would have no effect)
 			// Abort any pending executions
@@ -22980,6 +23856,11 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 			locked: function() {
 				return !!locked;
 			},
+=======
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 			// Call all callbacks with the given context and arguments
 			fireWith: function( context, args ) {
@@ -23044,11 +23925,17 @@ function adoptValue( value, resolve, reject, noValue ) {
 	// Deferred#then to conditionally suppress rejection.
 	} catch ( value ) {
 
+<<<<<<< HEAD
 		// Support: Android 4.0 only
 		// Strict mode functions invoked without .call/.apply get global-object context
 		reject.apply( undefined, [ value ] );
 	}
 }
+=======
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 jQuery.extend( {
 
@@ -23081,8 +23968,14 @@ jQuery.extend( {
 				pipe: function( /* fnDone, fnFail, fnProgress */ ) {
 					var fns = arguments;
 
+<<<<<<< HEAD
 					return jQuery.Deferred( function( newDefer ) {
 						jQuery.each( tuples, function( i, tuple ) {
+=======
+var createArrayFromMixed = __webpack_require__(115);
+var getMarkupWrap = __webpack_require__(117);
+var invariant = __webpack_require__(1);
+>>>>>>> Revise item summary page
 
 							// Map tuples (progress, done, fail) to arguments (done, fail, progress)
 							var fn = jQuery.isFunction( fns[ tuple[ 4 ] ] ) && fns[ tuple[ 4 ] ];
@@ -23156,8 +24049,14 @@ jQuery.extend( {
 												resolve( maxDepth, deferred, Thrower, special )
 											);
 
+<<<<<<< HEAD
 										// Normal processors (resolve) also hook into progress
 										} else {
+=======
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 											// ...and disregard older resolution values
 											maxDepth++;
@@ -23286,10 +24185,16 @@ jQuery.extend( {
 			var list = tuple[ 2 ],
 				stateString = tuple[ 5 ];
 
+<<<<<<< HEAD
 			// promise.progress = list.add
 			// promise.done = list.add
 			// promise.fail = list.add
 			promise[ tuple[ 1 ] ] = list.add;
+=======
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 			// Handle state
 			if ( stateString ) {
@@ -23323,11 +24228,17 @@ jQuery.extend( {
 				return this;
 			};
 
+<<<<<<< HEAD
 			// deferred.notifyWith = list.fireWith
 			// deferred.resolveWith = list.fireWith
 			// deferred.rejectWith = list.fireWith
 			deferred[ tuple[ 0 ] + "With" ] = list.fireWith;
 		} );
+=======
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Make the deferred a promise
 		promise.promise( deferred );
@@ -23351,9 +24262,15 @@ jQuery.extend( {
 			// count of unprocessed arguments
 			i = remaining,
 
+<<<<<<< HEAD
 			// subordinate fulfillment data
 			resolveContexts = Array( i ),
 			resolveValues = slice.call( arguments ),
+=======
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 			// the master Deferred
 			master = jQuery.Deferred(),
@@ -23374,9 +24291,13 @@ jQuery.extend( {
 			adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
 				!remaining );
 
+<<<<<<< HEAD
 			// Use .then() to unwrap secondary thenables (cf. gh-3000)
 			if ( master.state() === "pending" ||
 				jQuery.isFunction( resolveValues[ i ] && resolveValues[ i ].then ) ) {
+=======
+var hyphenate = __webpack_require__(119);
+>>>>>>> Revise item summary page
 
 				return master.then();
 			}
@@ -23391,6 +24312,12 @@ jQuery.extend( {
 	}
 } );
 
+<<<<<<< HEAD
+=======
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 // These usually indicate a programmer mistake during development,
 // warn about them ASAP rather than swallowing them by default.
@@ -23407,6 +24334,12 @@ jQuery.Deferred.exceptionHook = function( error, stack ) {
 
 
 
+<<<<<<< HEAD
+=======
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 jQuery.readyException = function( error ) {
 	window.setTimeout( function() {
@@ -23416,14 +24349,24 @@ jQuery.readyException = function( error ) {
 
 
 
+<<<<<<< HEAD
+=======
+var isNode = __webpack_require__(121);
+>>>>>>> Revise item summary page
 
 // The deferred used on DOM ready
 var readyList = jQuery.Deferred();
 
 jQuery.fn.ready = function( fn ) {
 
+<<<<<<< HEAD
 	readyList
 		.then( fn )
+=======
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Wrap jQuery.readyException in a function so that the lookup
 		// happens at the time of error handling instead of callback
@@ -23444,8 +24387,14 @@ jQuery.extend( {
 	// the ready event fires. See #6781
 	readyWait: 1,
 
+<<<<<<< HEAD
 	// Handle when the DOM is ready
 	ready: function( wait ) {
+=======
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Abort if there are pending holds or we're already ready
 		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) {
@@ -23474,17 +24423,32 @@ function completed() {
 	jQuery.ready();
 }
 
+<<<<<<< HEAD
 // Catch cases where $(document).ready() is called
 // after the browser event has already occurred.
 // Support: IE <=9 - 10 only
 // Older IE sometimes signals "interactive" too soon
 if ( document.readyState === "complete" ||
 	( document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
+=======
+module.exports = performance || {};
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+>>>>>>> Revise item summary page
 
 	// Handle it asynchronously to allow scripts the opportunity to delay ready
 	window.setTimeout( jQuery.ready );
 
+<<<<<<< HEAD
 } else {
+=======
+var performance = __webpack_require__(124);
+>>>>>>> Revise item summary page
 
 	// Use the handy event callback
 	document.addEventListener( "DOMContentLoaded", completed );
@@ -23493,6 +24457,14 @@ if ( document.readyState === "complete" ||
 	window.addEventListener( "load", completed );
 }
 
+<<<<<<< HEAD
+=======
+module.exports = performanceNow;
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 
 
@@ -23946,10 +24918,16 @@ jQuery.extend( {
 			fn.call( elem, next, hooks );
 		}
 
+<<<<<<< HEAD
 		if ( !startLength && hooks ) {
 			hooks.empty.fire();
 		}
 	},
+=======
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 	// Not public - generate a queueHooks object, or return the current one
 	_queueHooks: function( elem, type ) {
@@ -24362,8 +25340,14 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 	// Remove wrapper from fragment
 	fragment.textContent = "";
 
+<<<<<<< HEAD
 	i = 0;
 	while ( ( elem = nodes[ i++ ] ) ) {
+=======
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> Revise item summary page
 
 		// Skip elements already in the context collection (trac-4087)
 		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
@@ -24594,6 +25578,7 @@ jQuery.event = {
 				namespace: namespaces.join( "." )
 			}, handleObjIn );
 
+<<<<<<< HEAD
 			// Init the event handler queue if we're the first
 			if ( !( handlers = events[ type ] ) ) {
 				handlers = events[ type ] = [];
@@ -24611,6 +25596,11 @@ jQuery.event = {
 
 			if ( special.add ) {
 				special.add.call( elem, handleObj );
+=======
+/***/ }),
+/* 129 */
+/***/ (function(module, exports) {
+>>>>>>> Revise item summary page
 
 				if ( !handleObj.handler.guid ) {
 					handleObj.handler.guid = handler.guid;
@@ -24965,8 +25955,16 @@ jQuery.Event = function( src, props ) {
 		jQuery.extend( this, props );
 	}
 
+<<<<<<< HEAD
 	// Create a timestamp if incoming event doesn't have one
 	this.timeStamp = src && src.timeStamp || jQuery.now();
+=======
+var camelizeStyleName = __webpack_require__(113);
+var dangerousStyleValue = __webpack_require__(191);
+var hyphenateStyleName = __webpack_require__(120);
+var memoizeStringOnly = __webpack_require__(123);
+var warning = __webpack_require__(2);
+>>>>>>> Revise item summary page
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
@@ -25155,6 +26153,15 @@ jQuery.fn.extend( {
 	}
 } );
 
+<<<<<<< HEAD
+=======
+var EventPluginHub = __webpack_require__(26);
+var EventPropagators = __webpack_require__(27);
+var ExecutionEnvironment = __webpack_require__(7);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactUpdates = __webpack_require__(13);
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 var
 
@@ -25341,10 +26348,16 @@ function domManip( collection, args, callback, ignored ) {
 	return collection;
 }
 
+<<<<<<< HEAD
 function remove( elem, selector, keepData ) {
 	var node,
 		nodes = selector ? jQuery.filter( selector, elem ) : elem,
 		i = 0;
+=======
+var createNodesFromMarkup = __webpack_require__(116);
+var emptyFunction = __webpack_require__(11);
+var invariant = __webpack_require__(1);
+>>>>>>> Revise item summary page
 
 	for ( ; ( node = nodes[ i ] ) != null; i++ ) {
 		if ( !keepData && node.nodeType === 1 ) {
@@ -59501,7 +60514,18 @@ var ReactCompositeComponent = {
   _performComponentUpdate: function (nextElement, nextProps, nextState, nextContext, transaction, unmaskedContext) {
     var _this2 = this;
 
+<<<<<<< HEAD
     var inst = this._instance;
+=======
+var React = __webpack_require__(23);
+var ReactComponentEnvironment = __webpack_require__(47);
+var ReactCurrentOwner = __webpack_require__(14);
+var ReactErrorUtils = __webpack_require__(48);
+var ReactInstanceMap = __webpack_require__(28);
+var ReactInstrumentation = __webpack_require__(9);
+var ReactNodeTypes = __webpack_require__(82);
+var ReactReconciler = __webpack_require__(22);
+>>>>>>> Revise item summary page
 
     var hasComponentDidUpdate = Boolean(inst.componentDidUpdate);
     var prevProps;
@@ -60725,7 +61749,11 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDefaultInjection = __webpack_require__(160);
 var ReactMount = __webpack_require__(81);
 var ReactReconciler = __webpack_require__(22);
+<<<<<<< HEAD
 var ReactUpdates = __webpack_require__(12);
+=======
+var ReactUpdates = __webpack_require__(13);
+>>>>>>> Revise item summary page
 var ReactVersion = __webpack_require__(175);
 
 var findDOMNode = __webpack_require__(192);
@@ -62484,7 +63512,7 @@ var _prodInvariant = __webpack_require__(3),
 var DOMPropertyOperations = __webpack_require__(74);
 var LinkedValueUtils = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactUpdates = __webpack_require__(12);
+var ReactUpdates = __webpack_require__(13);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -64222,7 +65250,7 @@ var _prodInvariant = __webpack_require__(3),
 
 var LinkedValueUtils = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactUpdates = __webpack_require__(12);
+var ReactUpdates = __webpack_require__(13);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -65618,7 +66646,7 @@ module.exports = {
 =======
 var _assign = __webpack_require__(5);
 
-var ReactUpdates = __webpack_require__(12);
+var ReactUpdates = __webpack_require__(13);
 var Transaction = __webpack_require__(35);
 
 var emptyFunction = __webpack_require__(11);
@@ -66072,7 +67100,7 @@ var EventListener = __webpack_require__(68);
 var ExecutionEnvironment = __webpack_require__(7);
 var PooledClass = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactUpdates = __webpack_require__(12);
+var ReactUpdates = __webpack_require__(13);
 
 var getEventTarget = __webpack_require__(53);
 var getUnboundedScrollPosition = __webpack_require__(118);
@@ -66339,7 +67367,7 @@ var ReactComponentEnvironment = __webpack_require__(47);
 var ReactEmptyComponent = __webpack_require__(77);
 var ReactBrowserEventEmitter = __webpack_require__(33);
 var ReactHostComponent = __webpack_require__(79);
-var ReactUpdates = __webpack_require__(12);
+var ReactUpdates = __webpack_require__(13);
 
 var ReactInjection = {
   Component: ReactComponentEnvironment.injection,
@@ -67048,7 +68076,7 @@ var ReactComponentEnvironment = __webpack_require__(47);
 var ReactInstanceMap = __webpack_require__(28);
 var ReactInstrumentation = __webpack_require__(9);
 
-var ReactCurrentOwner = __webpack_require__(13);
+var ReactCurrentOwner = __webpack_require__(14);
 var ReactReconciler = __webpack_require__(22);
 var ReactChildReconciler = __webpack_require__(140);
 
@@ -69544,7 +70572,7 @@ var EventPropagators = __webpack_require__(27);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInputSelection = __webpack_require__(80);
-var SyntheticEvent = __webpack_require__(14);
+var SyntheticEvent = __webpack_require__(15);
 
 var getActiveElement = __webpack_require__(70);
 var isTextInputElement = __webpack_require__(90);
@@ -70152,6 +71180,7 @@ module.exports = SimpleEventPlugin;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticEvent = __webpack_require__(15);
 
 /**
@@ -70164,6 +71193,9 @@ var ClipboardEventInterface = {
   }
 =======
 var SyntheticEvent = __webpack_require__(14);
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 /**
  * @interface Event
@@ -70221,6 +71253,7 @@ module.exports = SyntheticAnimationEvent;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticEvent = __webpack_require__(15);
 
 /**
@@ -70231,6 +71264,9 @@ var CompositionEventInterface = {
   data: null
 =======
 var SyntheticEvent = __webpack_require__(14);
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 /**
  * @interface Event
@@ -70285,6 +71321,7 @@ module.exports = SyntheticClipboardEvent;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticMouseEvent = __webpack_require__(34);
 
 /**
@@ -70295,6 +71332,9 @@ var DragEventInterface = {
   dataTransfer: null
 =======
 var SyntheticEvent = __webpack_require__(14);
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 /**
  * @interface Event
@@ -70472,6 +71512,7 @@ module.exports = SyntheticFocusEvent;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticUIEvent = __webpack_require__(29);
 
 var getEventCharCode = __webpack_require__(51);
@@ -70530,6 +71571,9 @@ var KeyboardEventInterface = {
   }
 =======
 var SyntheticEvent = __webpack_require__(14);
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 /**
  * @interface Event
@@ -70776,6 +71820,7 @@ module.exports = SyntheticTouchEvent;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var SyntheticMouseEvent = __webpack_require__(34);
 
 /**
@@ -70804,6 +71849,9 @@ var WheelEventInterface = {
   deltaMode: null
 =======
 var SyntheticEvent = __webpack_require__(14);
+=======
+var SyntheticEvent = __webpack_require__(15);
+>>>>>>> Revise item summary page
 
 /**
  * @interface Event
@@ -71457,7 +72505,7 @@ module.exports = flattenChildren;
 =======
 var _prodInvariant = __webpack_require__(3);
 
-var ReactCurrentOwner = __webpack_require__(13);
+var ReactCurrentOwner = __webpack_require__(14);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstanceMap = __webpack_require__(28);
 
@@ -72390,9 +73438,12 @@ module.exports = ReactMount.renderSubtreeIntoContainer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createHashHistory__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createHashHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_history_createHashHistory__);
 =======
+=======
+>>>>>>> Revise item summary page
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createBrowserHistory__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createBrowserHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_history_createBrowserHistory__);
 >>>>>>> Add optimizations
@@ -72473,10 +73524,14 @@ BrowserRouter.propTypes = {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* harmony default export */ __webpack_exports__["a"] = (HashRouter);
 =======
 /* harmony default export */ __webpack_exports__["a"] = (BrowserRouter);
 >>>>>>> Add optimizations
+=======
+/* harmony default export */ __webpack_exports__["a"] = (BrowserRouter);
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 202 */
@@ -72538,7 +73593,10 @@ HashRouter.propTypes = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (HashRouter);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 203 */
@@ -72688,7 +73746,10 @@ NavLink.defaultProps = {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (NavLink);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 205 */
@@ -72852,7 +73913,10 @@ MemoryRouter.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> Revise item summary page
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createMemoryHistory__ = __webpack_require__(128);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_createMemoryHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_history_createMemoryHistory__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Router__ = __webpack_require__(57);
@@ -72972,7 +74036,10 @@ MemoryRouter.propTypes = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (MemoryRouter);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 214 */
@@ -73119,10 +74186,14 @@ Prompt.contextTypes = {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* harmony default export */ __webpack_exports__["a"] = (Redirect);
 =======
 /* harmony default export */ __webpack_exports__["a"] = (Prompt);
 >>>>>>> Add optimizations
+=======
+/* harmony default export */ __webpack_exports__["a"] = (Prompt);
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 215 */
@@ -73370,7 +74441,10 @@ Redirect.contextTypes = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (Redirect);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 216 */
@@ -73614,7 +74688,10 @@ StaticRouter.childContextTypes = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (StaticRouter);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 217 */
@@ -73759,17 +74836,24 @@ var withRouter = function withRouter(Component) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (withRouter);
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ }),
 /* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var isarray = __webpack_require__(218)
 =======
 var isarray = __webpack_require__(129)
 >>>>>>> Add optimizations
+=======
+var isarray = __webpack_require__(129)
+>>>>>>> Revise item summary page
 
 /**
  * Expose `pathToRegexp`.
@@ -76137,10 +77221,14 @@ module.exports = onlyChild;
 var _prodInvariant = __webpack_require__(19);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var ReactCurrentOwner = __webpack_require__(14);
 =======
 var ReactCurrentOwner = __webpack_require__(13);
 >>>>>>> Add optimizations
+=======
+var ReactCurrentOwner = __webpack_require__(14);
+>>>>>>> Revise item summary page
 var REACT_ELEMENT_TYPE = __webpack_require__(95);
 
 var getIteratorFn = __webpack_require__(63);
@@ -76478,6 +77566,7 @@ exports.default = valueEqual;
 /***/ }),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 233 */,
 /* 234 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -76517,6 +77606,8 @@ exports.default = PrivateRouteHome;
 =======
 =======
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 /* 233 */
 /***/ (function(module, exports) {
 
@@ -76542,7 +77633,10 @@ try {
 
 module.exports = g;
 
+<<<<<<< HEAD
 >>>>>>> Add optimizations
+=======
+>>>>>>> Revise item summary page
 
 /***/ })
 /******/ ]);
