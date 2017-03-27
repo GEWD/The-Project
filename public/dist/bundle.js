@@ -22538,6 +22538,47 @@ if ( document.readyState === "complete" ||
 	window.addEventListener( "load", completed );
 }
 
+<<<<<<< HEAD
+=======
+      var data = new FormData(form);
+      var currentScope = this;
+      _jquery2.default.ajax({
+        type: 'POST',
+        url: '/upload',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function success(results) {
+          _this2.onGVision(results);
+        }
+      });
+    }
+  }, {
+    key: 'onGVision',
+    value: function onGVision(itemizationObject) {
+      var itemArray = [];
+      for (var key in itemizationObject) {
+        if (key.search(/tax/ig) !== -1) {
+          this.setState({ sumTax: Number(itemizationObject[key]) });
+        }
+        if (key.search(/(\btotal|\btota)/i) !== -1) {
+          this.setState({ sumTotal: Number(itemizationObject[key]) });
+        }
+        if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
+          itemArray.push([{
+            name: key,
+            amount: itemizationObject[key],
+            members: []
+          }]);
+        }
+      }
+      this.setState({ items: itemArray });
+    }
+  }, {
+    key: 'addMember',
+    value: function addMember(itemArray) {
+      var _this3 = this;
+>>>>>>> Revise receipt summary page and note
 
 <<<<<<< HEAD
 =======
@@ -22558,6 +22599,12 @@ if ( document.readyState === "complete" ||
     value: function calculateTotal() {
       var sum = 0;
       this.state.items.map(function (item, index) {
+<<<<<<< HEAD
+=======
+        if (item[0].members.length === 0) {
+          item[0].members = [].concat.apply([], _this4.state.members);
+        }
+>>>>>>> Revise receipt summary page and note
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
@@ -22579,10 +22626,13 @@ if ( document.readyState === "complete" ||
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
+<<<<<<< HEAD
         console.log('....??', itemObj);
         if (itemObj.members.length === 0) {
           itemObj.members = [].concat.apply([], this.state.members);
         }
+=======
+>>>>>>> Revise receipt summary page and note
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22607,7 +22657,6 @@ if ( document.readyState === "complete" ||
   }, {
     key: 'handleTripNameSubmit',
     value: function handleTripNameSubmit(event) {
-      console.log('Tripname was submitted:' + this.state.tripName);
       _util2.default.sendServerTripName(this.state.tripName, this.state.tripDesc);
     }
   }, {
@@ -22620,12 +22669,54 @@ if ( document.readyState === "complete" ||
 >>>>>>> Made change so unclaimed items are split amongst all group members
 
 
+<<<<<<< HEAD
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
 var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 	var i = 0,
 		len = elems.length,
 		bulk = key == null;
+=======
+      this.setState({
+        items: items,
+        selectItem: index
+      });
+    }
+  }, {
+    key: 'initialMemberSelect',
+    value: function initialMemberSelect() {
+      if (this.state.selectMember.length === 0) {
+        this.setState({
+          selectMember: this.state.username
+        });
+      }
+    }
+  }, {
+    key: 'memberOnClick',
+    value: function memberOnClick(member) {
+      this.setState({
+        selectMember: member
+      });
+    }
+  }, {
+    key: 'menuOnClick',
+    value: function menuOnClick() {
+      this.setState({
+        sideMenuState: true
+      });
+    }
+  }, {
+    key: 'closeMenu',
+    value: function closeMenu() {
+      this.setState({
+        sideMenuState: !this.state.sideMenuState
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+>>>>>>> Revise receipt summary page and note
 
 	// Sets many values
 	if ( jQuery.type( key ) === "object" ) {
