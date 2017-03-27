@@ -148,9 +148,8 @@ class App extends React.Component {
   }
 
   calculateTotal() {
-    console.log('inside calculate Total')
     let sum = 0;
-    this.state.items.map((item,index) => {
+    this.state.items.map((item, index) => {
       if (item[0].name !== '<NOTE>') {
         sum += Number(item[0].amount);
       } 
@@ -172,6 +171,10 @@ class App extends React.Component {
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
       var eachPrice = itemObj.amount / itemObj.members.length;
+      console.log('....??', itemObj);
+      if (itemObj.members.length === 0) {
+        itemObj.members = this.state.members;
+      }
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;

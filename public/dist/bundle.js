@@ -22058,13 +22058,11 @@ var App = function (_React$Component) {
   }, {
     key: 'calculateTotal',
     value: function calculateTotal() {
-      console.log('inside calculate Total');
       var sum = 0;
       this.state.items.map(function (item, index) {
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
         }
-        // sum += Number(item[0].amount);
       });
       this.setState({
         sumBill: sum.toFixed(2)
@@ -22083,6 +22081,10 @@ var App = function (_React$Component) {
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
+        console.log('....??', itemObj);
+        if (itemObj.members.length === 0) {
+          itemObj.members = this.state.members;
+        }
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
