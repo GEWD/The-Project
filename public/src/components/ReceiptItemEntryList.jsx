@@ -1,7 +1,8 @@
 import React from 'react';
 import ReceiptItemEntry from './ReceiptItemEntry.jsx';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
-const ReceiptItemEntryList = ({items, selectItem, itemOnClick, deleteItem}) =>  (
+const ReceiptItemEntryList = ({items, selectItem, itemOnClick, deleteItem,sumTax,sumTip,onInputChange,calculateTotal}) =>  (
   <div>
     <ul>
       {items.map((item,index) => {
@@ -23,6 +24,8 @@ const ReceiptItemEntryList = ({items, selectItem, itemOnClick, deleteItem}) =>  
           )
       })}
     </ul>
+    <input placeholder='Total Tip' type='number' name='sumTip' value={sumTip} onChange={onInputChange}/>
+    <Link to='/summary' onClick={calculateTotal}> Submit </Link>
   </div>
 )
 
