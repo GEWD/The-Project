@@ -22,8 +22,7 @@ class AddMember extends React.Component {
                 <span
                   key={index}
                   onClick={() => this.props.memberOnClick(member[0])}
-                  className={'selectMember' + (this.props.selectMember === member[0] ? 'Selected' : '')}
-                  className='receipt-members-bar-mem'
+                  className={'receipt-members-bar-mem selectMember' + (this.props.selectMember === member[0] ? 'Selected' : '')}
                 >{member[0]}</span>
               )
             })}
@@ -35,10 +34,10 @@ class AddMember extends React.Component {
               id='input-member'
               onChange={this.props.onInputChange}
             />
-            <button
+            <a
               onClick={this.props.addMember}
-              className='btn-secondary'
-            >+</button><br/>
+              className='btn-circle'
+            ></a>
           </div>
         </div>
       </div>

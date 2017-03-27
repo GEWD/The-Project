@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Breakdown extends React.Component {
   constructor(props) {
@@ -12,12 +13,16 @@ class Breakdown extends React.Component {
   render() {
     return (
       <div>
-        <h3>Total per person due to {this.props.data.username}</h3>
-        <ul>
-          {Object.keys(this.props.data.memberSum).map((member,index) => {
-            return (<li key={index}>{member} : ${(this.props.data.memberSum[member] + this.perPerson).toFixed(2)}</li>)
-          })}
-        </ul>
+          <Link to='/summary' className='back-history'>Calculation Summary</Link>
+        <div>
+          <h1>Final Breakdown</h1>
+          <h3>Total per person due to {this.props.data.username}</h3>
+          <ul>
+            {Object.keys(this.props.data.memberSum).map((member,index) => {
+              return (<li key={index}>{member} : ${(this.props.data.memberSum[member] + this.perPerson).toFixed(2)}</li>)
+            })}
+          </ul>
+        </div>
       </div>
     );
   }

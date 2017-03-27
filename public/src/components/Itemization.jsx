@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 const Itemization = ({addItem, itemName, itemAmount, items, selectItem, deleteItem, selectMember, addMember, member, members, onInputChange, windowHeight, memberExist, itemOnClick, memberOnClick, initialMemberSelect,sumTax,sumTip,calculateTotal}) => (
 
-  <div>
+  <div className='itemization-page'>
     <Link to='/upload-receipt' className='back-history'>Upload Receipt</Link>
     <div >
       <h2>Receipt Items</h2>
@@ -26,13 +26,11 @@ const Itemization = ({addItem, itemName, itemAmount, items, selectItem, deleteIt
         onInputChange={onInputChange}
         addItem={addItem}
       />
-      <div className='btn btn-primary btn-wide'>
-        <Link
-          to='/summary'
-          onClick={calculateTotal}
-          className='btn-link'
-        > Calculate </Link>
-      </div>
+      <Link
+        to='/summary'
+        onClick={calculateTotal}
+        className='btn btn-primary btn-wide btn-link'
+      > Calculate </Link>
       <AddMember
         addMember={addMember}
         member={member}

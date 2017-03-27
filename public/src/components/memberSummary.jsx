@@ -14,7 +14,7 @@ class MemberSummary extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  
+
 
   handleSubmit(event) {
     event.preventDefault();
@@ -23,33 +23,37 @@ class MemberSummary extends React.Component {
   }
 
 
-  
+
   render() {
     return (
-      <div>
-        <h4>{this.props.data.tripName}</h4>
-        <h4>{this.props.data.receiptName} {'URL'}</h4>
-        <h4>Paid By: {this.props.data.username}</h4>
-        <ul>
+      <div className='member-summary-page'>
+        <Link to='/additems' className='back-history'>Receipt Items</Link>
+        <div className='container'>
+          <h4>{this.props.data.tripName}</h4>
+          <h4>{this.props.data.receiptName} {'URL'}</h4>
+          <h4>Paid By: {this.props.data.username}</h4>
           {this.props.data.items.map((el,idx) => {
             return (
-              <li key={idx}>
-                <ul ><strong>{el[0].name}</strong> ${Number(el[0].amount).toFixed(2)}
+              <div key={idx} className='flex-container'>
+                <span className='flex-column-name'>{el[0].name}</span>
+                <span className='flex-column-amount'> ${Number(el[0].amount).toFixed(2)}</span>
                   {el[0].members.map((member, index) => {
-                    return (<li key={index}><i>{member}</i>   ${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</li>)
+                    return (<span key={index}><i>{member}</i>   ${(Number(el[0].amount)/el[0].members.length).toFixed(2)}</span>)
                   })}
-                </ul> 
-              </li> 
-            )  
+              </div>
+            )
           })}
-        </ul>
-        <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
-        <p>Total Tax: ${this.sumTax}</p>
-        <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
-        <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
-        <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
-        <Link to='/breakdown' onClick={this.props.calculateMemberSum}>Submit</Link>
-        <input type="submit" value="Confirm" onClick={this.handleSubmit}/>
+          <p>Sub Total: ${this.sumBill.toFixed(2)}</p>
+          <p>Total Tax: ${this.sumTax}</p>
+          <p>Total Tip: ${this.sumTip.toFixed(2)}</p>
+          <p>Total: ${(Number(this.sumTip) + Number(this.sumBill)).toFixed(2)}</p>
+          <p>Tax + Tip per person: ${this.perPerson.toFixed(2)}</p>
+          <Link
+            to='/breakdown'
+            onClick={this.props.calculateMemberSum}
+            className='btn btn-primary btn-wide btn-link'
+          >Submit</Link>
+        </div>
       </div>
     )
   }

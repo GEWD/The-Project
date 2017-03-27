@@ -17776,8 +17776,6 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -17820,13 +17818,13 @@ var AddMember = function (_React$Component) {
             this.props.members.map(function (member, index) {
               return _react2.default.createElement(
                 'span',
-                _defineProperty({
+                {
                   key: index,
                   onClick: function onClick() {
                     return _this2.props.memberOnClick(member[0]);
                   },
-                  className: 'selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
-                }, 'className', 'receipt-members-bar-mem'),
+                  className: 'receipt-members-bar-mem selectMember' + (_this2.props.selectMember === member[0] ? 'Selected' : '')
+                },
                 member[0]
               );
             }),
@@ -17838,15 +17836,10 @@ var AddMember = function (_React$Component) {
               id: 'input-member',
               onChange: this.props.onInputChange
             }),
-            _react2.default.createElement(
-              'button',
-              {
-                onClick: this.props.addMember,
-                className: 'btn-secondary'
-              },
-              '+'
-            ),
-            _react2.default.createElement('br', null)
+            _react2.default.createElement('a', {
+              onClick: this.props.addMember,
+              className: 'btn-circle'
+            })
           )
         )
       );
@@ -21051,18 +21044,14 @@ var CreateTrip = function CreateTrip(_ref) {
       value: tripDesc,
       onChange: onInputChange }),
     _react2.default.createElement(
-      'div',
-      { className: 'btn btn-primary' },
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        {
-          to: '/upload-receipt',
-          value: 'submit',
-          className: 'btn-link',
-          onClick: handleTripNameSubmit
-        },
-        'New Trip'
-      )
+      _reactRouterDom.Link,
+      {
+        to: '/upload-receipt',
+        value: 'submit',
+        className: 'btn btn-primary btn-link',
+        onClick: handleTripNameSubmit
+      },
+      'New Trip'
     )
   );
 };
@@ -21122,7 +21111,7 @@ var Itemization = function Itemization(_ref) {
       calculateTotal = _ref.calculateTotal;
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'itemization-page' },
     _react2.default.createElement(
       _reactRouterDom.Link,
       { to: '/upload-receipt', className: 'back-history' },
@@ -21153,17 +21142,13 @@ var Itemization = function Itemization(_ref) {
         addItem: addItem
       }),
       _react2.default.createElement(
-        'div',
-        { className: 'btn btn-primary btn-wide' },
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          {
-            to: '/summary',
-            onClick: calculateTotal,
-            className: 'btn-link'
-          },
-          ' Calculate '
-        )
+        _reactRouterDom.Link,
+        {
+          to: '/summary',
+          onClick: calculateTotal,
+          className: 'btn btn-primary btn-wide btn-link'
+        },
+        ' Calculate '
       ),
       _react2.default.createElement(_AddMember2.default, {
         addMember: addMember,
@@ -21564,18 +21549,14 @@ var UploadReceipt = function (_React$Component) {
               })
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'btn btn-primary' },
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                {
-                  to: '/additems',
-                  value: 'submit',
-                  onClick: this.handleFormSubmit,
-                  className: 'btn-link'
-                },
-                'Submit'
-              )
+              _reactRouterDom.Link,
+              {
+                to: '/additems',
+                value: 'submit',
+                onClick: this.handleFormSubmit,
+                className: 'btn-link btn btn-primary'
+              },
+              'Submit'
             )
           )
         )
@@ -36555,6 +36536,8 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(20);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36587,23 +36570,37 @@ var Breakdown = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
-          'h3',
-          null,
-          'Total per person due to ',
-          this.props.data.username
+          _reactRouterDom.Link,
+          { to: '/summary', className: 'back-history' },
+          'Calculation Summary'
         ),
         _react2.default.createElement(
-          'ul',
+          'div',
           null,
-          Object.keys(this.props.data.memberSum).map(function (member, index) {
-            return _react2.default.createElement(
-              'li',
-              { key: index },
-              member,
-              ' : $',
-              (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
-            );
-          })
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Final Breakdown'
+          ),
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Total per person due to ',
+            this.props.data.username
+          ),
+          _react2.default.createElement(
+            'ul',
+            null,
+            Object.keys(this.props.data.memberSum).map(function (member, index) {
+              return _react2.default.createElement(
+                'li',
+                { key: index },
+                member,
+                ' : $',
+                (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
+              );
+            })
+          )
         )
       );
     }
@@ -36675,95 +36672,103 @@ var MemberSummary = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(
-          'h4',
-          null,
-          this.props.data.tripName
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          this.props.data.receiptName,
-          ' ',
-          'URL'
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          'Paid By: ',
-          this.props.data.username
-        ),
-        _react2.default.createElement(
-          'ul',
-          null,
-          this.props.data.items.map(function (el, idx) {
-            return _react2.default.createElement(
-              'li',
-              { key: idx },
-              _react2.default.createElement(
-                'ul',
-                null,
-                _react2.default.createElement(
-                  'strong',
-                  null,
-                  el[0].name
-                ),
-                ' $',
-                Number(el[0].amount).toFixed(2),
-                el[0].members.map(function (member, index) {
-                  return _react2.default.createElement(
-                    'li',
-                    { key: index },
-                    _react2.default.createElement(
-                      'i',
-                      null,
-                      member
-                    ),
-                    '   $',
-                    (Number(el[0].amount) / el[0].members.length).toFixed(2)
-                  );
-                })
-              )
-            );
-          })
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'Sub Total: $',
-          this.sumBill.toFixed(2)
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'Total Tax: $',
-          this.sumTax
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'Total Tip: $',
-          this.sumTip.toFixed(2)
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'Total: $',
-          (Number(this.sumTip) + Number(this.sumBill)).toFixed(2)
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'Tax + Tip per person: $',
-          this.perPerson.toFixed(2)
-        ),
+        { className: 'member-summary-page' },
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/breakdown', onClick: this.props.calculateMemberSum },
-          'Submit'
+          { to: '/additems', className: 'back-history' },
+          'Receipt Items'
         ),
-        _react2.default.createElement('input', { type: 'submit', value: 'Confirm', onClick: this.handleSubmit })
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'h4',
+            null,
+            this.props.data.tripName
+          ),
+          _react2.default.createElement(
+            'h4',
+            null,
+            this.props.data.receiptName,
+            ' ',
+            'URL'
+          ),
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Paid By: ',
+            this.props.data.username
+          ),
+          this.props.data.items.map(function (el, idx) {
+            return _react2.default.createElement(
+              'div',
+              { key: idx, className: 'flex-container' },
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-name' },
+                el[0].name
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'flex-column-amount' },
+                ' $',
+                Number(el[0].amount).toFixed(2)
+              ),
+              el[0].members.map(function (member, index) {
+                return _react2.default.createElement(
+                  'span',
+                  { key: index },
+                  _react2.default.createElement(
+                    'i',
+                    null,
+                    member
+                  ),
+                  '   $',
+                  (Number(el[0].amount) / el[0].members.length).toFixed(2)
+                );
+              })
+            );
+          }),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Sub Total: $',
+            this.sumBill.toFixed(2)
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Total Tax: $',
+            this.sumTax
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Total Tip: $',
+            this.sumTip.toFixed(2)
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Total: $',
+            (Number(this.sumTip) + Number(this.sumBill)).toFixed(2)
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Tax + Tip per person: $',
+            this.perPerson.toFixed(2)
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            {
+              to: '/breakdown',
+              onClick: this.props.calculateMemberSum,
+              className: 'btn btn-primary btn-wide btn-link'
+            },
+            'Submit'
+          )
+        )
       );
     }
   }]);

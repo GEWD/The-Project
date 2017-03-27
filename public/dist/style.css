@@ -128,6 +128,17 @@ p {
   font-size: 1em;
 }
 
+.btn-circle {
+/*  border-radius: 100%;
+  border: #4A90E2 1px solid;
+  padding: 1em;
+  color: #4A90E2;*/
+}
+
+.btn-circle::before {
+  content: url(./asset/add_ppl.svg);
+}
+
 .delete-btn {
 
 }
@@ -412,6 +423,12 @@ textarea#tripDesc::-webkit-input-placeholder{
   color: #AAAAAA;
 }
 
+
+/*itemization-page*/
+.itemization-page h2{
+  text-align: center;
+}
+
 .flex-column-receiptItem {
   flex-basis: 90%;
 }
@@ -466,10 +483,11 @@ textarea#tripDesc::-webkit-input-placeholder{
 
 .itemNameSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
 }
 
 .selectMemberSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
+  border: #4A90E2 1px solid;
 }

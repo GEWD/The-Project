@@ -53,14 +53,12 @@ class UploadReceipt extends React.Component {
                 onChange={(e) => this.handleFileUpload(e) }
               />
             </label>
-            <div className='btn btn-primary'>
-              <Link
-                to='/additems'
-                value='submit'
-                onClick={this.handleFormSubmit}
-                className='btn-link'
-              >Submit</Link>
-            </div>
+            <Link
+              to='/additems'
+              value='submit'
+              onClick={this.handleFormSubmit}
+              className='btn-link btn btn-primary'
+            >Submit</Link>
           </form>
         </div>
       </div>
