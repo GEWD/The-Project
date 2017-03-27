@@ -9,7 +9,7 @@ class TripSummary extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className='page-container'>
         <h1>Trip Summary</h1>
         <TripEntry />
         <TripEntry />

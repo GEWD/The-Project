@@ -1,8 +1,611 @@
+/*Clear Default CSS*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+  overflow: hidden;
+  width: 100%;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+input {
+  -webkit-appearance: none;
+  border: none;
+  box-shadow: none !important;
+}
+input:-webkit-autofill {
+  color: #fff !important;
+}
+
+/*App Styling*/
+html, body, #app {
+  height: 100%
+}
+
+body {
+  font-family: Lato;
+  font-size: 16px;
+  color: #444242;
+}
+
+h1 {
+  margin: 1em 0;
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+h2 {
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+h3 {
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+p {
+  margin-top: 0.63em;
+  margin-bottom: 0.63em;
+  font-size: 1em;
+  font-weight: 100;
+  line-height: 1.4em;
+}
+
+/*Btn*/
+
+.btn {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 2px;
+  background-color: #fff;
+  border: #4A90E2 1px solid;
+  width: 240px;
+  margin: 0.6em auto;
+  height: 36px;
+  text-align: center;
+  padding: 0.6em 1em;
+}
+
+.btn-primary {
+  background-color: #4A90E2;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  border: #4A90E2 1px solid;
+}
+
+.btn-wide {
+  padding: 0.1em 0;
+  width: 100%;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.btn-link-secondary {
+  text-decoration: none;
+  color: #4A90E2;
+  font-size: 1em;
+}
+
+.btn-circle {
+/*  border-radius: 100%;
+  border: #4A90E2 1px solid;
+  padding: 1em;
+  color: #4A90E2;*/
+  padding-left: 1.4em;
+}
+
+.btn-circle::before {
+  content: url(./asset/add_ppl.svg);
+}
+
+.delete-btn {
+
+}
+
+.delete-btn::before {
+  content: url(./asset/delete.svg);
+  position: relative;
+  bottom: 4px;
+}
+
+/*Input*/
+input {
+  padding: 0.8em 1em;
+  -webkit-appearance: none;
+  border-radius: 2px;
+  background-color: #F7F7F7;
+  color: #444242;
+  font-size: 0.8em;
+}
+
+input::-webkit-input-placeholder{
+  color: #AAAAAA;
+}
+
+input#text-field {
+  display: block;
+  margin: 1em auto;
+  width: 240px;
+  padding: 0.8em 1em;
+  font-size: 1em;
+}
+
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+input#input-name {
+  margin-right: 10px;
+  width: 90%;
+  font-size: 0.9em;
+}
+
+input#input-amount{
+  width: 40%;
+  font-size: 0.9em;
+}
+
+input#input-amount-tip{
+  width: 40%;
+  font-size: 0.9em;
+}
+
+input#input-member {
+  background-color: #fff;
+  width: 80%;
+  font-size: 0.9em;
+}
+
+label.file-upload-btn {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width:240px;
+  height:100px;
+  margin: 1em auto;
+  padding: 0.6em 1em;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #F7F7F7;
+  text-align: center;
+}
+
+.upload-btn-text {
+  color: #AAAAAA;
+}
+
+.upload-btn-text::before {
+  content: url(./asset/cloud_upload.svg);
+  display: block;
+}
+
+.upload-filename {
+  color: #444242;
+}
+
+.upload-filename::before {
+  content: url(./asset/receipt.svg);
+  display: block;
+}
+
+/*flex*/
+.flex-container {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.flex-container-horizontal {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  align-items: center;
+  /*justify-content: space-between;*/
+}
+
+.site-container {
+  height:100%;
+}
+
+.site-pusher {
+  height: 100%;
+  transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+}
+
+.site-pusher-on{
+  height: 100%;
+  transform: translateX(250px);
+  -webkit-transform: translateX(250px);
+  transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+}
+
+/*Navbar*/
+.navbar-component {
+  display: flex;
+  align-items: center;
+  height:64px;
+  background: #F8F8F8;
+  /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);*/
+  justify-content: space-between;
+}
+
+.menu-icon {
+  display: block;
+  position: relative;
+  width: 50px;
+  height: 66px;
+  cursor: pointer;
+}
+
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 1rem;
+  height: 0;
+  top: 16px;
+  left: 15px;
+  box-shadow: 0 10px 0 1px #181818, 0 16px 0 1px #181818, 0 22px 0 1px #181818;
+}
+
+.brand {
+  display: block;
+  margin: auto;
+  font-size:1em;
+  color:#777;
+  text-decoration: none;
+}
+
+.brand::after {
+  content: '';
+  padding-right: 50px;
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #262626;
+  width:250px;
+  -webkit-transform: translateX(-250px);
+  transform: translateX(-250px);
+}
+
+.link {
+  display: block;
+  padding: 0 2em;
+  line-height: 40px;
+  text-decoration: none;
+  color:#fff;
+}
+
+/*Content*/
+.content-container {
+  padding: 0 1.4em;
+  height: 100%
+}
+
+/*Pages*/
+.page-container-center {
+  /*padding-top: 0.4em;*/
+  text-align: center;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.page-container {
+  padding: 0 1.4em;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/*Back Button*/
+.back-history {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 1em 0;
+  text-align: left;
+  font-size: 1em;
+  color: #AAAAAA;
+  text-decoration: none;
+}
+
+.back-history a {
+}
+
+.back-history::before {
+  content: url(./asset/back.svg);
+  position: relative;
+  bottom: 4px;
+}
+
+/*Login Page*/
+.login-page-container {
+  padding-top: 2em;
+  text-align: center;
+}
+
+.auth-options {
+  padding: 2em 0;
+}
+
+.facebook-login {
+  box-sizing: border-box;
+  position: relative;
+  width: 13em;
+  height: 34px;
+  margin: 0.2em;
+  padding: 10px 15px 10px 46px;
+  border: none;
+  background-color: #4C69BA;
+  background-image: linear-gradient(#4C69BA, #3B55A0);
+  text-align: left;
+  text-decoration: none;
+  line-height: 34px;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color:#fff;
+}
+
+.facebook-login::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  border-right: #364e92 1px solid;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+
+/*Create Trip Page Container*/
+.create-trip-page-container {
+  padding-top: 2em;
+  text-align: center;
+}
+
+textarea#tripDesc {
+  display: block;
+  margin: 1em auto;
+  width: 240px;
+  -webkit-appearance: none;
+  background-color: #F7F7F7;
+  border: none;
+  border-radius: 2px;
+  padding: 0.8em 1em;
+  color: #444242;
+  font-size: 16px;
+}
+
+textarea#tripDesc::-webkit-input-placeholder{
+  color: #AAAAAA;
+}
+
+
+/*itemization-page*/
+.itemization-page h2{
+  text-align: center;
+}
+
+/*Receipt Item Entry*/
+.flex-column-receiptItem {
+  flex-basis: 90%;
+  margin: .1em 0
+}
+
+.flex-column-deleteItem {
+  flex-basis: 40px;
+}
+
+.flex-column-name {
+  flex-basis: 80%;
+}
+.flex-column-amount {
+  flex-basis: 20%;
+}
+
+.flex-column-members {
+  flex-basis: 90%;
+}
+
+.receipt-entry-list-container {
+  max-height: 240px;
+  margin-bottom: 1em;
+  overflow-y: auto;
+}
+
+.receipt-item-amount {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.receipt-item-amount::before {
+  content: '$';
+  margin-right: 10px;
+}
+
+.receipt-member {
+  color: #AAAAAA;
+  font-size: 0.8em;
+  margin-right: 10px;
+}
+
+/*Receipt Members*/
+.receipt-members-bar-outer-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  background-color: #F8F8F8
+}
+
+.receipt-members-bar-inner-container {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0 1.4em;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.receipt-add-members {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0.6em 0;
+}
+
+.receipt-members-list {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+}
+
+.receipt-members-bar-mem {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin: 0 4px;
+  height: 20px;
+  border-radius: 100px;
+  padding: 0.2em 0.4em;
+  border: #444242 solid 1px;
+  font-size: 0.9em;
+}
+
 .itemNameSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
 }
+
 .selectMemberSelected {
   color: white;
-  background-color: blue;
+  background-color: #4A90E2;
+  border: #4A90E2 1px solid;
+}
+
+/*Summary Page*/
+.receipt-item-mem-summary {
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+  color: #AAAAAA;
+}
+
+.summary-mem-item {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  justify-content: flex-start;
+}
+
+.summary-mem-name {
+  padding-left: 10px;
+  margin: 0.2em 0;
+}
+
+.receipt-info {
+  text-align: center;
+  border-bottom: 1px #AAAAAA solid;
+  padding-bottom: 1em;
+}
+
+.receipt-summary {
+  margin-top: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.receipt-tax {
+  margin: 0.6em 0;
+}
+.sumbit-btn-bar-outer-container{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.sumbit-btn-bar-inner-container {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0 1.4em;
+  flex-basis: 100%;
+  align-items: center;
 }
