@@ -195,17 +195,6 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
-let uploadCloud = () => {
-  cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
-      // var params = [1, 1, 1, 'cat', results.url, 150, 10, 15];
-      // db.addReceipt(params, function(err, data) {
-      //   console.log(data);
-      //   res.send('File uploaded!');
-      // });
-      console.log('+++++++++',data);
-  });
-}
-
 app.post('/summary', (req, res) => {
   console.log('=============', req.body);
   db.createMemberSummary(req.body);

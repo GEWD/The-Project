@@ -179,7 +179,15 @@ const assignItemsToMembers = (allItemsArray, params) => {
   // return Promise.map(allItems, (item, index) => {
   //   return Promise.map(allConsumers, (consumer, index) => {
     for (let i = 0; i < allItems.length; i++) {
-        db.query(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[i], params.receiptUrl, params.username, params.tripName])
+        db.query(queryString.assignItemsToMembers, [
+          allItems[i],
+          params.receiptUrl,
+          params.username,
+          allConsumers[i],
+          params.receiptUrl,
+          params.username,
+          params.tripName
+        ])
         // return db.queryAsync(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[j], params.receiptUrl, params.username])
         // .then( () => console.log('SUCCESS: assignItemsToMembers'))
         // .catch( err => console.error('ERROR: insert consumed_items', err));   
