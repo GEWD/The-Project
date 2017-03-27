@@ -20940,6 +20940,8 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(15);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20989,6 +20991,11 @@ var Breakdown = function (_React$Component) {
               (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
             );
           })
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/', onClick: this.props.recent },
+          ' Back To Homepage (Recent) '
         )
       );
     }
@@ -21575,10 +21582,19 @@ var TripSummary = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'Trip Summary'
+          'Most Recent Trips'
         ),
-        _react2.default.createElement(_TripEntry2.default, null),
-        _react2.default.createElement(_TripEntry2.default, null)
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.data.recent.map(function (item, index) {
+            return _react2.default.createElement(
+              'p',
+              null,
+              item.name
+            );
+          })
+        )
       );
     }
   }]);
@@ -21794,39 +21810,63 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TripEntry = function TripEntry() {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h3',
-      null,
-      'Trip Name'
-    ),
-    ' ',
-    _react2.default.createElement(
-      'p',
-      null,
-      'Total: $193.00'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Date: 2014 March'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'People: '
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TripEntry = function (_React$Component) {
+  _inherits(TripEntry, _React$Component);
+
+  function TripEntry(props) {
+    _classCallCheck(this, TripEntry);
+
+    return _possibleConstructorReturn(this, (TripEntry.__proto__ || Object.getPrototypeOf(TripEntry)).call(this, props));
+  }
+
+  _createClass(TripEntry, [{
+    key: 'render',
+    value: function render() {
+      console.log('-------what is this??', this.props.data);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Trip Name'
+        ),
+        ' ',
+        _react2.default.createElement(
+          'p',
+          null,
+          'Total: $193.00'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Date: 2014 March'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'People: '
+        )
+      );
+    }
+  }]);
+
+  return TripEntry;
+}(_react2.default.Component);
 
 exports.default = TripEntry;
 
@@ -36343,7 +36383,7 @@ var App = function (_React$Component) {
       name: '',
       amount: 0,
       sideMenuState: false
-    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sumBill', ''), _defineProperty(_this$state, 'sumTax', ''), _defineProperty(_this$state, 'sumTip', 0), _defineProperty(_this$state, 'sumTotal', 0), _defineProperty(_this$state, 'memberSum', {}), _this$state);
+    }, _defineProperty(_this$state, 'amount', ''), _defineProperty(_this$state, 'sumBill', ''), _defineProperty(_this$state, 'sumTax', ''), _defineProperty(_this$state, 'sumTip', 0), _defineProperty(_this$state, 'sumTotal', 0), _defineProperty(_this$state, 'memberSum', {}), _defineProperty(_this$state, 'recent', [{ name: 'No trips yet. Now create one!' }]), _this$state);
 
     _this.verifyAuthentication = _this.verifyAuthentication.bind(_this);
     _this.handleClickLogout = _this.handleClickLogout.bind(_this);
@@ -36362,6 +36402,7 @@ var App = function (_React$Component) {
     _this.closeMenu = _this.closeMenu.bind(_this);
     _this.calculateMemberSum = _this.calculateMemberSum.bind(_this);
     _this.calculateTotal = _this.calculateTotal.bind(_this);
+    _this.getRecentTrip = _this.getRecentTrip.bind(_this);
     return _this;
   }
 
@@ -36458,6 +36499,32 @@ var App = function (_React$Component) {
         }
       });
       this.state.member = '';
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getRecentTrip();
+    }
+  }, {
+    key: 'getRecentTrip',
+    value: function getRecentTrip() {
+      var _this4 = this;
+
+      var user = this.state;
+      _jquery2.default.ajax({
+        type: 'POST',
+        url: '/recent',
+        data: user,
+        success: function success(results) {
+          console.log('app component trips of this person', results);
+          _this4.setState({
+            recent: results
+          });
+        },
+        error: function error(_error) {
+          console.log('error', _error);
+        }
+      });
     }
   }, {
     key: 'calculateTotal',
@@ -36565,7 +36632,8 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _React$createElement,
+          _this5 = this;
 
       return _react2.default.createElement(
         'div',
@@ -36586,7 +36654,9 @@ var App = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'content-container' },
-              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default }),
+              _react2.default.createElement(_PrivateRoute2.default, { path: '/', isAuthenticated: this.state.isAuthenticated, component: _TripSummary2.default,
+                data: this.state
+              }),
               _react2.default.createElement(_PrivateRoute2.default, {
                 path: '/create-trip',
                 component: _CreateTrip2.default,
@@ -36600,16 +36670,14 @@ var App = function (_React$Component) {
                 isAuthenticated: this.state.isAuthenticated,
                 component: _Profile2.default
               }),
-              _react2.default.createElement(_PrivateRoute2.default, {
+              _react2.default.createElement(_PrivateRoute2.default, (_React$createElement = {
                 path: '/upload-receipt',
                 isAuthenticated: this.state.isAuthenticated,
                 component: _Upload2.default,
                 data: this.state,
                 tripName: this.state.tripName,
-                tripDesc: this.state.tripDesc,
-                callGVision: this.callGVision,
-                onInputChange: this.onInputChange
-              }),
+                tripDesc: this.state.tripDesc
+              }, _defineProperty(_React$createElement, 'data', this.state), _defineProperty(_React$createElement, 'callGVision', this.callGVision), _defineProperty(_React$createElement, 'onInputChange', this.onInputChange), _React$createElement)),
               _react2.default.createElement(_PrivateRoute2.default, { path: '/additems', isAuthenticated: this.state.isAuthenticated, component: _Itemization2.default,
                 addItem: this.addItem,
                 itemName: this.state.name,
@@ -36641,10 +36709,18 @@ var App = function (_React$Component) {
                 path: '/breakdown',
                 isAuthenticated: this.state.isAuthenticated,
                 component: _Breakdown2.default,
-                data: this.state
+                data: this.state,
+                recent: this.getRecentTrip
+              }),
+              _react2.default.createElement(_PrivateRoute2.default, {
+                path: '/recent',
+                isAuthenticated: this.state.isAuthenticated,
+                component: _TripSummary2.default,
+                data: this.state,
+                recent: this.getRecentTrip
               }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/login', render: function render() {
-                  return _this4.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
+                  return _this5.state.isAuthenticated ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_Login2.default, null);
                 } })
             )
           )

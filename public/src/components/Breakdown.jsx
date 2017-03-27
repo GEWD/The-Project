@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
 class Breakdown extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Breakdown extends React.Component {
             return (<li key={index}>{member} : ${(this.props.data.memberSum[member] + this.perPerson).toFixed(2)}</li>)
           })}
         </ul>
+        <Link to='/' onClick={this.props.recent}> Back To Homepage (Recent) </Link>
       </div>
     );
   }
