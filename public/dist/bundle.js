@@ -22538,6 +22538,47 @@ if ( document.readyState === "complete" ||
 	window.addEventListener( "load", completed );
 }
 
+<<<<<<< HEAD
+=======
+      var data = new FormData(form);
+      var currentScope = this;
+      _jquery2.default.ajax({
+        type: 'POST',
+        url: '/upload',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function success(results) {
+          _this2.onGVision(results);
+        }
+      });
+    }
+  }, {
+    key: 'onGVision',
+    value: function onGVision(itemizationObject) {
+      var itemArray = [];
+      for (var key in itemizationObject) {
+        if (key.search(/tax/ig) !== -1) {
+          this.setState({ sumTax: Number(itemizationObject[key]) });
+        }
+        if (key.search(/(\btotal|\btota)/i) !== -1) {
+          this.setState({ sumTotal: Number(itemizationObject[key]) });
+        }
+        if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
+          itemArray.push([{
+            name: key,
+            amount: itemizationObject[key],
+            members: []
+          }]);
+        }
+      }
+      this.setState({ items: itemArray });
+    }
+  }, {
+    key: 'addMember',
+    value: function addMember(itemArray) {
+      var _this3 = this;
+>>>>>>> Revise receipt summary page and note
 
 <<<<<<< HEAD
 =======
@@ -22560,10 +22601,8 @@ if ( document.readyState === "complete" ||
 
       var sum = 0;
       this.state.items.map(function (item, index) {
-        console.log('//////:', item[0]);
         if (item[0].members.length === 0) {
           item[0].members = [].concat.apply([], _this4.state.members);
-          // itemObj.members.push(123456678);
         }
         if (item[0].name !== '<NOTE>') {
           sum += Number(item[0].amount);
@@ -22587,11 +22626,6 @@ if ( document.readyState === "complete" ||
       this.state.items.forEach(function (itemArr) {
         var itemObj = itemArr[0];
         var eachPrice = itemObj.amount / itemObj.members.length;
-        console.log('....??', itemObj);
-        // if (itemObj.members.length === 0) {
-        //   itemObj.members = [].concat.apply([], currentScope.state.members);
-        //   // itemObj.members.push(123456678);
-        // }
         for (var i = 0; i < itemObj.members.length; i++) {
           if (memberSum[itemObj.members[i]]) {
             memberSum[itemObj.members[i]] += eachPrice;
@@ -22616,7 +22650,6 @@ if ( document.readyState === "complete" ||
   }, {
     key: 'handleTripNameSubmit',
     value: function handleTripNameSubmit(event) {
-      console.log('Tripname was submitted:' + this.state.tripName);
       _util2.default.sendServerTripName(this.state.tripName, this.state.tripDesc);
     }
   }, {
@@ -22671,7 +22704,6 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
       this.setState({
         sideMenuState: true
       });
-      console.log('----menu state is when menu button is clicked', this.state.sideMenuState);
     }
   }, {
     key: 'closeMenu',
@@ -22679,7 +22711,6 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
       this.setState({
         sideMenuState: !this.state.sideMenuState
       });
-      console.log('----site-pusher is clicked', this.state.sideMenuState);
     }
   }, {
     key: 'render',
