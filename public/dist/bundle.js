@@ -21055,26 +21055,34 @@ var Breakdown = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(
-            'h1',
-            null,
-            'Final Breakdown'
-          ),
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Total per person due to ',
-            this.props.data.username
-          ),
-          _react2.default.createElement(
-            'ul',
-            null,
+            'div',
+            { className: 'receipt-info' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Final Breakdown'
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Total per person due to ',
+              this.props.data.username
+            ),
+            _react2.default.createElement('div', null),
             Object.keys(this.props.data.memberSum).map(function (member, index) {
               return _react2.default.createElement(
-                'li',
-                { key: index },
-                member,
-                ' : $',
-                (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
+                'div',
+                { key: index, className: 'flex-container receipt-tax' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'flex-column-name' },
+                  member
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'flex-column-amount receipt-item-amount' },
+                  (_this2.props.data.memberSum[member] + _this2.perPerson).toFixed(2)
+                )
               );
             })
           )
