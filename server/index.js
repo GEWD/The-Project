@@ -197,7 +197,7 @@ app.post('/upload/delete', function(req, res) {
 
 app.post('/summary', (req, res) => {
   console.log('=============', req.body);
-  db.createMemberSummary(req.body);
+  db.createMemberSummary(req.body)
 })
 
 //gVision.spliceReceipt produces an object of item : price pairs

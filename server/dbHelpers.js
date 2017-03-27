@@ -178,8 +178,9 @@ const assignItemsToMembers = (allItemsArray, params) => {
   console.log('url and username -----', params.receiptUrl, params.username);
   // return Promise.map(allItems, (item, index) => {
   //   return Promise.map(allConsumers, (consumer, index) => {
+
     for (let i = 0; i < allItems.length; i++) {
-        db.query(queryString.assignItemsToMembers, [
+      db.query(queryString.assignItemsToMembers, [
           allItems[i],
           params.receiptUrl,
           params.username,
@@ -187,7 +188,15 @@ const assignItemsToMembers = (allItemsArray, params) => {
           params.receiptUrl,
           params.username,
           params.tripName
-        ])
+        ]
+        , (err, results) => {
+          if (err) {
+            console.log(err);
+          }
+        }
+        )
+    //   .then( () => console.log('SUCCESS assignItemsToMembers'))
+    // .catch( err => console.error('ERROR: assignItemsToMembers', err));
         // return db.queryAsync(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[j], params.receiptUrl, params.username])
         // .then( () => console.log('SUCCESS: assignItemsToMembers'))
         // .catch( err => console.error('ERROR: insert consumed_items', err));   
@@ -201,7 +210,7 @@ const createMemberSummary = (params) => {
   let adminName = params.username;
   let payor = params.username;
   let receiptName = params.receiptName;
-  params.receiptUrl = params.receiptUrl || `${receiptName}${adminName}`;
+  params.receiptUrl = params.receiptUrl || receiptName + Math.floor(Math.random(0, 1) * 10000000);
   let receiptUrl = params.receiptUrl;
   let sumBill = Number(params.sumBill) || 0;
   let sumTax = Number(params.sumTax) || 0;
