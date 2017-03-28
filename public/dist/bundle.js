@@ -22440,8 +22440,10 @@ var App = function (_React$Component) {
       var itemArray = [];
       for (var key in itemizationObject) {
         if (key.search(/tax/ig) !== -1) {
-          if (!isNaN) {
+          if (!isNaN(itemizationObject[key])) {
             this.setState({ sumTax: Number(itemizationObject[key]) });
+          } else {
+            this.setState({ sumTax: itemizationObject[key] });
           }
         }
         if (key.search(/(\btotal|\btota)/i) !== -1) {
