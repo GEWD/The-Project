@@ -1,1 +1,1 @@
-{"New Orleans Iced Coffee x 2":"$8.00","Whole Milk":"($4.00 each)","Subtotal":"$8.00","Healthy SF Surcharge":"$0.32","Total":"$8.32"}
+{"New Orleans Iced Coffee x 2":"8.00","Whole Milk":"4.00","Healthy SF Surcharge":"0.32","Total":"8.32","<NOTE>":"We apologize for the inconvenience, our <strike>sick</strike> algorithm may not have accurately parsed your receipt. You can utilize the delete and add items buttons to adjust the results and to remove this note"}

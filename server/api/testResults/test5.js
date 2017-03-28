@@ -1,1 +1,1 @@
-{"D. Spicy Tsukemen":"($13.50 each)","Sapporo x 3":"Takoyaki","Sapporo x 2":"($6.00 each)","Subtotal":"($6.00 each)","Healthy SF":"Sales Tax"}
+{"D. Spicy Tsukemen":"13.50","Sapporo x 3":"","Sapporo x 2":"6.00","Healthy SF":"","<NOTE>":"We apologize for the inconvenience, our <strike>sick</strike> algorithm may not have accurately parsed your receipt. You can utilize the delete and add items buttons to adjust the results and to remove this note"}

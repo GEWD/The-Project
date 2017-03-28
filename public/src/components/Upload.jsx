@@ -27,7 +27,7 @@ class UploadReceipt extends React.Component {
     return (
       <div>
         <Link to='/create-trip' className='back-history'>{this.props.tripName.length > 0 ? this.props.tripName : 'Create Trip'}</Link>
-        <div className='page-container'>
+        <div className='page-container-center'>
           <h1>Receipt Upload</h1>
           <form ref='uploadForm'
             id='uploadForm'
@@ -38,7 +38,8 @@ class UploadReceipt extends React.Component {
               id='text-field'
               type='text'
               placeholder='Receipt Name'
-              onChange={this.props.onReceiptNameChange}
+              name='receiptName'
+              onChange={this.props.onInputChange}
             />
             <label className='file-upload-btn'>
               {this.state.filename.length > 0 ?

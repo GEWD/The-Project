@@ -11,6 +11,7 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
+import PrivateRouteHome from './components/PrivateRouteHome.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
 import $ from 'jquery';
@@ -42,7 +43,8 @@ class App extends React.Component {
       memberSum: {},
       amount: '',
       sideMenuState: false,
-      windowHeight: ''
+      windowHeight: '',
+      recent: [ {name: 'No trips yet. Now create one!'}]
     };
 
     this.verifyAuthentication = this.verifyAuthentication.bind(this);
@@ -63,6 +65,7 @@ class App extends React.Component {
     this.calculateMemberSum = this.calculateMemberSum.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
+    this.getRecentTrip = this.getRecentTrip.bind(this);
   }
 
   verifyAuthentication(userInfo) {
@@ -80,13 +83,17 @@ class App extends React.Component {
   }
 
   addItem (itemArray) {
-    this.setState({
-      items: this.state.items.concat([[{
-        name: this.state.name,
-        amount: this.state.amount,
-        members: []
-      }]])
-    });
+    if (this.state.name === '' || this.state.amount === '') {
+      console.log('Please include item and price');
+    } else {
+      this.setState({
+        items: this.state.items.concat([[{
+          name: this.state.name,
+          amount: this.state.amount,
+          members: []
+        }]])
+      });
+    }
     this.state.name = '';
     this.state.amount = '';
   }
@@ -117,7 +124,9 @@ class App extends React.Component {
     let itemArray = [];
     for (var key in itemizationObject) {
       if (key.search(/tax/ig) !== -1) {
-        this.setState({sumTax: Number(itemizationObject[key])});
+        if (!isNaN) {
+          this.setState({sumTax: Number(itemizationObject[key])});
+        }
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {
         this.setState({sumTotal: Number(itemizationObject[key])});
@@ -147,6 +156,29 @@ class App extends React.Component {
       }
     });
     this.state.member = '';
+  }
+
+
+  componentDidMount() {
+    this.getRecentTrip();
+  }
+
+  getRecentTrip() {
+    let user = this.state;
+    $.ajax({
+      type: 'POST',
+      url: '/recent',
+      data: user,
+      success: (results) => {
+        console.log('app component trips of this person', results);
+        this.setState({
+          recent: results
+        });
+      },
+      error: (error) => {
+        console.log('error', error);
+      }
+    });
   }
 
   calculateTotal() {
@@ -271,7 +303,9 @@ class App extends React.Component {
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
           <div className='content-container'>
-            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}/>
+            <PrivateRouteHome path="/" isAuthenticated={this.state.isAuthenticated}
+              data={this.state}
+            />
             <PrivateRoute
               path="/create-trip"
               component={CreateTrip}
@@ -291,7 +325,9 @@ class App extends React.Component {
               component={UploadReceipt}
               tripName={this.state.tripName}
               tripDesc={this.state.tripDesc}
+              data={this.state}
               callGVision={this.callGVision}
+              data={this.state}
               onInputChange={this.onInputChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
@@ -326,6 +362,14 @@ class App extends React.Component {
               isAuthenticated={this.state.isAuthenticated}
               component={Breakdown}
               data={this.state}
+              recent={this.getRecentTrip}
+            />
+            <PrivateRoute
+              path ="/recent-trips"
+              isAuthenticated={this.state.isAuthenticated}
+              component={TripSummary}
+              data={this.state}
+              recent={this.getRecentTrip}
             />
             <Route path ="/login" render={() => (
               this.state.isAuthenticated ? <Redirect to="/" /> : <Login />

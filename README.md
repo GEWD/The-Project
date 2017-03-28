@@ -21,24 +21,25 @@
 
 ## Usage
 
-> Some usage instructions
+> Run npm start and npm webpack;
+> mysql -u root < schema.sql; schema is available in server/db-mysql
 
 ## Requirements
 
 - Node 6.4.x
 - Express
--
 - React
 - MYSQL
-- 
 
+- API key setup required:
+	GOOGLE VISION API: https://cloud.google.com/vision/
+	>Insert Google Vision API parameters in server/api/vision.js
+	Cloudinary API: http://cloudinary.com/
+	>Insert Cloudinary API parameters in server/index.js
 ## Development
 
 ### Installing Dependencies
 
 From within the root directory:
 
-```sh
-npm install -g bower
 npm install
-bower install

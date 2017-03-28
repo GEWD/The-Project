@@ -1,1 +1,1 @@
-{"SUB TOTAL":"10.99"}
+{"Sales Tax":"1099","$11.93":"0.94","<NOTE>":"We apologize for the inconvenience, our <strike>sick</strike> algorithm may not have accurately parsed your receipt. You can utilize the delete and add items buttons to adjust the results and to remove this note"}

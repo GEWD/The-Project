@@ -8,11 +8,7 @@ const Navbar = ({isAuthenticated, handleClickLogout, sideMenuState, menuOnClick}
       <Link to="/" className='brand'>Diff</Link>
       <nav className='menu'>
         <Link to="/" className='link'>Home</Link>
-        <Link to="/upload-receipt" className='link'>Upload Receipt</Link>
-        <Link to="/profile" className='link'>Profile</Link>
-        <Link to="/additems" className='link'>Add Items</Link>
-        <Link to="/summary" className='link'>Member Summary</Link>
-        <Link to="/create-trip" className='link'>Create Trip</Link>
+        <Link to="/recent-trips" className='link'>Recent Trips</Link>
         {isAuthenticated ? null : <Link to="/login" className='link'>Login</Link>}
         {!isAuthenticated ? null : <Link to="/logout" onClick={handleClickLogout} className='link'>Logout</Link>}
       </nav>
@@ -21,3 +17,9 @@ const Navbar = ({isAuthenticated, handleClickLogout, sideMenuState, menuOnClick}
 )
 
 export default Navbar;
+
+//<Link to="/upload-receipt" className='link'>Upload Receipt</Link>
+//<Link to="/profile" className='link'>Profile</Link>
+//<Link to="/additems" className='link'>Add Items</Link>
+//<Link to="/summary" className='link'>Member Summary</Link>
+//<Link to="/create-trip" className='link'>Create Trip</Link>

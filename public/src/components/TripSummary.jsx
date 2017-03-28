@@ -9,10 +9,12 @@ class TripSummary extends React.Component {
 
   render() {
     return(
-      <div>
-        <h1>Trip Summary</h1>
-        <TripEntry />
-        <TripEntry />
+      <div className='page-container'>
+        <h1>Most Recent Trips</h1>
+        <div className='trip-summary'>{this.props.data.recent.map((item,index) => {
+          return (<p key={index} >{item.name}</p>)
+        })}
+        </div>
       </div>
     )
   }

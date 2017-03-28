@@ -10,7 +10,12 @@ const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = cloudinary.config(process.env.cloudKey);
+cloudinary.config({
+  cloud_name: 'dsl0njnpb',
+  api_key: '699437861478522',
+  api_secret: 'jLZRElTaxWs30ckTcPwwGQ_rFCU'
+});
+
 const path = require('path');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
@@ -81,7 +86,7 @@ checkAuthentication = (req, res, next) => {
 
 authHelper = (req, res, next) => {
   localStorage.isAuthenitcated = req.isAuthenticated();
-  localStorage.user = req.user || {} ;
+  localStorage.user = req.user || {};
   next();
 };
 
@@ -114,6 +119,11 @@ app.get('/login', authHelper, (req, res) => {
   }
 });
 
+app.post('/recent', function(req,res) {
+  //call query function for latest trip,
+  //res.send(object back to the client)
+});
+
 app.get('/logout', authHelper, function(req, res) {
   req.logout();
   res.redirect('/');
@@ -124,7 +134,7 @@ app.get('/verify', authHelper, function(req, res) {
     isAuthenitcated: localStorage.isAuthenitcated,
     name: localStorage.user.name,
     fb_id: localStorage.user.fb_id
-  }
+  };
   res.send(userInfo);
 });
 
@@ -161,11 +171,8 @@ app.post('/createTripName', function(req, res) {
 let uploadCloud = () => {
   cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
   });
-}; 
+};
 app.post('/upload', function(req, res) {
-  //req.body should include receipt name, total, receipt_link;
-  //should be an insert query
-  // console.log('body', req.body);
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -196,19 +203,27 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/summary', (req, res) => {
-  console.log('=============', req.body);
-  db.createMemberSummary(req.body)
-})
+  db.createMemberSummary(req.body);
+});
+
+// this will duplicate with Duy's /recent
+app.post('/recent', (req, res) => {
+  db.getReceiptsAndTrips({adminName: 'Gary Wong', tripName: 'lol123'})
+  .then( (results) => {
+    res.send(results);
+  });
+});
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';
+  let testNumber = 4;
+  let image = req.body.receipt || __dirname + `/api/testReceipts/test${testNumber}.jpg`;
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
-    fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
+    fs.writeFileAsync(`server/api/testResults/test${testNumber}.js`, JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);

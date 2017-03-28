@@ -77,6 +77,13 @@ h2 {
   font-weight: 400;
 }
 
+h3 {
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
 p {
   margin-top: 0.63em;
   margin-bottom: 0.63em;
@@ -94,6 +101,8 @@ p {
   align-items: center;
   text-decoration: none;
   border-radius: 2px;
+  background-color: #fff;
+  border: #4A90E2 1px solid;
   width: 240px;
   margin: 0.6em auto;
   height: 36px;
@@ -193,7 +202,7 @@ input#input-amount{
 }
 
 input#input-amount-tip{
-  width: 80%;
+  width: 40%;
   font-size: 0.9em;
 }
 
@@ -341,9 +350,15 @@ label.file-upload-btn {
 }
 
 /*Pages*/
-.page-container {
+.page-container-center {
   /*padding-top: 0.4em;*/
   text-align: center;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.page-container {
+  padding: 0 1.4em;
   height: 100%;
   overflow-y: auto;
 }
@@ -466,7 +481,7 @@ textarea#tripDesc::-webkit-input-placeholder{
 
 .receipt-item-amount {
   display: flex;
-  align-items: flex-end;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -538,4 +553,65 @@ textarea#tripDesc::-webkit-input-placeholder{
   color: white;
   background-color: #4A90E2;
   border: #4A90E2 1px solid;
+}
+
+/*Summary Page*/
+.receipt-item-mem-summary {
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+  color: #AAAAAA;
+}
+
+.summary-mem-item {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-basis: 100%;
+  justify-content: flex-start;
+}
+
+.summary-mem-name {
+  padding-left: 10px;
+  margin: 0.2em 0;
+}
+
+.receipt-info {
+  text-align: center;
+  border-bottom: 1px #AAAAAA solid;
+  padding-bottom: 1em;
+}
+
+.receipt-summary {
+  margin-top: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+
+}
+
+.receipt-tax {
+  margin: 0.6em 0;
+}
+.sumbit-btn-bar-outer-container{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.sumbit-btn-bar-inner-container {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0 1.4em;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.trip-summary {
+  height: 500px;
+  overflow-y: auto;
 }
