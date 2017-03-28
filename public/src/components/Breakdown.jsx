@@ -1,5 +1,4 @@
 import React from 'react';
-// import {Link} from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 
 
@@ -9,7 +8,7 @@ class Breakdown extends React.Component {
     this.sumTax = Number(this.props.data.sumTax);
     this.sumTip = Number(this.props.data.sumTip);
     this.memberCount = this.props.data.members.length;
-    this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount) ;
+    this.perPerson = ((this.sumTax + this.sumTip) / this.memberCount);
   }
 
   render() {

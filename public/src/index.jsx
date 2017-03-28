@@ -6,7 +6,7 @@ import CreateTrip from './components/CreateTrip.jsx';
 import Itemization from './components/Itemization.jsx';
 import UploadReceipt from './components/Upload.jsx';
 import MemberSummary from './components/MemberSummary.jsx';
-import Breakdown from './components/Breakdown.jsx'
+import Breakdown from './components/Breakdown.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -22,18 +22,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      receiptUrl:'',
+      receiptUrl: '',
       tripName: '',
       username: '',
       tripDesc: '',
-      receiptName:'',
-      items:[],
-      selectItem:'',
-      selectMember:'',
-      members:[],
+      receiptName: '',
+      items: [],
+      selectItem: '',
+      selectMember: '',
+      members: [],
       member: '',
       memberExist: false,
-      name:'',
+      name: '',
       sideMenuState: false,
       amount: '',
       sumBill: '',
@@ -82,14 +82,14 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     this.setState({
       items: this.state.items.concat([[{
         name: this.state.name,
         amount: this.state.amount,
         members: []
       }]])
-    })
+    });
     this.state.name = '';
     this.state.amount = '';
   }
@@ -98,7 +98,7 @@ class App extends React.Component {
     delete this.state.items[index];
     this.setState({
       items: this.state.items
-    })
+    });
   }
 
   callGVision(form) {
@@ -108,8 +108,8 @@ class App extends React.Component {
       type: 'POST',
       url: '/upload',
       data: data,
-      processData:false,
-      contentType:false,
+      processData: false,
+      contentType: false,
       success: (results) => {
         this.onGVision(results);
       },
@@ -129,8 +129,8 @@ class App extends React.Component {
       }
       if (key.search(/(\btotal|\btota)/i) === -1 && key.search(/tax/ig) === -1) {
         itemArray.push([{
-          name:key,
-          amount:itemizationObject[key],
+          name: key,
+          amount: itemizationObject[key],
           members: []
         }]);
       }
@@ -138,55 +138,58 @@ class App extends React.Component {
 
     }
     this.setState({items: itemArray});
-    console.log('Successfully sent post to /vision, resulting array:', this.state.items);
   }
 
-  addMember (itemArray){
-    this.memberExist(this.state.member,(exist) => {
+  addMember (itemArray) {
+    this.memberExist(this.state.member, (exist) => {
+      this.setState({
+        memberExist: exist
+      });
+      if (!exist) {
         this.setState({
-          memberExist: exist
+          members: this.state.members.concat([[this.state.member]])
         });
-        if (!exist) {
-          this.setState({
-            members: this.state.members.concat([[this.state.member]])
-          })
-        }
+      }
     });
     this.state.member = '';
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     this.getRecentTrip();
   }
 
-  getRecentTrip(){
-     let user = this.state;
-     $.ajax({
-       type: 'POST',
-       url: '/recent',
-       data: user,
-       success: (results) => {
-         console.log('app component trips of this person',results);
-         this.setState({
-           recent: results
-         })
-       },
-       error: (error) => {
-         console.log('error',error);
-       }
-     })
+  getRecentTrip() {
+    let user = this.state;
+    $.ajax({
+      type: 'POST',
+      url: '/recent',
+      data: user,
+      success: (results) => {
+        console.log('app component trips of this person', results);
+        this.setState({
+          recent: results
+        });
+      },
+      error: (error) => {
+        console.log('error', error);
+      }
+    });
   }
 
   calculateTotal() {
-    console.log('inside calculate Total')
     let sum = 0;
-    this.state.items.map((item,index) => {
-      sum+= Number(item[0].amount);
-    })
+    this.state.items.map((item, index) => {
+      if (item[0].members.length === 0) {
+        item[0].members = [].concat.apply([], this.state.members);
+      }
+      if (item[0].name !== '<NOTE>') {
+        sum += Number(item[0].amount);
+      } 
+    });
     this.setState({
       sumBill: sum.toFixed(2)
-    })
+    });
   }
 
   onInputChange(event) {
@@ -198,9 +201,15 @@ class App extends React.Component {
 
   calculateMemberSum() {
     var memberSum = {};
+    var currentScope = this;
     this.state.items.forEach(function(itemArr) {
       var itemObj = itemArr[0];
       var eachPrice = itemObj.amount / itemObj.members.length;
+      console.log('....??', itemObj);
+      if (itemObj.members.length === 0) {
+        // itemObj.members = [].concat.apply([], this.state.members);
+        itemObj.members.push('Testing');
+      }
       for (var i = 0; i < itemObj.members.length; i++) {
         if (memberSum[itemObj.members[i]]) {
           memberSum[itemObj.members[i]] += eachPrice;
@@ -219,12 +228,11 @@ class App extends React.Component {
       if (val[0].toUpperCase().trim() === member.toUpperCase().trim()) {
         exist = true;
       }
-    })
+    });
     cb(exist);
   }
 
   handleTripNameSubmit(event) {
-    console.log('Tripname was submitted:' + this.state.tripName);
     Util.sendServerTripName(this.state.tripName, this.state.tripDesc );
   }
 
@@ -264,14 +272,12 @@ class App extends React.Component {
     this.setState({
       sideMenuState: true
     });
-    console.log('----menu state is when menu button is clicked', this.state.sideMenuState);
   }
 
   closeMenu() {
     this.setState({
       sideMenuState: !this.state.sideMenuState
     });
-    console.log('----site-pusher is clicked', this.state.sideMenuState);
   }
 
   updateDimensions() {
@@ -371,9 +377,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('=========window innerHeight',window.innerHeight);
     this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener('resize', this.updateDimensions.bind(this));
     Util.verify(this.verifyAuthentication);
   }
 }
