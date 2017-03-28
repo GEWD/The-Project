@@ -10,7 +10,13 @@ const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = cloudinary.config(process.env.cloudKey);
+// const cloudConfig = cloudinary.config(process.env.cloudKey);
+cloudinary.config({ 
+  cloud_name: 'dsl0njnpb', 
+  api_key: '699437861478522', 
+  api_secret: 'jLZRElTaxWs30ckTcPwwGQ_rFCU' 
+});
+
 const path = require('path');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
@@ -113,6 +119,11 @@ app.get('/login', authHelper, (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
   }
 });
+
+app.post('/recent', function(req,res) {
+  //call query function for latest trip,
+  //res.send(object back to the client)
+})
 
 app.get('/logout', authHelper, function(req, res) {
   req.logout();
