@@ -31,6 +31,11 @@
 - React
 - MYSQL
 
+- API key setup required:
+	GOOGLE VISION API: https://cloud.google.com/vision/
+	>Insert Google Vision API parameters in server/api/vision.js
+	Cloudinary API: http://cloudinary.com/
+	>Insert Cloudinary API parameters in server/index.js
 ## Development
 
 ### Installing Dependencies
