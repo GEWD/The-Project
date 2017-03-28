@@ -211,6 +211,15 @@ app.post('/summary', (req, res) => {
   db.createMemberSummary(req.body)
 })
 
+// this will duplicate with Duy's /recent
+app.post('/recent', (req, res) => {
+  db.getReceiptsAndTrips({adminName: 'Gary Wong', tripName: 'lol123'})
+  .then( (results) => {
+    console.log('87687', results);
+    res.send(results);
+  })
+});
+
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
   let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';

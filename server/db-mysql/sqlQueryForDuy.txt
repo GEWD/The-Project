@@ -1,0 +1,31 @@
+SELECT trips.name FROM heroku_a258462d4ded143.trips WHERE trips.adminID =
+(SELECT members.id FROM heroku_a258462d4ded143.members WHERE members.name = 'Eugene Song');
+
+SELECT trips.id from heroku_a258462d4ded143.trips WHERE trips.name = 'Grand 2017';
+SELECT trips_members.memberID from heroku_a258462d4ded143.trips_members WHERE trips_members.tripID = '12';
+SELECT members.name FROM heroku_a258462d4ded143.members WHERE members.id = '22';
+
+SELECT receipts.name FROM heroku_a258462d4ded143.receipts WHERE receipts.payorID = '62' AND receipts.tripID = '132';
+
+SELECT receipts.sum_bill FROM receipts WHERE receipts.name = 'esongRec1';
+SELECT receipts.sum_tax FROM receipts WHERE receipts.name='esongRec1';
+SELECT receipts.sum_tip FROM receipts WHERE receipts.name='testReceiptTwo';
+
+
+
+
+
+
+
+SELECT trips.name FROM heroku_a258462d4ded143.trips WHERE trips.adminID =
+(SELECT members.id FROM heroku_a258462d4ded143.members WHERE members.name = ?);
+
+SELECT trips.id from heroku_a258462d4ded143.trips WHERE trips.name = ?;
+SELECT trips_members.memberID from heroku_a258462d4ded143.trips_members WHERE trips_members.tripID = ?;
+SELECT members.name FROM heroku_a258462d4ded143.members WHERE members.id = ?;
+
+SELECT receipts.name FROM heroku_a258462d4ded143.receipts WHERE receipts.payorID = ? AND receipts.tripID = ?;
+
+SELECT receipts.sum_bill FROM receipts WHERE receipts.name = ?;
+SELECT receipts.sum_tax FROM receipts WHERE receipts.name = ?;
+SELECT receipts.sum_tip FROM receipts WHERE receipts.name = ?;
