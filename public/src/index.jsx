@@ -82,14 +82,18 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray) {
-    this.setState({
-      items: this.state.items.concat([[{
-        name: this.state.name,
-        amount: this.state.amount,
-        members: []
-      }]])
-    });
+  addItem (itemArray){
+    if (this.state.name === '' || this.state.amount === '') {
+      console.log('Please include item and price')
+    } else {
+      this.setState({
+        items: this.state.items.concat([[{
+          name: this.state.name,
+          amount: this.state.amount,
+          members: []
+        }]])
+      })
+    }
     this.state.name = '';
     this.state.amount = '';
   }
@@ -323,6 +327,7 @@ class App extends React.Component {
               tripDesc={this.state.tripDesc}
               data={this.state}
               callGVision={this.callGVision}
+              data={this.state}
               onInputChange={this.onInputChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
