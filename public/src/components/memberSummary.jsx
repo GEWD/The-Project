@@ -90,7 +90,7 @@ class MemberSummary extends React.Component {
               >Submit</Link>
             </div>
           </div>
-        </div>
+      </div>
       </div>
     )
   }

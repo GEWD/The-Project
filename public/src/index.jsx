@@ -82,9 +82,9 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     if (this.state.name === '' || this.state.amount === '') {
-      console.log('Please include item and price')
+      console.log('Please include item and price');
     } else {
       this.setState({
         items: this.state.items.concat([[{
@@ -92,7 +92,7 @@ class App extends React.Component {
           amount: this.state.amount,
           members: []
         }]])
-      })
+      });
     }
     this.state.name = '';
     this.state.amount = '';
