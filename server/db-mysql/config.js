@@ -1,15 +1,16 @@
 
-// module.exports = {
-//   connectionLimit: 10,
-//   host: 'us-cdbr-iron-east-03.cleardb.net',
-//   user: 'bc13f161df8ceb',
-//   password: process.env.CLEARDB_PASS,
-//   database: 'heroku_a258462d4ded143'
-// };
-
 module.exports = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'gewd'
+  connectionLimit: 10,
+  host: 'us-cdbr-iron-east-03.cleardb.net',
+  user: process.env.CLEARDB_USER,
+  password: process.env.CLEARDB_PASS,
+  database: process.env.CLEARDB_DATABASE
 };
+
+
+// module.exports = {
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'gewd'
+// };
