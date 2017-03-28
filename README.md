@@ -21,16 +21,15 @@
 
 ## Usage
 
-> Some usage instructions
+> Run npm start and npm webpack;
+> mysql -u root < schema.sql; schema is available in server/db-mysql
 
 ## Requirements
 
 - Node 6.4.x
 - Express
--
 - React
 - MYSQL
-- 
 
 ## Development
 
@@ -38,7 +37,4 @@
 
 From within the root directory:
 
-```sh
-npm install -g bower
 npm install
-bower install

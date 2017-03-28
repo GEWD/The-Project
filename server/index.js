@@ -216,7 +216,7 @@ app.post('/recent', (req, res) => {
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let testNumber = 9;
+  let testNumber = 4;
   let image = req.body.receipt || __dirname + `/api/testReceipts/test${testNumber}.jpg`;
   gVision.promisifiedDetectText(image)
   .then(function(results) {
