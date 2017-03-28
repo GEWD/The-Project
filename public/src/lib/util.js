@@ -24,6 +24,13 @@ module.exports = {
     function(res) {
       console.log('successful tripName submitted');
     })
+  },
+
+  insertIntoDb: (data) => {
+    $.post('/summary', data,
+    function(res) {
+      console.log('success inserting into db', res);
+    })
   }
 
 }

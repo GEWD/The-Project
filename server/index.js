@@ -10,7 +10,12 @@ const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-const cloudConfig = cloudinary.config(process.env.cloudKey);
+cloudinary.config({
+  cloud_name: 'dsl0njnpb',
+  api_key: '699437861478522',
+  api_secret: 'jLZRElTaxWs30ckTcPwwGQ_rFCU'
+});
+
 const path = require('path');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
@@ -97,12 +102,14 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
+// // test database functions
+// app.get('/', db.getAllUsers);
 app.get('/newUser', db.createNewUser);
 app.get('/newTrip', db.createNewTrip);
 app.get('/addMembersToTrip', db.addMembersToTrip);
 app.get('/addReceipt', db.addReceipt);
 app.get('/storeItems', db.storeReceiptItems);
-app.get('/assignItems', db.assignItemsToMembers);
+// app.get('/assignItems', db.assignItemsToMembers);
 
 app.get('/login', authHelper, (req, res) => {
   if (req.isAuthenticated()) {
@@ -111,6 +118,11 @@ app.get('/login', authHelper, (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public', 'dist', 'index.html'));
   }
 });
+
+app.post('/recent', function(req,res) {
+  //call query function for latest trip,
+  //res.send(object back to the client)
+})
 
 app.get('/logout', authHelper, function(req, res) {
   req.logout();
@@ -147,6 +159,7 @@ app.post('/createTripName', function(req, res) {
 
   let params = [
     req.body.submittedTripName,
+    localStorage.user.name,
     req.body.submittedTripDesc,
     localStorage.user.fb_id
   ];
@@ -158,11 +171,8 @@ app.post('/createTripName', function(req, res) {
 let uploadCloud = () => {
   cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
   });
-}; 
+};
 app.post('/upload', function(req, res) {
-  //req.body should include receipt name, total, receipt_link;
-  //should be an insert query
-  // console.log('body', req.body);
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -192,6 +202,17 @@ app.post('/upload/delete', function(req, res) {
   //should be a delete query
 });
 
+app.post('/summary', (req, res) => {
+  db.createMemberSummary(req.body)
+})
+
+// this will duplicate with Duy's /recent
+app.post('/recent', (req, res) => {
+  db.getReceiptsAndTrips({adminName: 'Gary Wong', tripName: 'lol123'})
+  .then( (results) => {
+    res.send(results);
+  })
+});
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
@@ -201,7 +222,7 @@ app.post('/vision', function(req, res) {
     let allItems = results[0];
     fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);
