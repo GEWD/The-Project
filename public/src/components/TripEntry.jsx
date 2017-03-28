@@ -6,7 +6,6 @@ class TripEntry extends React.Component {
   }
 
   render() {
-    console.log('-------what is this??', this.props.data);
     return (
       <div>
         <h3>Trip Name</h3> <p>Total: $193.00</p>
