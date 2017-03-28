@@ -11,7 +11,7 @@ class TripSummary extends React.Component {
     return(
       <div className='page-container'>
         <h1>Most Recent Trips</h1>
-        <div>{this.props.data.recent.map((item,index) => {
+        <div className='trip-summary'>{this.props.data.recent.map((item,index) => {
           return (<p>{item.name}</p>)
         })}
         </div>

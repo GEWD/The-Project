@@ -610,3 +610,8 @@ textarea#tripDesc::-webkit-input-placeholder{
   flex-basis: 100%;
   align-items: center;
 }
+
+.trip-summary {
+  height: 500px;
+  overflow-y: auto;
+}
