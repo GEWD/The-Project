@@ -16,15 +16,12 @@ class MemberSummary extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
-
   handleSubmit(event) {
     // event.preventDefault();
     // this.setState({dummyData});
     Util.insertIntoDb(this.props.data);
     this.props.calculateMemberSum();
   }
-
 
   render() {
     return (
@@ -39,8 +36,8 @@ class MemberSummary extends React.Component {
           <div className='receipt-summary'>
             {this.props.data.items.map((el, idx) => {
               return (
-                <div>
-                  <div key={idx} className='flex-container'>
+                <div key={idx}>
+                  <div className='flex-container'>
                     <span className='flex-column-name receipt-item-name'>{el[0].name}</span>
                     <span className='flex-column-amount receipt-item-amount'> ${Number(el[0].amount).toFixed(2)}</span>
                   </div>

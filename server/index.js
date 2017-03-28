@@ -10,11 +10,10 @@ const KEYS = process.env.fbKey;
 const fileUpload = require('express-fileupload');
 const app = express();
 const cloudinary = require('cloudinary');
-// const cloudConfig = cloudinary.config(process.env.cloudKey);
-cloudinary.config({ 
-  cloud_name: 'dsl0njnpb', 
-  api_key: '699437861478522', 
-  api_secret: 'jLZRElTaxWs30ckTcPwwGQ_rFCU' 
+cloudinary.config({
+  cloud_name: 'dsl0njnpb',
+  api_key: '699437861478522',
+  api_secret: 'jLZRElTaxWs30ckTcPwwGQ_rFCU'
 });
 
 const path = require('path');
@@ -172,11 +171,8 @@ app.post('/createTripName', function(req, res) {
 let uploadCloud = () => {
   cloudinary.uploader.upload(__dirname + '/temp/filename.jpg', function(data) {
   });
-}; 
+};
 app.post('/upload', function(req, res) {
-  //req.body should include receipt name, total, receipt_link;
-  //should be an insert query
-  // console.log('body', req.body);
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -207,7 +203,6 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/summary', (req, res) => {
-  console.log('=============', req.body);
   db.createMemberSummary(req.body)
 })
 
@@ -215,7 +210,6 @@ app.post('/summary', (req, res) => {
 app.post('/recent', (req, res) => {
   db.getReceiptsAndTrips({adminName: 'Gary Wong', tripName: 'lol123'})
   .then( (results) => {
-    console.log('87687', results);
     res.send(results);
   })
 });
@@ -228,7 +222,7 @@ app.post('/vision', function(req, res) {
     let allItems = results[0];
     fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
-    console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
+    // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
   .error(function(e) {
     console.log('Error received in appPost, promisifiedDetectText:', e);

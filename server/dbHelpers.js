@@ -76,7 +76,7 @@ const createNewUser = (userInfo) => {
 }
 
 const createNewTrip = (params) => {
-  console.log('createNewTrip!!!! params!!!!', params);
+  // console.log('createNewTrip!!!! params!!!!', params);
   // Total 2 fields: get name and ADMIN_NAME from req.body
   const queryCheckIfTripExist = `SELECT trips.id FROM trips WHERE trips.name = ? AND trips.adminID = (SELECT members.id FROM members
                     WHERE members.name = ?)`
@@ -104,7 +104,7 @@ const addMembersToTrip = (params) => {
   let adminName = params.adminName;
   let membersArray = params.noDupeMemberArray;
 
-  console.log('addMembersToTrip!!!!!!! PARAMS!!!', params);
+  // console.log('addMembersToTrip!!!!!!! PARAMS!!!', params);
 
   const queryMemberId = `SELECT members.id FROM members WHERE members.name = ?`;
   const addMembersToTrip = `INSERT INTO trips_members (tripID, memberID) VALUES ((SELECT trips.id FROM trips
@@ -114,7 +114,7 @@ const addMembersToTrip = (params) => {
     return db.queryAsync(queryMemberId, member)
       .then(result => {
         if (result[0]) {
-          console.log('member already exisit and id is=============', result[0].id);
+          // console.log('member already exisit and id is=============', result[0].id);
           return db.queryAsync(addMembersToTrip, [tripName, result[0].id ])
         } else {
           return db.queryAsync(queryString.createNewUser, member)
@@ -132,7 +132,7 @@ const addMembersToTrip = (params) => {
 
 const addReceipt = (params) => {
   // Total 8 fields: get PAYOR_AUTH, TRIP_NAME, PAYOR_AUTH, RECEIPT_NAME, RECEIPT_URL, TOTAL_BILL, TOTAL_TAX, TOTAL_TAX_TIP from req.body
-  console.log('addReceipt PARAMSSS!!!!', params);
+  // console.log('addReceipt PARAMSSS!!!!', params);
   return db.queryAsync(queryString.addReceipt, params)
     .then( (result) => console.log('successful insert into addReceipt'))
     .catch( err => console.error('SQL ERROR in addReceipt', err));
@@ -148,7 +148,7 @@ const storeReceiptItems = ({receiptUrl, allItemsArray, allPricesArray}) => {
 }
 
 const assignItemsToMembers = (allItemsArray, params) => {
-  console.log('assignItemsToMembers------', JSON.stringify(params));
+  // console.log('assignItemsToMembers------', JSON.stringify(params));
 
   let allConsumers = [];
   let allItems = [];
@@ -163,12 +163,6 @@ const assignItemsToMembers = (allItemsArray, params) => {
       }
     }
   }
-  console.log('allitems----------------', allItems);
-  console.log('consumers----------------',allConsumers);
-  console.log('url and username -----', params.receiptUrl, params.username);
-  // return Promise.map(allItems, (item, index) => {
-  //   return Promise.map(allConsumers, (consumer, index) => {
-
     for (let i = 0; i < allItems.length; i++) {
       db.query(queryString.assignItemsToMembers, [
           allItems[i],
@@ -184,16 +178,11 @@ const assignItemsToMembers = (allItemsArray, params) => {
           }
         }
       )
-    //   .then( () => console.log('SUCCESS assignItemsToMembers'))
-    // .catch( err => console.error('ERROR: assignItemsToMembers', err));
-        // return db.queryAsync(queryString.assignItemsToMembers, [allItems[i], params.receiptUrl, params.username, allConsumers[j], params.receiptUrl, params.username])
-        // .then( () => console.log('SUCCESS: assignItemsToMembers'))
-        // .catch( err => console.error('ERROR: insert consumed_items', err));   
     }
 }
 
 const createMemberSummary = (params) => {
-  console.log('----params passed down to Server here!!!!------', params);
+  // console.log('----params passed down to Server here!!!!------', params);
   let tripName = params.tripName;
   // NEED: fb_id, name, email, token
   let adminName = params.username;
