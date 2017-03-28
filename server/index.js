@@ -143,9 +143,6 @@ app.get('*', checkAuthentication, authHelper, (req, res) => {
 
 app.get('/testing', function(req, res) {
   res.send('hello world');
-  console.log('req.cookies is ========', req.cookies);
-  console.log('req.session is ========', req.session);
-  console.log('req.session.user is ========', req.session.user);
 });
 
 //To be used for testing and seeing requests
@@ -173,7 +170,6 @@ app.post('/upload', function(req, res) {
   }
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
-  // console.log(sampleFile);
   // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
