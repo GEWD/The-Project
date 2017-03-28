@@ -11,6 +11,7 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
+import PrivateRouteHome from './components/PrivateRouteHome.jsx';
 import Util from './lib/util.js';
 import CreateItem from './components/CreateItem.jsx';
 import $ from 'jquery';
@@ -82,13 +83,17 @@ class App extends React.Component {
   }
 
   addItem (itemArray){
-    this.setState({
-      items: this.state.items.concat([[{
-        name: this.state.name,
-        amount: this.state.amount,
-        members: []
-      }]])
-    })
+    if (this.state.name === '' || this.state.amount === '') {
+      console.log('Please include item and price')
+    } else {
+      this.setState({
+        items: this.state.items.concat([[{
+          name: this.state.name,
+          amount: this.state.amount,
+          members: []
+        }]])
+      })
+    }
     this.state.name = '';
     this.state.amount = '';
   }
@@ -292,7 +297,7 @@ class App extends React.Component {
               menuOnClick={this.menuOnClick}
               sideMenuState={this.state.sideMenuState}/>
           <div className='content-container'>
-            <PrivateRoute path="/" isAuthenticated={this.state.isAuthenticated} component={TripSummary}
+            <PrivateRouteHome path="/" isAuthenticated={this.state.isAuthenticated}
               data={this.state}
             />
             <PrivateRoute
@@ -316,6 +321,7 @@ class App extends React.Component {
               tripDesc={this.state.tripDesc}
               data={this.state}
               callGVision={this.callGVision}
+              data={this.state}
               onInputChange={this.onInputChange}
             />
             <PrivateRoute path="/additems" isAuthenticated={this.state.isAuthenticated} component={Itemization}
@@ -353,7 +359,7 @@ class App extends React.Component {
               recent={this.getRecentTrip}
             />
             <PrivateRoute
-              path ="/recent"
+              path ="/recent-trips"
               isAuthenticated={this.state.isAuthenticated}
               component={TripSummary}
               data={this.state}
