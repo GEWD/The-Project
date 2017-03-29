@@ -7,10 +7,10 @@ module.exports = {
   database: process.env.CLEARDB_DATABASE
 };
 
-
 // module.exports = {
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'gewd'
+//  host: 'localhost',
+//  user: 'root',
+//  password: '',
+//  database: 'gewd'
 // };
+
