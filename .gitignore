@@ -25,7 +25,6 @@ env/
 temp/
 api/testResults/
 .env
-bundle.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
