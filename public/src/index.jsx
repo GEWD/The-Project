@@ -82,9 +82,9 @@ class App extends React.Component {
     Util.logout(this.verifyAuthentication);
   }
 
-  addItem (itemArray){
+  addItem (itemArray) {
     if (this.state.name === '' || this.state.amount === '') {
-      console.log('Please include item and price')
+      console.log('Please include item and price');
     } else {
       this.setState({
         items: this.state.items.concat([[{
@@ -92,7 +92,7 @@ class App extends React.Component {
           amount: this.state.amount,
           members: []
         }]])
-      })
+      });
     }
     this.state.name = '';
     this.state.amount = '';
@@ -124,8 +124,10 @@ class App extends React.Component {
     let itemArray = [];
     for (var key in itemizationObject) {
       if (key.search(/tax/ig) !== -1) {
-        if (!isNaN) {
+        if (!isNaN(itemizationObject[key])) {
           this.setState({sumTax: Number(itemizationObject[key])});
+        } else {
+          this.setState({sumTax: itemizationObject[key]});
         }
       }
       if (key.search(/(\btotal|\btota)/i) !== -1) {

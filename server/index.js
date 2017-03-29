@@ -86,7 +86,7 @@ checkAuthentication = (req, res, next) => {
 
 authHelper = (req, res, next) => {
   localStorage.isAuthenitcated = req.isAuthenticated();
-  localStorage.user = req.user || {} ;
+  localStorage.user = req.user || {};
   next();
 };
 
@@ -119,11 +119,6 @@ app.get('/login', authHelper, (req, res) => {
   }
 });
 
-app.post('/recent', function(req,res) {
-  //call query function for latest trip,
-  //res.send(object back to the client)
-})
-
 app.get('/logout', authHelper, function(req, res) {
   req.logout();
   res.redirect('/');
@@ -134,7 +129,7 @@ app.get('/verify', authHelper, function(req, res) {
     isAuthenitcated: localStorage.isAuthenitcated,
     name: localStorage.user.name,
     fb_id: localStorage.user.fb_id
-  }
+  };
   res.send(userInfo);
 });
 
@@ -148,9 +143,6 @@ app.get('*', checkAuthentication, authHelper, (req, res) => {
 
 app.get('/testing', function(req, res) {
   res.send('hello world');
-  console.log('req.cookies is ========', req.cookies);
-  console.log('req.session is ========', req.session);
-  console.log('req.session.user is ========', req.session.user);
 });
 
 //To be used for testing and seeing requests
@@ -178,7 +170,6 @@ app.post('/upload', function(req, res) {
   }
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
-  // console.log(sampleFile);
   // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(__dirname + '/temp/filename.jpg', function(err) {
     if (err) {
@@ -203,24 +194,25 @@ app.post('/upload/delete', function(req, res) {
 });
 
 app.post('/summary', (req, res) => {
-  db.createMemberSummary(req.body)
-})
+  db.createMemberSummary(req.body);
+});
 
 // this will duplicate with Duy's /recent
 app.post('/recent', (req, res) => {
-  db.getReceiptsAndTrips({adminName: 'Gary Wong', tripName: 'lol123'})
+  db.getReceiptsAndTrips({adminName: req.body.username, tripName: req.body.tripName})
   .then( (results) => {
     res.send(results);
-  })
+  });
 });
 
 //gVision.spliceReceipt produces an object of item : price pairs
 app.post('/vision', function(req, res) {
-  let image = req.body.receipt || __dirname + '/api/testReceipts/test3.jpg';
+  let testNumber = 4;
+  let image = req.body.receipt || __dirname + `/api/testReceipts/test${testNumber}.jpg`;
   gVision.promisifiedDetectText(image)
   .then(function(results) {
     let allItems = results[0];
-    fs.writeFileAsync('server/api/testResults/test3.js', JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
+    fs.writeFileAsync(`server/api/testResults/test${testNumber}.js`, JSON.stringify(gVision.spliceReceipt(allItems.split('\n'))));
     res.send(gVision.spliceReceipt(allItems.split('\n')));
     // console.log('Successfully created /test.js with:', gVision.spliceReceipt(allItems.split('\n')));
   })
