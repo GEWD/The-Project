@@ -1,4 +1,4 @@
-# The Project
+# Diff
 
 > Shared payment for travel
 
@@ -6,7 +6,7 @@
 
   - Whitney Zhu
   - Gary Wong
-  - Duy Aiden Nguyen
+  - Aiden (Duy) Nguyen
   - Eugene Song 
 
 ## Table of Contents
